@@ -1,6 +1,6 @@
 <?php 
     require "../layouts/main.php";  
-    require "./app/autoloader.php";
+    //require "./app/autoloader.php";
 ?>
 
 <!DOCTYPE html>
