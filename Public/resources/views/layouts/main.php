@@ -11,6 +11,7 @@ function head($session = null){?>
 <body>
     <h1>Greennet</h1>
     <button onclick="app.view('login')">Ir al login</button>
+    <button onclick="app.view('register')">Ir a registrarse</button>
 </body>
 
 <?php } ?>
@@ -19,6 +20,7 @@ function head($session = null){?>
 function scripts($script = ""){?>
 <!---Se mandan a llamar todos los scripts desde aca--->
     <script src="/resources/js/app.js"></script>
+    <script src="/resources/js/jquery.js"></script>
     <?php
     if($script != ''){
         echo '<script src="/resources/js/'.$script.'.js"></script>';
