@@ -18,9 +18,10 @@ function head($session = null){?>
 
 <?php 
 function scripts($script = ""){?>
-<!---Se mandan a llamar todos los scripts desde aca--->
-    <script src="/resources/js/app.js"></script>
+<!---Se mandan a llamar todos los scripts generales desde aca--->
     <script src="/resources/js/jquery.js"></script>
+    <script src="/resources/js/app.js"></script>
+
     <?php
     if($script != ''){
         echo '<script src="/resources/js/'.$script.'.js"></script>';

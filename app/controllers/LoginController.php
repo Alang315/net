@@ -8,7 +8,7 @@ class LoginController {
     }
 
     public function index() {
-        require_view("auth/login");
+        require_view("login");
     }
 
     public function register() {

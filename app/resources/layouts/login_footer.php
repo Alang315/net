@@ -1,7 +1,9 @@
-<?php function login_footer($args = null){ ?>
-    <footer>
-        <script src=<?php echo urlsite."/view/js/login_script.js";?>></script>
-
-    </footer>
-
+<?php function login_footer($args = []){ ?>
+    <?php
+    if (isset($args['scripts'])) {
+        foreach ($args['scripts'] as $s) {
+            echo_script_js($s);
+        }
+    }
+    ?>
 <?php } ?>

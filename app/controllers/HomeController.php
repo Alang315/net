@@ -8,7 +8,7 @@ class HomeController {
     }
 
     public function index() {
-        require_view("start");
+        require_view("home");
     }
 }
 

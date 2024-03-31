@@ -13,11 +13,10 @@ function require_layout($layout) {
 }
 
 function echo_link_style($style) {
-    echo "<link rel=\"stylesheet\" href=\"assets/css/$style.css\">";
+    echo "<link rel=\"stylesheet\" href=\"resources/css/$style.css\">";
 }
 
 function echo_script_js($script) {
     echo "<script src=\"/resources/js/$script.js\"></script>";
 }
-
 ?>

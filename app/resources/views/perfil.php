@@ -4,13 +4,13 @@
     include("./view/layout/detailsPanel.php");
     if(session_status() !== PHP_SESSION_ACTIVE) session_start();
     if(isset($_SESSION['name'])){
-        $home = "<li><a href=". urlsite."/index.php/..". ">Inicio</a></li>";
-        $logout = "<li><a href='". urlsite. "/logout'>Cerrar Sesión</a></li>";
+        $home = "<li><a href=". ROOT."/index.php/..". ">Inicio</a></li>";
+        $logout = "<li><a href='". ROOT. "/logout'>Cerrar Sesión</a></li>";
         $datos_usuario = $_SESSION['name'];
         $username = $_SESSION['name'];
         $useremail = $_SESSION['email'];
     } else{
-        $datos_usuario = '<a class="unirsebtn" href="' .urlsite . '/login">¡Inicia sesión o Registrate!</a>';
+        $datos_usuario = '<a class="unirsebtn" href="' .ROOT . '/login">¡Inicia sesión o Registrate!</a>';
         $logout = "";
         $home = "";
     }     

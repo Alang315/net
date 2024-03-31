@@ -1,5 +1,5 @@
 <?php
-$layouts = ["main_header", "main_footer"];
+$layouts = ["main_header", "main_footer", "main"];
 $styles = ["style"];
 
 foreach ($layouts as $l) {
@@ -12,7 +12,6 @@ main_header(["styles" => $styles]);
 <!--Panel del perfil-->
 <div id="detailsDiv">
     <b>GreenNet</b><br>
-    
     <ul>
         
     </ul>
@@ -24,6 +23,7 @@ main_header(["styles" => $styles]);
         <!--Mostrar temas-->
         <div class="temas">
             <h2>Temas</h2>
+            <h2><button onclick="app.view('login')"> Registrate o Inicia sesion</button></h2>
             <div class="temasopciones">
             <ul>
                 <li>FIN DE LA POBREZA</li>
@@ -71,5 +71,5 @@ main_header(["styles" => $styles]);
         </div>
     </section>
 </div>
-
+<?php scripts();?>
 <?php main_footer(); ?>

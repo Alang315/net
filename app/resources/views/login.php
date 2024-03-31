@@ -1,12 +1,15 @@
 <?php 
-    include_once("./view/layout/login_header.php");
-    include_once("./view/layout/login_footer.php");
-    login_header();
+    $layouts = ["login_footer", "login_header", "main"];
+    foreach($layouts as $ly){
+        require_layout($ly);
+    }
+    $styles = ["login", "fonts"];
+    login_header(["styles" => $styles]);
 ?>
 <body>
-    <img class="fondo-login" src="view/img/fondo2.avif">
+    <img class="fondo-login" src="resources/img/fondo2.avif">
     <div class="flecha">
-        <a href="./index.php"><img src="view/img/flecha.png" title="Regresar" width="130px" height=""><a>    
+        <button onclick="app.view('home')">Home</button>    
     </div>
     <?php 
     if(isset($_GET['error'])) {
@@ -44,13 +47,13 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-                    <img width="40%" src= <?php echo( urlsite ."/view/img/logo_ODS.png"); ?> title="RedNet" alt="logo de RedNet">
+                    <img width="40%" src="resources/img/logo_ODS.png" title="RedNet" alt="logo de RedNet">
                     <h1>¡Bienvenido de nuevo!</h1>
                     <p>Inicia sesión para utilizar todas las funciones del sitio</p>
                     <button class="hidden" id="login" title="Entrar">Iniciar sesión</button>
                 </div>
                 <div class="toggle-panel toggle-right">
-                    <img width="40%" src=<?php echo(urlsite. "/view/img/logo_ODS.png") ?> title="RedNet" alt="logo de RedNet">
+                    <img width="40%" src="resources/img/logo_ODS.png" title="RedNet" alt="logo de RedNet">
                     <h1>¡Hola amigo!</h1>
                     <p>Regístrate con tu correo para utilizar todas las funciones del sitio</p>
                     <button class="hidden" id="register" title="Registrarse">Registrarse</button>
@@ -59,7 +62,9 @@
         </div>
     </div>
 </body>
-<?php 
-    login_footer();
+<?php
+    $scripts = ["login_script"];
+    login_footer(["scripts" => $scripts]); 
+    scripts();
 ?>
 </html>

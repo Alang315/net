@@ -8,7 +8,7 @@ class ErrorController {
     }
 
     public function error404() {
-        echo "ERRORCONTROLLER";
+        require_view("error404");
     }
 }
 
