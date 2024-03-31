@@ -8,7 +8,7 @@ class user extends DB {
     public $table;
 	public function __construct() {
         parent::__construct();
-        $this->campos = ['Username', 'Password', 'Email', 'ID_Role'];
+        $this->campos = ['Username', 'Password', 'Email', 'Biography', 'ID_Role'];
     }
 
     function setValores($v) {
