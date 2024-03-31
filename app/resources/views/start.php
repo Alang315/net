@@ -1,5 +1,5 @@
 <?php 
-    require getcwd() . "/resources/views/layouts/main.php";
+    require_layout("main");
     head();
 ?>
 <!DOCTYPE html>

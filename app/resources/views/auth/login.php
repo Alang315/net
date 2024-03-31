@@ -1,6 +1,5 @@
 <?php 
-    require "../layouts/main.php";  
-    //require "./app/autoloader.php";
+    require_layout("main");
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +10,8 @@
     <title>Login</title>
 </head>
 <body>
-    
+<h1>Greennet</h1>
+    <button onclick="app.view('home')">Ir a Home</button>
 </body>
 </html>
 

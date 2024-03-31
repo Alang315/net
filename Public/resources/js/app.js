@@ -1,11 +1,13 @@
 app = {
-    urls:{
-        login: "/resources/views/auth/login.php",
-        register: "/resources/views/auth/register.php"
+
+    urls: {
+        home: "/",
+        login: "/login",
+        register: "/login/register"
     },
-    view:function(url){
+
+    view: function(url){
         location.replace(this.urls[url])
     }
-
 
 }

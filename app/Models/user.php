@@ -1,15 +1,18 @@
 <?php
-namespace Models;
-use Models\conexion;
 
-class user extends conexion {
+namespace app\models;
+
+use app\classes\DB;
+
+class user extends DB {
+    public $table;
 	public function __construct() {
         parent::__construct();
-        $this->setTable('users'); // Aquí puedes configurar la tabla que desees
+        $this->campos = ['Username', 'Password', 'Email', 'ID_Role'];
     }
-	
-    protected $campos = ['Username', 'Password', 'Email', 'ID_Role'];
-    public $valores = [];
 
+    function setValores($v) {
+        $this->valores = $v;
+    }
 }
 ?>

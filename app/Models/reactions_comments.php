@@ -4,13 +4,13 @@ namespace app\models;
 
 use app\classes\DB;
 
-class publication extends DB {
+class reactions_comments extends DB {
 	public $table;
 	function __construct(){
 		parent::__construct();
-		$this->campos = ['Title', 'Content', 'Date','ID_user', 'ID_topic'];
+		$this->campos = ['ID_user', 'ID_type', 'ID_comment','Date'];
 	}
-	
+
 	function setValores($v) {
         $this->valores = $v;
     }
