@@ -99,7 +99,7 @@ class DB extends PDO{
         $columnas = implode(', ', $this->campos);            
         $query = "INSERT INTO " . str_replace("app\\models\\", "", get_class($this)) . " ($columnas) VALUES ($keys)";
         $stmt = $this->prepare($query);
-        return $stmt->execute($this->valores);  
+        return $stmt->execute($this->valores);
     }
 
     public function delete() {

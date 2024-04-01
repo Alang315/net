@@ -53,6 +53,7 @@ class Router {
         }
         $controller = ucfirst($controller) . 'Controller';
         return $controller;
+        
     }
 
     private function getAction() {

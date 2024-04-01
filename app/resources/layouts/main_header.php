@@ -20,12 +20,12 @@ function main_header($args = []){
 <body>
     <header>
         <div class="logo" id="logo">
-            <img src="<?php  ?>" alt="Logo de mi foro" class="img-logo">
+            <img src="resources/img/perfil.jpg" alt="Logo de mi foro" class="img-logo">
             <h1 class="nombre-logo">GreenNet</h1>
         </div>
         <div class="perfil">
             <p class="nombre-perfil"><?php  ?></p>
-            <img src="<?php  ?>" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
+            <img src="resources/img/perfil_img.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
         </div>
     </header>
 <?php }?>
