@@ -3,7 +3,8 @@ app = {
     urls: {
         home: "/",
         login: "/login",
-        doregister: "/login/getdata_user"
+        doregister: "/login/getdata_user",
+        log_in: "/login/getdata_login"
     },
 
     view: function(url){

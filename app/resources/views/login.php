@@ -33,13 +33,12 @@
             </form>
         </div>
         <div class="form-container sign-in">
-            <form action="index.php" method="post">
+            <form action="index.php" method="post" id="login-form">
                 <h1><b>GreenNet</b></h1>
                 <br><b><h3><i>Gritos silenciosos</i></h3></b><br>
                 <h1>Iniciar sesión</h1>
-                <input type="email" placeholder="Correo" name="email" required>
-                <input type="password" placeholder="Contraseña" name="pass" required minlength="6">
-                <input type="hidden" name="m" value="initAccount">
+                <input type="email" placeholder="Correo" name="mail" id="mail" required>
+                <input type="password" placeholder="Contraseña" name="passw" id="passw" required minlength="6">
                 <button type="submit" title="Entrar">Iniciar sesión</button>
             </form>
         </div>
@@ -76,7 +75,7 @@
             const data = new FormData();
             data.append("name",$("#name").val());
             data.append("email",$("#email").val());
-            data.append("pass",$("#passwd").val());
+            data.append("pass",$("#pass").val());
             data.append("_register","");
             fetch(app.urls.doregister,{
                 method : "POST",
@@ -87,6 +86,35 @@
                 if(resp.r !== false){
                     //location.href = "login.php";
                     alert("Se creo exitosamente")
+                    rf.reset()
+                }else{
+                    alert("No se pudo realizar la accion");
+                }
+            }).catch( err => console.error( err ))            
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        const lf = $("#login-form");
+        lf.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("passw",$("#passw").val());
+            data.append("mail",$("#mail").val());
+            data.append("_login","");
+            fetch(app.urls.log_in,{
+                method : "POST",
+                body : data
+            })
+            .then ( resp => resp.json())
+            .then ( resp => {
+                if(resp.r !== false){
+                    //location.href = "login.php";
+                    alert("Se creo la sesion")
+                    lf.reset()
                 }else{
                     alert("No se pudo realizar la accion");
                 }
