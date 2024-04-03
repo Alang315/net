@@ -5,11 +5,14 @@
     }
     $styles = ["login", "fonts"];
     login_header(["styles" => $styles]);
+
+    !is_null($sesion) ? $sesion = $sesion : $sesion = null;
 ?>
 <body>
     <img class="fondo-login" src="resources/img/fondo2.avif">
     <div class="flecha">
-        <button onclick="app.view('home')">Home</button>    
+        <button onclick="app.view('home')">Home</button>
+        <button onclick="app.view('logoutlogin')">Cierra sesion</button>    
     </div>
     <?php 
     if(isset($_GET['error'])) {
@@ -84,9 +87,7 @@
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    //location.href = "login.php";
-                    alert("Se creo exitosamente")
-                    rf.reset()
+                    alert("Se creo el usuario exitosamente")
                 }else{
                     alert(resp.m);
                 }
@@ -112,9 +113,8 @@
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    //location.href = "login.php";
                     alert("Se creo la sesion")
-                    lf.reset()
+                    app.view("home")
                 }else{
                     alert("No se pudo realizar la accion");
                 }

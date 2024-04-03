@@ -24,6 +24,7 @@ main_header(["styles" => $styles]);
         <div class="temas">
             <h2>Temas</h2>
             <h2><button onclick="app.view('login')"> Registrate o Inicia sesion</button></h2>
+            <h2><button onclick="app.view('logoutindex')">CERRAR SESION</button></h2>
             <div class="temasopciones">
             <ul>
                 <li>FIN DE LA POBREZA</li>

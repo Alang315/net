@@ -4,7 +4,9 @@ app = {
         home: "/",
         login: "/login",
         doregister: "/login/getdata_user",
-        log_in: "/login/getdata_login"
+        log_in: "/login/getdata_login",
+        logoutindex: "/home/logout",
+        logoutlogin: "/login/logout"
     },
 
     view: function(url){

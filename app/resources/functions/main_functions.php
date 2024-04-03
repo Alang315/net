@@ -4,7 +4,7 @@ function as_object($array) {
     return json_decode(json_encode($array));
 }
 
-function require_view($view) {
+function require_view($view, $sesion = null, $data = null) {
     require(ROOT . "resources/views/" . $view . ".php");
 }
 

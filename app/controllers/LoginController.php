@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\user;
 use Exception;
+use stdClass;
 
 class LoginController {
     public function __construct() {
@@ -17,7 +18,17 @@ class LoginController {
     //-----------------Vistas--------------------- 
 
     public function index() {
-        require_view("login");
+        $sesion = $this->sessionValidate();
+        if(!is_null($sesion)){
+            $sesion = new stdClass();
+            $sesion->sv = true;
+            $sesion->key = $_SESSION["key"];
+            $sesion->passwd = $_SESSION["passwd"];
+            $sesion ->user = $_SESSION["user"];
+            require_view("login", $sesion);
+        }else{
+            require_view("login");
+        } 
     }
     //---------Manejo de la informacion------------ 
     public function getdata_user() {
@@ -51,7 +62,11 @@ class LoginController {
     // Salir de la sesion
     public function logout(){
         $this->sessionDestroy();
-        return;
+        header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+        header("Pragma: no-cache"); // HTTP 1.0
+        header("Expires: 0"); // Proxies
+        header("Location: /login");
+        exit;
     }
 
     //----------Instrucciones hacia los modelos ----------------
@@ -60,7 +75,7 @@ class LoginController {
         $remail = $user->where([["Email", $datos["email"]]])->getAll();
         $ruser = $user->where([["Username", $datos["name"]]])->getAll();
         if(count($remail) > 0 || count($ruser) > 0){
-           return json_encode(["r" => false, "m" => "Usuario ya existente"]);
+           return json_encode(["r" => false, "m" => "El usuario ya esta registrado"]);
            die;
         }
         $user->valores  = [$datos["name"], password_hash($datos["pass"], PASSWORD_DEFAULT), $datos["email"], NULL, 2];
@@ -99,7 +114,9 @@ class LoginController {
         session_start();
         $_SESSION['IP'] = $_SERVER['REMOTE_ADDR'];
         $_SESSION['email'] = $datos[0]->Email; // seleccionamos el atributo
+        $_SESSION['user'] = $datos[0]->Username;
         $_SESSION['passwd'] = $datos[0]->Password;
+        $_SESSION["key"] = $datos[0]->ID_user;
         session_write_close();
         return json_encode(["r" => true]);
     }
@@ -109,13 +126,10 @@ class LoginController {
         session_start();
         if(session_status() == PHP_SESSION_ACTIVE && count($_SESSION) > 0){
             $datos = $_SESSION;
-            $result = $user->where([["username",$datos["username"]],
-                                    ["passwd",$datos["passwd"]]])->getAll(); //libreria base de datos
-            if(count(json_decode($result)) > 0 && $datos['IP'] == $_SERVER['REMOTE_ADDR']){
+            $result = $user->where([["Password",$datos["passwd"]],
+                                    ["Email",$datos["email"]]])->getAll(); //libreria base de datos
+            if(count($result) > 0 && $datos['IP'] == $_SERVER['REMOTE_ADDR']){
                 session_write_close();
-                $this->sv = true;
-                $this->name = json_decode($result)[0]->name;
-                $this->id = json_decode($result)[0]->id;
                 return $result;
             }
         } else {
@@ -130,9 +144,6 @@ class LoginController {
         $_SESSION = [];
         session_destroy();
         session_write_close();
-        $this->sv = false;
-        $this->name = "";
-        $this->id = "";
         return;
     }
 
