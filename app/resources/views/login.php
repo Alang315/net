@@ -88,7 +88,7 @@
                     alert("Se creo exitosamente")
                     rf.reset()
                 }else{
-                    alert("No se pudo realizar la accion");
+                    alert(resp.m);
                 }
             }).catch( err => console.error( err ))            
         })

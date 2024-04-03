@@ -57,17 +57,22 @@ class LoginController {
     //----------Instrucciones hacia los modelos ----------------
     private function userRegister($datos){
         $user = new user();
+        $remail = $user->where([["Email", $datos["email"]]])->getAll();
+        $ruser = $user->where([["Username", $datos["name"]]])->getAll();
+        if(count($remail) > 0 || count($ruser) > 0){
+           return json_encode(["r" => false, "m" => "Usuario ya existente"]);
+           die;
+        }
         $user->valores  = [$datos["name"], password_hash($datos["pass"], PASSWORD_DEFAULT), $datos["email"], NULL, 2];
         $result = $user->insert();
         return $result;
         die;
     }
     
-    public function userLogin($data) {
+    private function userLogin($data) {
         try {
             $user = new user();
             $result = $user->where([["Email", $data["mail"]]])->getAll();
-            //print_r($result);
             if (count($result) > 0) {
                 // Si hay resultados para el correo electrónico proporcionado
                 $storedPassword = $result[0]->Password;
@@ -77,12 +82,12 @@ class LoginController {
                 } else {
                     // Contraseña incorrecta
                     $this->sessionDestroy();
-                    echo json_encode(["r" => false]);
+                    return json_encode(["r" => false]);
                 }
             } else {
                 // No se encontró ningún usuario con el correo electrónico proporcionado
                 $this->sessionDestroy();
-                echo json_encode(["r" => false]);
+                return json_encode(["r" => false]);
             }
         } catch(Exception $e) {
             // Manejo de errores
@@ -90,9 +95,8 @@ class LoginController {
         }
     }
     
-    private function sessionCreate($data){
+    private function sessionCreate($datos){//Se crea una sesion y se guardan sus datos
         session_start();
-        $datos = $data;
         $_SESSION['IP'] = $_SERVER['REMOTE_ADDR'];
         $_SESSION['email'] = $datos[0]->Email; // seleccionamos el atributo
         $_SESSION['passwd'] = $datos[0]->Password;
