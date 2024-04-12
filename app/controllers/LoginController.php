@@ -20,15 +20,14 @@ class LoginController {
     public function index() {
         $sesion = $this->sessionValidate();
         if(!is_null($sesion)){
-            $sesion = new stdClass();
-            $sesion->sv = true;
-            $sesion->key = $_SESSION["key"];
-            $sesion->passwd = $_SESSION["passwd"];
-            $sesion ->user = $_SESSION["user"];
-            require_view("login", $sesion);
+            header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+            header("Pragma: no-cache"); // HTTP 1.0
+            header("Expires: 0"); // Proxies
+            header("Location: /");
+            exit;
         }else{
             require_view("login");
-        } 
+        }
     }
     //---------Manejo de la informacion------------ 
     public function getdata_user() {
@@ -132,7 +131,7 @@ class LoginController {
                 session_write_close();
                 return $result;
             }
-        } else {
+        }else {
             session_write_close();
             $this->sessionDestroy();
             return null;

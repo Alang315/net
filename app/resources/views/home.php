@@ -23,8 +23,11 @@ main_header(["styles" => $styles]);
         <!--Mostrar temas-->
         <div class="temas">
             <h2>Temas</h2>
-            <h2><button onclick="app.view('login')"> Registrate o Inicia sesion</button></h2>
+        <?php if(isset($sesion->sv)){?>
             <h2><button onclick="app.view('logoutindex')">CERRAR SESION</button></h2>
+        <?php }else{?>
+            <h2><button onclick="app.view('login')"> Registrate o Inicia sesion</button></h2>
+        <?php }?>
             <div class="temasopciones">
             <ul>
                 <li>FIN DE LA POBREZA</li>
@@ -60,7 +63,7 @@ main_header(["styles" => $styles]);
         </div>
         <!--Ciclo para imprimir publicaciones-->
         <section class="feed">
-            
+            <h1>Holas</h1>
         </section>
     </main>
     <!-- PANEL DERECHO -->
