@@ -20,7 +20,7 @@ function main_header($args = []){
 <body>
     <header>
         <div class="logo" id="logo">
-            <img src="resources/img/perfil.jpg" alt="Logo de mi foro" class="img-logo">
+            <img src="resources/img/logo_mission_vision.png" alt="Logo de mi foro" class="img-logo">
             <h1 class="nombre-logo">GreenNet</h1>
         </div>
         <div class="perfil">

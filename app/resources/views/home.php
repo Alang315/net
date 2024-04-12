@@ -11,11 +11,14 @@ main_header(["styles" => $styles]);
 
 <!--Panel del perfil-->
 <div id="detailsDiv">
-    <b>GreenNet</b><br>
-    <ul>
-        
-    </ul>
-</div>
+        <b>GreenNet</b><br>
+        <p class="nombre-perfil"><?php echo $username ?></p>
+        <p class="email-perfil"><?php echo $useremail ?></p>
+        <ul>
+            <?php echo $home;?>
+            <?php echo $logout; ?>
+        </ul>
+    </div>
 
 <div class="app">
     <!-- PANEL IZQUIERDO -->
@@ -23,8 +26,8 @@ main_header(["styles" => $styles]);
         <!--Mostrar temas-->
         <div class="temas">
             <h2>Temas</h2>
-            <h2><button onclick="app.view('login')"> Registrate o Inicia sesion</button></h2>
-            <h2><button onclick="app.view('logoutindex')">CERRAR SESION</button></h2>
+            <button onclick="app.view('login')"> Registrate o Inicia sesion</button>
+            <button onclick="app.view('logoutindex')">CERRAR SESION</button>
             <div class="temasopciones">
             <ul>
                 <li>FIN DE LA POBREZA</li>

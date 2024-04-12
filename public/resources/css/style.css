@@ -341,7 +341,7 @@ header {
 
 .publicaciones {
     /*background-color: black;*/
-    background-image: url(/view/img/Plants_2.jpg);
+    background-image: url(../img/Plants_2.jpg);
     flex: 7 0 0;
     border-right: 1px solid var(--background-mid-light-color);
     border-left: 1px solid var(--background-mid-light-color);
