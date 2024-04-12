@@ -5,8 +5,6 @@
     }
     $styles = ["login", "fonts"];
     login_header(["styles" => $styles]);
-
-    !is_null($sesion) ? $sesion = $sesion : $sesion = null;
 ?>
 <body>
     <img class="fondo-login" src="resources/img/fondo2.avif">
