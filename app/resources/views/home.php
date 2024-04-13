@@ -6,20 +6,7 @@ foreach ($layouts as $l) {
     require_layout($l);
 }
 
-
-
-if(isset($sesion->sv)){
-$useremail = $_SESSION['email'];
-$account = "<li><a href=perfil.php>Mi cuenta</a></li>"; //Tag para enlace de ver tu perfil
-$logout = "<h2><button onclick=\"app.view('logoutindex')\">CERRAR SESION</button></h2>"; //Tag para cerrar sesión
-$logear = "";
-}else{
-  $logear = "<h2><button onclick=\"app.view('login')\"> Registrate o Inicia sesion</button></h2>"; //Instancia con el boton de registrarse
-  $logout = "";
-  $account = "";
-  $useremail = "";
-}
-main_header(["styles" => $styles],$logear);
+main_header(["styles" => $styles],$sesion);
 ?>
 
 
@@ -30,8 +17,8 @@ main_header(["styles" => $styles],$logear);
         <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : ''; ?></p>
         <p class="email-perfil"><?php #sesion->email; ?></p>
         <ul>
-            <?php echo $account;?>
-            <?php echo $logout; ?>
+            <?php echo isset($sesion->sv) ? "<li><a href=perfil.php>Mi cuenta</a></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<h2><button onclick=\"app.view('logoutindex')\">CERRAR SESION</button></h2>" : "";  ?>
         </ul>
 </div>
 

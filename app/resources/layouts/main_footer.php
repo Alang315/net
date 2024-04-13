@@ -1,4 +1,4 @@
-<?php function main_footer($args = []){ ?>
+<?php function main_footer($args = [], $sesion = null){ ?>
     
      
 </body>

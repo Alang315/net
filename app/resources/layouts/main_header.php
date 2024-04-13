@@ -1,5 +1,5 @@
 <?php
-function main_header($args = [],$logear = null){
+function main_header($args = [],$sesion = null){
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ function main_header($args = [],$logear = null){
         </div>
        
         <div class="perfil">
-            <p class="nombre-perfil"><?php echo $logear; ?></p><!--Pone en el header el boton para registrarse o no -->
+            <p class="nombre-perfil"><?php echo !isset($sesion->sv) ? "<h2><button onclick=\"app.view('login')\"> Registrate o Inicia sesion</button></h2>" : "" ?> </p><!--Pone en el header el boton para registrarse o no -->
             <img src="resources/img/perfil_img.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono" onclick="app.toggleDetails()">
         </div>
     </header>
