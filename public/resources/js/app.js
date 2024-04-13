@@ -72,6 +72,18 @@ app = {
             }).catch( err => console.error( err ));
     },
 
+    toggleDetails: function() { //Función para desplegar el detailsdiv (tab de usuario)
+        window.onload = function() { //Para que abra en cuanto abra la página DOM
+            const detailsDiv = document.getElementById('detailsDiv');
+            const imgLogo = document.getElementById('perfil_Icono');
+            if (imgLogo && detailsDiv) {
+                imgLogo.addEventListener('click', () => { //Activar cuando haga click
+                    let displayStyle = window.getComputedStyle(detailsDiv, null).display;
+                    detailsDiv.style.display = (displayStyle === 'none') ? 'flex' : 'none';
+                });
+            }
+        }
+    },
     /*fetchInsert: function(id_form, fields, passwdiname1, passwdname2, key) {
         const rf = $(id_form);
         rf.on("submit", function(e) {
@@ -102,3 +114,4 @@ app = {
     }
 */
 }
+app.toggleDetails(); //Abre la función antes de que cargue todo
