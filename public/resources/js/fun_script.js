@@ -53,24 +53,32 @@ const app = {
     }
 
 }
-
+if(Logo){
 Logo.addEventListener('click', () => {
     location.href = './';
 });
+}
+if(imgLogo){
 imgLogo.addEventListener('click', () => {
+    if(detailsDiv){
     detailsDiv.style.display = detailsDiv.style.display === 'none' ? 'flex' : 'none';
+    }
 });
+}
+if(EditButton){
 EditButton.addEventListener('click', () => {
     EditDiv.style.display = EditDiv.style.display === 'none' ? 'flex' : 'none';
     Sombreado.style.display = 'flex';
     document.body.style.overflow = 'hidden'
 });
+}
+if(CancelarButton){
 CancelarButton.addEventListener('click', () => {
     EditDiv.style.display = 'none';
     Sombreado.style.display = 'none';
     document.body.style.overflow = ''
 });
-
+}
 
 
 
@@ -79,10 +87,6 @@ window.onclick = event => {
         app.detailsDiv.style.display = "none";
     }
 }
-window.onload = function() {
-    detailsDiv.style.display = "none";
-    EditDiv.style.display = "none";
-    Sombreado.style.display = "none";
-}
+
 
 

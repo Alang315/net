@@ -6,19 +6,34 @@ foreach ($layouts as $l) {
     require_layout($l);
 }
 
-main_header(["styles" => $styles]);
+
+
+if(isset($sesion->sv)){
+$useremail = $_SESSION['email'];
+$account = "<li><a href=perfil.php>Mi cuenta</a></li>"; //Tag para enlace de ver tu perfil
+$logout = "<h2><button onclick=\"app.view('logoutindex')\">CERRAR SESION</button></h2>"; //Tag para cerrar sesión
+$logear = "";
+}else{
+  $logear = "<h2><button onclick=\"app.view('login')\"> Registrate o Inicia sesion</button></h2>"; //Instancia con el boton de registrarse
+  $logout = "";
+  $account = "";
+  $useremail = "";
+}
+main_header(["styles" => $styles],$logear);
 ?>
 
+
 <!--Panel del perfil-->
+
 <div id="detailsDiv">
         <b>GreenNet</b><br>
-        <p class="nombre-perfil"><?php echo $username ?></p>
-        <p class="email-perfil"><?php echo $useremail ?></p>
+        <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : ''; ?></p>
+        <p class="email-perfil"><?php #sesion->email; ?></p>
         <ul>
-            <?php echo $home;?>
+            <?php echo $account;?>
             <?php echo $logout; ?>
         </ul>
-    </div>
+</div>
 
 <div class="app">
     <!-- PANEL IZQUIERDO -->
@@ -26,11 +41,6 @@ main_header(["styles" => $styles]);
         <!--Mostrar temas-->
         <div class="temas">
             <h2>Temas</h2>
-        <?php if(isset($sesion->sv)){?>
-            <h2><button onclick="app.view('logoutindex')">CERRAR SESION</button></h2>
-        <?php }else{?>
-            <h2><button onclick="app.view('login')"> Registrate o Inicia sesion</button></h2>
-        <?php }?>
             <div class="temasopciones">
             <ul>
                 <li>FIN DE LA POBREZA</li>

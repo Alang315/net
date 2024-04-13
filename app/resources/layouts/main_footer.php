@@ -4,6 +4,7 @@
 </body>
 </html>
     <footer>
-        <script src="public/resources/js/fun_script.js "></script>
+        <!--<script src="resources/js/fun_script.js"></script>-->
+        <script src="resources/js/app.js"></script>
     </footer>
 <?php }?>

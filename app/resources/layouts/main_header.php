@@ -1,5 +1,5 @@
 <?php
-function main_header($args = []){
+function main_header($args = [],$logear = null){
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +23,11 @@ function main_header($args = []){
             <img src="resources/img/logo_mission_vision.png" alt="Logo de mi foro" class="img-logo">
             <h1 class="nombre-logo">GreenNet</h1>
         </div>
+       
         <div class="perfil">
-            <p class="nombre-perfil"><?php  ?></p>
-            <img src="resources/img/perfil_img.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
+            <p class="nombre-perfil"><?php echo $logear; ?></p><!--Pone en el header el boton para registrarse o no -->
+            <img src="resources/img/perfil_img.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono" onclick="app.toggleDetails()">
         </div>
     </header>
-<?php }?>
+
+<?php scripts(); }?>
