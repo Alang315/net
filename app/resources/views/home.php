@@ -15,7 +15,7 @@ main_header(["styles" => $styles],$sesion);
 <div id="detailsDiv">
         <b>GreenNet</b><br>
         <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : ''; ?></p>
-        <p class="email-perfil"><?php #sesion->email; ?></p>
+        <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : ''; ?></p>
         <ul>
             <?php echo isset($sesion->sv) ? "<li><a href=perfil.php>Mi cuenta</a></li>" : "";?>
             <?php echo isset($sesion->sv) ? "<h2><button onclick=\"app.view('logoutindex')\">CERRAR SESION</button></h2>" : "";  ?>

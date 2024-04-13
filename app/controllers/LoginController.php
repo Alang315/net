@@ -69,6 +69,8 @@ class LoginController {
     }
 
     //----------Instrucciones hacia los modelos ----------------
+    
+    //Metodo para registrar a los usuarios
     private function userRegister($datos){
         $user = new user();
         $remail = $user->where([["Email", $datos["email"]]])->getAll();
@@ -83,6 +85,7 @@ class LoginController {
         die;
     }
     
+    //Metodo para loguear a los usuarios 
     private function userLogin($data) {
         try {
             $user = new user();
@@ -109,6 +112,7 @@ class LoginController {
         }
     }
     
+    //Metodo que crea las sesiones de los usuarios 
     private function sessionCreate($datos){//Se crea una sesion y se guardan sus datos
         session_start();
         $_SESSION['IP'] = $_SERVER['REMOTE_ADDR'];
@@ -120,6 +124,7 @@ class LoginController {
         return json_encode(["r" => true]);
     }
 
+    //Metodo que valida las sesiones con las base de datos
     private function sessionValidate(){ //Se valida la sesion desde la bd
         $user = new user();
         session_start();
@@ -138,6 +143,7 @@ class LoginController {
         }
     }
 
+    //Metodo que destruye las sesiones y las cierra
     private function sessionDestroy(){ // se destruye la sesion  y se desvalida
         session_start();
         $_SESSION = [];

@@ -9,7 +9,8 @@ class HomeController {
     public function __construct() {
         
     }
-
+    
+    //Metodo que reevia la vista al cliente 
     public function index() {
         $result = $this->sessionValidate();
         if(!is_null($result)){
@@ -18,13 +19,15 @@ class HomeController {
             $sesion->key = $_SESSION["key"];
             $sesion->passwd = $_SESSION["passwd"];
             $sesion ->user = $_SESSION["user"];
+            $sesion->email = $_SESSION["email"];
             require_view("home", $sesion);
         }
         else{
-            require_view("home");
+            require_view("home"); // funcion para reenviar vistas
         }
     }
 
+    //Metodo que deslogue a los usuarios
     public function logout(){
         $this->sessionDestroy();
         header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
@@ -34,6 +37,7 @@ class HomeController {
         exit;
     }
 
+    //Metodo que valida la sesion de los usuarios 
     private function sessionValidate(){ //Se valida la sesion desde la bd
         $user = new user();
         session_start();
@@ -51,7 +55,8 @@ class HomeController {
             return null;
         }
     }
-
+    
+    // Metodo que destruye la sesion
     private function sessionDestroy(){ // se destruye la sesion  y se desvalida
         session_start();
         $_SESSION = [];
