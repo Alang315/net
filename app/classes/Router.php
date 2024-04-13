@@ -6,6 +6,7 @@ namespace app\classes;
 use app\controllers\HomeController as Home;
 use app\controllers\LoginController as Login;
 use app\controllers\ErrorController as ErrorController;
+use app\controllers\PostController as Post;
 
 class Router {
     private $uri = "";
@@ -25,6 +26,8 @@ class Router {
                 $controller = new Home();break;
             case 'LoginController':
                 $controller = new Login();break;
+            case 'PostController':
+                $controller = new Post(); break;
             default :
                 $controller = new ErrorController();
                 $action = 'error404';
