@@ -85,6 +85,9 @@
             .then ( resp => {
                 if(resp.r !== false){
                     alert("Se creo el usuario exitosamente")
+                    $("#name").val('');
+                    $("#email").val('');
+                    $("#pass").val('');
                 }else{
                     alert(resp.m);
                 }
@@ -111,6 +114,8 @@
             .then ( resp => {
                 if(resp.r !== false){
                     alert("Se creo la sesion")
+                    $("#mail").val('');
+                    $("#passw").val('');
                     app.view("home")
                 }else{
                     alert("No se pudo realizar la accion");

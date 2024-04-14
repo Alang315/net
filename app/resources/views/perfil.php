@@ -186,6 +186,8 @@
             .then ( resp => {
                 if(resp.r !== false){
                     alert("Se creo la publicacion")
+                    $("#titulo").val(''); //Borra el campo de titulo
+                    $("#contenido").val(''); //Borra el campo de contenido
                 }else{
                     alert("No se pudo realizar la accion");
                 }
