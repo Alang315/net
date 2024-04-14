@@ -1,38 +1,32 @@
 <?php
-    include("./view/layout/perfil_header.php");
-    include("./view/layout/main_footer.php");
-    include("./view/layout/detailsPanel.php");
-    if(session_status() !== PHP_SESSION_ACTIVE) session_start();
-    if(isset($_SESSION['name'])){
-        $home = "<li><a href=". ROOT."/index.php/..". ">Inicio</a></li>";
-        $logout = "<li><a href='". ROOT. "/logout'>Cerrar Sesión</a></li>";
-        $datos_usuario = $_SESSION['name'];
-        $username = $_SESSION['name'];
-        $useremail = $_SESSION['email'];
-    } else{
-        $datos_usuario = '<a class="unirsebtn" href="' .ROOT . '/login">¡Inicia sesión o Registrate!</a>';
-        $logout = "";
-        $home = "";
-    }     
-  
-    perfil_header($datos_usuario);
+    $layouts = ["perfil_header", "perfil_footer"];
+    $styles = ["fonts", "perfil"];
+    
+    foreach ($layouts as $l) {
+        require_layout($l);
+    }
+    
+    perfil_header(["styles" => $styles], $sesion);
+
+    date_default_timezone_set('America/Mexico_City');
+    
 ?>
 <!--Panel del perfil-->
     <div id="detailsDiv">
         <b>GreenNet</b><br>
-        <p class="nombre-perfil"><?php echo $username ?></p>
-        <p class="email-perfil"><?php echo $useremail ?></p>
+        <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
+        <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
         <ul>
-            <?php echo $home;?>
-            <?php echo $logout; ?>
+            <li><button onclick="app.view('home')">Regresar a inicio</button></li>
+            <li><button onclick="app.view('logoutperfil')">Cerrar sesion</button></li>
         </ul>
     </div>
     <div class="miperfil-arriba">
         <div class="mitad">
-            <div class="foto-miperfil"><img src= <?php echo urlsite ."/view/img/perfil.jpg"; ?> width="40%" alt="Foto de perfil"></div>
-            <p class="nombre-perfil"><?php echo $username ?></p>
+            <div class="foto-miperfil"><img src= "/resources/img/perfil.jpg" width="40%" alt="Foto de perfil"></div>
+            <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
             <hr><br>
-            <p class="email-perfil"><?php echo $useremail ?></p>
+            <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
         </div>  
         <!--<br><hr>-->
     </div>
@@ -82,17 +76,20 @@
         <main class="publicaciones">
             <!--Panel para crear publicaciones-->
             <div class="publicacion-crear">
-                <form action="index.php?m=enviarPublicacion" method="post">
+                <form id="publi-form" method="post">
                     <div class="mi-perfil">
                         <div class="image-container">
                             <span>Crear Post</span>
-                            <img src="<?php echo urlsite; ?>./view/img/perfil_img.jpg" alt="Imagen">
+                            <img src= "/resources/img/perfil_img.jpg" alt="Imagen">
                             <button type="submit">Enviar</button> 
                         </div>
                         <!--Titulo y contenido de la nueva publicacion-->
                         <div class="input-container">
-                            <input type="text" name="titulo" placeholder="Título"> 
-                            <textarea name="contenido" placeholder="Escribe tu idea..."></textarea> 
+                            <input type="text" name="titulo" placeholder="Título" id="titulo">
+                            <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
+                            <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
+                            <input hidden type="text" value="1" name="tid" id="tid">
+                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido"></textarea>
                         </div>
                     </div>
                 </form>
@@ -101,7 +98,7 @@
             <h3>MIS PUBLICACIONES</h3>
             <!--Ciclo para imprimir publicaciones-->
             <section class="feed">
-            <?php foreach($publis as $p){ ?>
+            <?php /* foreach($publis as $p){ ?>
                 <div class="publicacion">
                     <div class="publicacion-unidad">
                         <h2> <?php echo $p['Title']; ?> </h2>
@@ -112,7 +109,7 @@
                     <div class="opciones-miperfil">
                         
                         <button id="Edit_Button" title="Editar publicación" onclick="openEdit(<?php echo $p['ID_publication']; ?>)">
-                        <img src="/view/img/edit-3-svgrepo-com.png"></button>
+                        <img src="/resources/img/edit-3-svgrepo-com.png"></button>
                         <div class="EditarDiv" id="EditDiv">
                             <form action="index.php" method="POST" class="EditForm">
                                     <div class="image-container">
@@ -133,14 +130,15 @@
                         <form action="index.php" method="POST">
                             
                             <button id="Delete_Button" name="deleB" value= "<?php echo $p["ID_publication"] ?>" title="Eliminar publicación">
-                            <img src="/view/img/delete-2-svgrepo-com.png"></button>
+                            <img src="/resources/img/delete-2-svgrepo-com.png"></button>
                             <input type="hidden" name="m" value="deletePubli">
                         </form>
                         <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
-                            <img src="/view/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png"></img></button>
+                            <img src="/resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png"></img></button>
                     </div>
                 </div>
-            <?php }?>
+            <?php } ?>
+            ?>*/ ?>
             </section>
         </main>
         <!--Ciclo para imprimir comentarios-->
@@ -161,5 +159,37 @@
     </div>
     <div id="Sombreado"></div>
 </body>
-<?php main_footer();?>
+<?php 
+    $scripts = ["app", "jquery"];
+    perfil_footer(["scripts" => $scripts, $sesion]);
+?>
 </html>
+
+<script type="text/javascript">
+    $(function(){
+        const lf = $("#publi-form");
+        lf.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("titulo",$("#titulo").val());
+            data.append("contenido",$("#contenido").val());
+            data.append("key",$("#key").val());
+            data.append("tid",$("#tid").val());
+            data.append("date",$("#date").val());
+            data.append("_cp","");
+            fetch(app.urls.createPost,{
+                method : "POST",
+                body : data
+            })
+            .then ( resp => resp.json())
+            .then ( resp => {
+                if(resp.r !== false){
+                    alert("Se creo la publicacion")
+                }else{
+                    alert("No se pudo realizar la accion");
+                }
+            }).catch( err => console.error( err ))            
+        })
+    })
+</script>

@@ -20,11 +20,7 @@ class LoginController {
     public function index() {
         $sesion = $this->sessionValidate();
         if(!is_null($sesion)){
-            header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-            header("Pragma: no-cache"); // HTTP 1.0
-            header("Expires: 0"); // Proxies
-            header("Location: /");
-            exit;
+            require_view("error404");
         }else{
             require_view("login");
         }

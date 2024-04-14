@@ -7,11 +7,14 @@ app = {
         log_in: "/login/getdata_login",
         logoutindex: "/home/logout",
         logoutlogin: "/login/logout",
-        posts: "/post"
+        posts: "/post",
+        miperfil:"/perfil",
+        logoutperfil: "/perfil/logout",
+        createPost: "/post/get_Publidata",
     },
 
-    pp : $(".feed"), //Seccion para meter todos las publicaciones
-	lp : $("#content"), //seccion para insertar el contenido
+   // pp : $(".feed"), //Seccion para meter todos las publicaciones
+	//lp : $("#content"), //seccion para insertar el contenido
 
     likesValue : 0,
     dislikesValue : 0,

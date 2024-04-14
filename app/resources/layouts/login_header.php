@@ -1,9 +1,5 @@
 <?php
     function login_header($args = []){
-    if(session_status() !== PHP_SESSION_ACTIVE) session_start();
-    if(isset($_SESSION['name'])){
-        header("location:/");
-    }
 ?>
 <?php
     if (isset($args['styles'])) {

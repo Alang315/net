@@ -22,6 +22,22 @@ class PostController{
         }
     }
 
+    public function get_Publidata(){
+        if(!empty($_POST)){
+            $cp = in_array('_cp', array_keys(filter_input_array(INPUT_POST)));
+            if($cp){
+                $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                print_r($this->createPost($datos));
+            }else{
+                require_view("error404");
+            }
+        }else{
+            require_view("error404");
+        }
+
+    }
+
+
     private function getPost($limit="", $pid = ""){
         $posts = new publication();
         $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','a.ID_topic', 'a.Date'])
@@ -79,6 +95,13 @@ class PostController{
         }
         return $result;
         */
+    }
+
+    public function createPost($datos){
+        $post = new publication();
+        $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"]]);
+        $result = $post->insert();
+        return $result;
     }
 
 
