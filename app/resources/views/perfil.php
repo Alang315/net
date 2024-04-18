@@ -107,7 +107,6 @@
                         <h><?php echo $p['Date']; ?></h><br>
                     </div><br>
                     <div class="opciones-miperfil">
-                        
                         <button id="Edit_Button" title="Editar publicación" onclick="openEdit(<?php echo $p['ID_publication']; ?>)">
                         <img src="/resources/img/edit-3-svgrepo-com.png"></button>
                         <div class="EditarDiv" id="EditDiv">

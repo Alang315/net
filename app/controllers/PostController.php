@@ -5,12 +5,13 @@ namespace app\controllers;
 use app\models\comments;
 use app\models\publication;
 use app\models\reaction_type;
+use app\models\reactions_publications;
+use LDAP\Result;
 
 class PostController{
 
     public function index(){
         require_view("error404");
-        $this->getPost();
     }
     
     public function getP(){
@@ -37,16 +38,25 @@ class PostController{
 
     }
 
-
+//OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
     private function getPost($limit="", $pid = ""){
         $posts = new publication();
         $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','a.ID_topic', 'a.Date'])
-                         ->join('user b', 'a.ID_user = b.ID_user')
-                         ->where($pid != "" ? [['a.ID_publication', $pid]] : [['a.ID_publication', 2]])
-                         ->orderBy([['a.Date', 'DESC']])
+                        ->count([["DISTINCT rp.ID_reaction", "reacciones"], ["DISTINCT c.ID_comment", "comments"]])
+                         ->group_concat("DISTINCT rt.ID_type", "reacciones_IDS")
+                         ->join([['user b', 'a.ID_user = b.ID_user', " "], 
+                         ["reactions_publications rp", "a.ID_publication = rp.ID_publication", "left"],
+                         ["reactions_comments rc", "a.ID_publication = rc.ID_comment", "left"],
+                         ["reaction_type rt", "rp.ID_type = rt.ID_type OR rc.ID_type = rt.ID_type", "left"],
+                         ["comments c", "a.ID_publication = c.ID_publication", "left"]
+                         ])
+                         ->where($pid != "" ? [['a.ID_publication', $pid], ["a.Active", 1]] : [["a.Active", 1]]) //corregir el obtener el id de a publi si no se especifica
+                         ->groupby("a.ID_publication DESC")
                          ->limit($limit)
                          ->getAll();
-        print_r($resultP);
+                        return $resultP;
+    }
+    //LO COMENTE ESPERANDO REUTILIZARLO PARA CUANDO SE OBTENGA UNA SOLA PUBLICACION
         /*if($pid!="" || $limit==1){
             $comments = new comments();
             $resultC = $comments->select(['id'])
@@ -94,9 +104,9 @@ class PostController{
             $result = $resultP;
         }
         return $result;
-        */
-    }
-
+        
+    }*/
+    //Crear Publoicacion
     public function createPost($datos){
         $post = new publication();
         $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"]]);

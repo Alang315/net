@@ -18,7 +18,8 @@ class DB extends PDO{
     protected $l = "";    // Limit
     protected $r;         // Resultado de consulta
     protected $c = "";    // Count
-
+    protected $concat = ""; //Concat
+    protected $g ="";    //group by
     protected $campos;
     public $valores;
 
@@ -40,14 +41,29 @@ class DB extends PDO{
         return $this;
     }
 
-    public function count($c = "*"){
-        $this->c = ",count(" .$c . ") as tt";
+    public function count($c = ["*", "tt"]){
+        if(count($c) > 0){
+            foreach($c as $counts){
+                $this->c .= ",count(" .$counts[0] . ")". $counts[1];
+            }
+        }
         return $this;
     }
 
-    public function join($join = "", $on = ""){
-        if($join != "" && $on != ""){
-            $this->j = ' join ' . $join . ' on ' . $on;
+    public function join($join = []){
+        if(count($join) > 0){
+            foreach($join as $joins){
+                if($joins[0] != "" && $joins[1] != "" && $joins[2] != ""){
+                    $this->j .= " " . $joins[2] . ' join ' . $joins[0] . ' on ' . $joins[1];
+                }
+            }
+        }
+        return $this;
+    }
+
+    public function group_concat($con, $name){
+        if($con != ""){
+            $this->concat .=  ",GROUP_CONCAT(".$con. ")" . $name;
         }
         return $this;
     }
@@ -74,6 +90,14 @@ class DB extends PDO{
         return $this;
     }
 
+    public function groupby($group = ""){
+        $this->g = "";
+        if($group != ""){
+           $this-> g = ' group by ' . $group;
+        }
+        return $this;
+    }
+
     public function limit($l = ""){
         $this->l = "";
         if($l != ""){
@@ -85,11 +109,13 @@ class DB extends PDO{
     public function getAll(){
         $sql = "select " . $this->s .
                $this->c .
+               $this->concat .
                " from " . str_replace("app\\models\\", "", get_class($this)) .
                ($this->j != "" ? " a" . $this->j : "") .
                " where " . $this->w .
                $this->o . 
-               $this->l;
+               $this->l . 
+               $this->g;
         $this->r = $this->query($sql);
         return $this->r->fetchAll(PDO::FETCH_CLASS);
     }

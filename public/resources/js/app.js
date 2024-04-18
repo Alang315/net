@@ -7,7 +7,7 @@ app = {
         log_in: "/login/getdata_login",
         logoutindex: "/home/logout",
         logoutlogin: "/login/logout",
-        posts: "/post",
+        posts: "/post/getP",
         miperfil:"/perfil",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
