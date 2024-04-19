@@ -7,13 +7,13 @@ app = {
         log_in: "/login/getdata_login",
         logoutindex: "/home/logout",
         logoutlogin: "/login/logout",
-        posts: "/post/getP",
+        posts: "post/getP?_pp",
         miperfil:"/perfil",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
     },
 
-   // pp : $(".feed"), //Seccion para meter todos las publicaciones
+    pp : $(".feed"), //Seccion para meter todos las publicaciones
 	//lp : $("#content"), //seccion para insertar el contenido
 
     likesValue : 0,
@@ -34,26 +34,28 @@ app = {
 			 		html = "";
 			 		let primera = true;
 			 		for(let post of ppresp){
-                        console.log(post);
+                   
+                        console.log(post.Username);
 			 			html += `
-                                <a href="#" onclick="app.openPost(event, ${post.id}, this)"
+                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
                                     class="list-group-item list-group-item-action pplg ${ primera ? `active` : `` } prevpost"> 
                                     <div class="w-100 border-bottom">
-                                        <h5 class="mb-1">${post.title}</h5>
+                                        <h5 class="mb-1">${post.Title}</h5>
                                         <small class="text-muted blanco ${primera ? `text-light` : ``}">
                                             <i class="bi bi-calendar-week blanco ${primera ? `text-light` : ``}"
                                                ${primera ? `style="color:white;"` : ``}>
                                             </i> <span ${primera ? `style="color:white;"` : ``}
-                                                       class="blanco ${primera ? `text-light` : ``}">${post.fecha}</span>
+                                                       class="blanco ${primera ? `text-light` : ``}">${post.Date}</span>
                                         </small>
                                     </div>
                                     <small>
                                         <i class="bi bi-person-circle"></i>
-                                        <b>${ post.name }</b>
+                                        <b>${ post.Username }</b>
                                     </small>
                                 </a>
                             `;
                         }
+                        
                         primera = false;
                     this.pp.html(html);
                     let items = document.querySelectorAll('.pplg');

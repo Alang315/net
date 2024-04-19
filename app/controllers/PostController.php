@@ -54,7 +54,7 @@ class PostController{
                          ->groupby("a.ID_publication DESC")
                          ->limit($limit)
                          ->getAll();
-                        return $resultP;
+                        return json_encode($resultP);
     }
     //LO COMENTE ESPERANDO REUTILIZARLO PARA CUANDO SE OBTENGA UNA SOLA PUBLICACION
         /*if($pid!="" || $limit==1){

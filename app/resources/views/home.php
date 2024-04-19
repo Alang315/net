@@ -76,4 +76,12 @@ main_header(["styles" => $styles],$sesion);
     </section>
 </div>
 <?php scripts();?>
+<script type="text/javascript">
+    $(function(){
+        
+        // hacer variables js que se emparejen con las de php para poder enviarlas
+        app.publications();
+        //app.lastPost(1);
+    });
+</script>
 <?php main_footer(); ?>
