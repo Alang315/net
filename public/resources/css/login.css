@@ -34,6 +34,18 @@ body{
     top:7%; 
     left:5%;
 }
+.flecha button {
+    background-color: gray;
+    color: white;
+    border-radius: 1.2rem;
+    padding: 1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+.flecha button:hover {
+    background-color: orangered;
+}
 
 .container{
     background-color: #007020;

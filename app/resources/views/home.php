@@ -17,8 +17,8 @@ main_header(["styles" => $styles],$sesion);
         <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : ''; ?></p>
         <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : ''; ?></p>
         <ul>
-            <?php echo isset($sesion->sv) ? "<li><button onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
-            <?php echo isset($sesion->sv) ? "<h2><button onclick=\"app.view('logoutindex')\">CERRAR SESION</button></h2>" : "";  ?>
+            <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">CERRAR SESION</button></h2>" : "";  ?>
         </ul>
 </div>
 

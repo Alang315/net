@@ -9,7 +9,7 @@
 <body>
     <img class="fondo-login" src="resources/img/fondo2.avif">
     <div class="flecha">
-        <button onclick="app.view('home')">Home</button>
+        <button onclick="app.view('home')">< Regresar</button>
     </div>
     <?php 
     if(isset($_GET['error'])) {
