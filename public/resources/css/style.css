@@ -304,8 +304,9 @@ header {
     font-family: Roboto;
     border-radius: 5px;
     font-size: 1.2em;
+    min-width: 95%;
     width: 95%;
-    max-width: 95;
+    max-width: 95%;
     height: 10%;
     max-height: 10%;
     margin-bottom: 0.8em;

@@ -5,5 +5,10 @@
             echo_script_js($s);
         }
     }
+    
     ?>
+    <footer>
+        <!--<script src="resources/js/fun_script.js"></script>-->
+        <script src="resources/js/app.js"></script>
+    </footer>
 <?php } ?>

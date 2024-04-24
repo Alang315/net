@@ -114,6 +114,25 @@ header {
 #detailsDiv li a {
     text-decoration: none;
 }
+#detailsDiv li .miperfilbtn {
+    background-color: transparent;
+    border: none;
+    padding: 0.2rem;
+    width: 100%;
+    min-width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+}
+#detailsDiv h2 .cerrarsesionbtn {
+    background-color: gray;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 0.2rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 #EditDiv {
     display: none;
     z-index: 2;
@@ -279,6 +298,8 @@ header {
     background-image: url(../img/fondo_multi.png);
     /*background-color: #fff;*/
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
 }
 
 .miperfil-arriba .mitad {
@@ -430,8 +451,9 @@ header {
     font-family: Roboto;
     border-radius: 5px;
     font-size: 1.2em;
+    min-width: 95%;
     width: 95%;
-    max-width: 95;
+    max-width: 95%;
     height: 10%;
     max-height: 10%;
     margin-bottom: 0.8em;
@@ -497,12 +519,13 @@ header {
     overflow-y: auto;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    padding-top: 48rem;
 }
-.publicaciones h3 {
-    margin: 1em;
-}
+
 .publicacion {
+    margin-bottom: 1em;
     max-width: 35em;
     min-width: 35em;
     border-left: 6px solid blue;
@@ -511,66 +534,39 @@ header {
     justify-content: center;
     border-radius: 8px;
     width: 35em;
+    text-decoration: none;
     height: auto;
-    
 }
+
 .publicacion .vercomments {
-    background-color: transparent;
-    border: none;
-    width: 2.5em;
-    max-width: 2.5em;
-    min-width: 2.5em;
-    font-weight: bold;
-    border-radius: 5px;
-    max-height: 2.5em;
-    height: 2.5em;
-    min-height: 2.5em;
-    font-size: 1rem;
-    margin: 15px;
-    cursor: pointer;
-    align-items: center;
+        background-color: transparent;
+        border: none;
+        width: 2.5em;
+        max-width: 2.5em;
+        min-width: 2.5em;
+        font-weight: bold;
+        border-radius: 5px;
+        max-height: 2.5em;
+        height: 2.5em;
+        min-height: 2.5em;
+        font-size: 1rem;
+        margin: 15px;
+        cursor: pointer;
+        margin-right: 5px;
+    
+        align-items: center;
+    }
+    .publicacion .vercomments img {
+        width: 2.0em;
+        max-width: 2.0em;
+        min-width: 2.0em;
+        max-height: 2.0em;
+        height: 2.0em;
+        min-height: 2.0em;
+        align-items: center;
+        display: block;
 }
-.opciones-miperfil #Edit_Button, #Delete_Button {
-    background-color: transparent;
-    border: none;
-    width: 2.5em;
-    max-width: 2.5em;
-    min-width: 2.5em;
-    font-weight: bold;
-    border-radius: 5px;
-    max-height: 2.5em;
-    height: 2.5em;
-    min-height: 2.5em;
-    font-size: 1rem;
-    margin: 15px;
-    cursor: pointer;
-    align-items: center;
-}
-.publicacion .vercomments img {
-    width: 2.5em;
-    max-width: 2.5em;
-    min-width: 2.5em;
-    max-height: 2.5em;
-    height: 2.5em;
-    min-height: 2.5em;
-    align-items: center;
-    display: block;
-}
-.opciones-miperfil img {
-    width: 2.5em;
-    max-width: 2.5em;
-    min-width: 2.5em;
-    max-height: 2.5em;
-    height: 2.5em;
-    min-height: 2.5em;
-    align-items: center;
-    display: block;
-}
-
-.publicacion-crear {
-    margin-top: 30px; /* Espacio entre el formulario y el feed */
-}
-
+    
 .publicacion-unidad {
     background-color: #e1e8ea;
     padding: 1em 1em;
@@ -578,13 +574,90 @@ header {
     max-width: 100%;
     min-width: 100%;
     border-bottom: 2px solid var(--verde);
+    color: black;
+    display: flex;
+    flex-direction: column;
 }
-
-.contenido {
-    padding: 1%;
-    background-color: #f0f0f0;
+.publicacion-unidad .username .User {
+    float: left;
+    font-size: 20px;
+}
+.publicacion-unidad .username .fecha {
+    float: right;
+    font-size: 16px;
+    background-color: #0074D9;
+    color: white;
+    padding: 2px;
+    border-radius: 0.3rem;
+}
+.publicacion-reaccion {
+    align-items: center;
+    display: flex;
+    color: black;
+    margin-left: 1rem;
+}
+.reaccionestab {
+    background: url('') no-repeat right;
+    -webkit-appearance: none; /* Removes default styling for select on WebKit browsers */
+    -moz-appearance: none;    /* Removes default styling for select on Mozilla browsers */
+    appearance: none;         /* Removes default styling for select */
+        /* Make room for the icon */
+   
+    font-size: 1.4rem;
+    border: none;
     border-radius: 8px;
 }
+
+/* You would need to add a class for each option to set the background image accordingly */
+.reaccionestab .thumbs-up {
+    background: url('../img/like-1385-svgrepo-com.png') no-repeat left;
+    padding-left: 30px; /* Make room for the icon */
+}
+.reacciones-container,
+.comments-container {
+    margin-right: 10px; 
+}
+.reaccionestab option {
+    background-color: rgb(40, 143, 40);
+}
+.reaccionestab:focus {
+    outline: none;
+}
+.reacciones-container {
+    display: flex;
+    align-items: center;
+}
+.comments-container {
+    display: flex;
+    align-items: center;
+}
+.publicacion-unidad .titulo {
+    background-color: #448c3f;
+    border-radius: 0.3rem;
+    padding: 0.3rem;
+}
+.publicacion-unidad .titulo .title {
+    font-size: 22px;
+    color: white;
+    font-weight: bold;
+}
+.publicacion-unidad .username {
+    margin-bottom: 5px;
+}
+.contenido {
+   margin-bottom: 0.2rem;
+    border-radius: 8px;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+.publicacion-unidad .topic span {
+    background-color: #ff7b00;
+    width: auto;
+    color: white;
+    border-radius: 1rem;
+    padding: 0.2rem;
+}
+
 
 .opciones-miperfil {
     display: flex;
@@ -597,10 +670,13 @@ header {
     justify-content: center;
 }
 
+.publicacion-crear {
+    margin-top: 10px; /* Espacio entre el formulario y el feed */
+}
+
 .mi-perfil {
     max-width: 90%;
     width: 90%;
-    max-height: 25%;
     margin: 2% 3%;
     background-color: #c9d5d9;
     display: flex;
@@ -690,6 +766,25 @@ input[type="text"],
         outline: none;
         box-shadow: 0 0 10px #34343433;
     }
+.temastab {
+    background-color: #e1e1e1;
+    border-color: transparent;
+    color: black;
+    font-weight: bold;
+    margin-left: 5px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    min-width: 95%;
+    width: 95%;
+    max-width: 95%;
+    height: 10%;
+    max-height: 10%;
+    margin-bottom: 0.8em;
+    padding: 0 0.8rem;
+}
+.publifile {
+    border: none;
+}
    
 .mi-perfil button:hover {
     background-color: white;
@@ -717,7 +812,7 @@ input[type="text"],
     margin: 2% 3%;
     /*background-color: rgb(234, 234, 234);*/
     border-radius: 8px;
-    margin-top: 30px;
+    margin-top: 1px;
 
 }
 
@@ -727,7 +822,7 @@ input[type="text"],
     color: var(--text-dark-color); 
 }
 
-.feed h {
+.feed h3 {
     font-size: 12px;
     margin-left: 1px;
 }
