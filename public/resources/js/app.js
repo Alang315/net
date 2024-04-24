@@ -25,6 +25,9 @@ app = {
     },
 
     publications : function(){
+        if(this.pp) {
+            
+        
 		let html = `<b>No hay publicaciones</b>`;
 		this.pp.html("");
 		fetch(this.urls.posts)
@@ -102,6 +105,7 @@ app = {
                     });
                 }
             }).catch( err => console.error( err ));
+        }
     },
 
     toggleDetails: function() { //Función para desplegar el detailsdiv (tab de usuario)

@@ -18,7 +18,7 @@ class PostController{
         if($_GET){
             $pp = in_array('_pp', array_keys(filter_input_array(INPUT_GET)));
             if($pp){
-                print_r($this->getPost("","",14));
+                print_r($this->getPost());
             }
         }
     }
