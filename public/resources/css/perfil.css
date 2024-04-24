@@ -521,7 +521,7 @@ header {
     justify-content: center;
     flex-direction: column;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    padding-top: 48rem;
+    padding-top: 28rem;
 }
 
 .publicacion {
@@ -671,7 +671,7 @@ header {
 }
 
 .publicacion-crear {
-    margin-top: 10px; /* Espacio entre el formulario y el feed */
+    margin-top: 0%; /* Espacio entre el formulario y el feed */
 }
 
 .mi-perfil {

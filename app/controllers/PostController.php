@@ -18,10 +18,11 @@ class PostController{
         if($_GET){
             $pp = in_array('_pp', array_keys(filter_input_array(INPUT_GET)));
             if($pp){
-                print_r($this->getPost());
+                print_r($this->getPost("","",14));
             }
         }
     }
+   
 
     public function get_Publidata(){
         if(!empty($_POST)){
@@ -39,7 +40,7 @@ class PostController{
     }
 
 //OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
-    private function getPost($limit="", $pid = ""){
+    private function getPost($limit="", $pid = "", $uid = ""){
         $posts = new publication();
         $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','a.ID_topic', 'a.Date'])
                         ->count([["DISTINCT rp.ID_reaction", "reacciones"], ["DISTINCT c.ID_comment", "comments"]])
@@ -51,6 +52,7 @@ class PostController{
                          ["comments c", "a.ID_publication = c.ID_publication", "left"]
                          ])
                          ->where($pid != "" ? [['a.ID_publication', $pid], ["a.Active", 1]] : [["a.Active", 1]]) //corregir el obtener el id de a publi si no se especifica
+                         ->where($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]])
                          ->groupby("a.ID_publication DESC")
                          ->limit($limit)
                          ->getAll();
