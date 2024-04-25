@@ -21,8 +21,10 @@ function main_header($args = [],$sesion = null){
 <body>
     <header>
         <div class="logo" id="logo">
-            <img src="resources/img/logo_mission_vision.png" alt="Logo de mi foro" class="img-logo">
-            <h1 class="nombre-logo">GreenNet</h1>
+            <button class="logobutton" onclick="app.view('home')">
+                <img src="resources/img/logo_mission_vision.png" alt="Logo de mi foro" class="img-logo">
+                <h1 class="nombre-logo">GreenNet</h1>
+            </button>
         </div>
        
         <div class="perfil">

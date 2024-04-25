@@ -75,7 +75,9 @@ main_header(["styles" => $styles],$sesion);
         </div>
     </section>
 </div>
-<?php scripts();?>
+<?php scripts();
+$scripts = ["app", "jquery"];
+main_footer(["scripts" => $scripts]);?>
 <script type="text/javascript">
     $(function(){
         

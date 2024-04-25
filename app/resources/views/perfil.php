@@ -98,7 +98,7 @@
                     </div>
                 </form>
             </div>
-
+            <div class="feedmain">
             <h3>MIS PUBLICACIONES</h3>
             <!--Ciclo para imprimir publicaciones-->
             <section class="feed">
@@ -144,6 +144,7 @@
                     <?php } ?>
                     ?>*/ ?>
             </section>
+            </div>
         </main>
         <!--Ciclo para imprimir comentarios-->
         <section class="comentarios">

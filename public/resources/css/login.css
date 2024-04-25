@@ -133,6 +133,28 @@ body{
     width: 50%;
     z-index: 2;
 }
+.datosincorrectos {
+    display: none;
+    background-color: red;
+    padding: 7px;
+    border-radius: 3px;
+}
+.datosincorrectos span {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+.datosincorrectos2 {
+    display: none;
+    background-color: red;
+    padding: 7px;
+    border-radius: 3px;
+}
+.datosincorrectos2 span {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
 
 .container.active .sign-in{
     transform: translateX(100%);

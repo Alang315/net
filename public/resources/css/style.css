@@ -152,6 +152,15 @@ header {
 .logo{
     cursor: pointer;
 }
+.logo .logobutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
 
 .logo, .perfil {
     display: flex;

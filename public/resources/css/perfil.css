@@ -265,6 +265,15 @@ header {
 .logo{
     cursor: pointer;
 }
+.logo .logobutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
 
 .logo, .perfil {
     display: flex;
@@ -516,12 +525,14 @@ header {
     flex: 7 0 0;
     border-right: 1px solid var(--background-mid-light-color);
     border-left: 1px solid var(--background-mid-light-color);
-    overflow-y: auto;
     display: flex;
     justify-content: center;
     flex-direction: column;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    padding-top: 73rem;
+}
+.feedmain {
+    overflow-y: auto;
+    flex: 7 0 0;
 }
 
 .publicacion {

@@ -29,6 +29,9 @@
                 <input type="text" placeholder="Nombre" name="name" required id="name">
                 <input type="email" placeholder="Correo" name="email" required id="email">
                 <input type="password" placeholder="Contraseña" name="pass" required minlength="6" id="pass">
+                <div class="datosincorrectos" id="errordivre">
+                    <span>Este usuario ya ha sido registrado</span>
+                </div>
                 <button type="submit" title="Registrarse">Registrarse</button>
             </form>
         </div>
@@ -39,6 +42,9 @@
                 <h1>Iniciar sesión</h1>
                 <input type="email" placeholder="Correo" name="mail" id="mail" required>
                 <input type="password" placeholder="Contraseña" name="passw" id="passw" required minlength="6">
+                <div class="datosincorrectos2" id="errordivlo">
+                    <span>Error al iniciar sesión</span>
+                </div>
                 <button type="submit" title="Entrar">Iniciar sesión</button>
             </form>
         </div>
@@ -61,7 +67,7 @@
     </div>
 </body>
 <?php
-    $scripts = ["login_script"];
+    $scripts = ["login_script", "jquery"];
     login_footer(["scripts" => $scripts]); 
     scripts();
 ?>
@@ -69,6 +75,7 @@
 <script type="text/javascript">
     $(function(){
         const rf = $("#register-form");
+        const errordiv = $("#errordivre");
         rf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -85,20 +92,28 @@
             .then ( resp => {
                 if(resp.r !== false){
                     alert("Se creo el usuario exitosamente")
+                    errordiv.css('display', 'none');
+                    app.view("login");
                     $("#name").val('');
                     $("#email").val('');
                     $("#pass").val('');
+                    
                 }else{
-                    alert(resp.m);
+                    errordiv.css('display', 'flex');
+                    $("#email").val('');
+                    $("#pass").val('');
+                    //alert(resp.m);
                 }
             }).catch( err => console.error( err ))            
         })
     })
+
 </script>
 
 <script type="text/javascript">
     $(function(){
         const lf = $("#login-form");
+        const errordiv = $("#errordivlo");
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -116,9 +131,13 @@
                     alert("Se creo la sesion")
                     $("#mail").val('');
                     $("#passw").val('');
+                    errordiv.css('display', 'none');
                     app.view("home")
                 }else{
-                    alert("No se pudo realizar la accion");
+                    //alert("No se pudo realizar la accion");
+                    errordiv.css('display', 'flex');
+                    $("#email").val('');
+                    $("#pass").val('');
                 }
             }).catch( err => console.error( err ))            
         })
