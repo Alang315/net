@@ -15,11 +15,17 @@ class PostController{
     }
     
     public function getP(){
-        if($_GET){
+        if(!empty($_GET)){
             $pp = in_array('_pp', array_keys(filter_input_array(INPUT_GET)));
             if($pp){
                 print_r($this->getPost());
+            }else{
+                require_view("error404");
+                die;
             }
+        }else{
+            require_view("error404");
+            die;
         }
     }
    
@@ -39,17 +45,34 @@ class PostController{
 
     }
 
+    public function get_user_P(){
+        if(!empty($_GET)){
+            $up = in_array('uid', array_keys(filter_input_array(INPUT_GET)));
+            if($up){
+                $key = filter_input_array(INPUT_GET)["uid"];
+                print_r($this->getPost("","", $key));
+            }else{
+                require_view("error404");
+                die;
+            }
+        }else{
+            require_view("error404");
+            die;
+        }
+    }
+
 //OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
     private function getPost($limit="", $pid = "", $uid = ""){
         $posts = new publication();
-        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','a.ID_topic', 'a.Date'])
+        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic', 'a.Date'])
                         ->count([["DISTINCT rp.ID_reaction", "reacciones"], ["DISTINCT c.ID_comment", "comments"]])
                          ->group_concat("DISTINCT rt.ID_type", "reacciones_IDS")
                          ->join([['user b', 'a.ID_user = b.ID_user', " "], 
                          ["reactions_publications rp", "a.ID_publication = rp.ID_publication", "left"],
                          ["reactions_comments rc", "a.ID_publication = rc.ID_comment", "left"],
                          ["reaction_type rt", "rp.ID_type = rt.ID_type OR rc.ID_type = rt.ID_type", "left"],
-                         ["comments c", "a.ID_publication = c.ID_publication", "left"]
+                         ["comments c", "a.ID_publication = c.ID_publication", "left"], 
+                         ["topics t", "a.ID_topic = t.ID_topic", "inner"]
                          ])
                          ->where($pid != "" ? [['a.ID_publication', $pid], ["a.Active", 1]] : [["a.Active", 1]]) //corregir el obtener el id de a publi si no se especifica
                          ->where($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]])
