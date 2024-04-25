@@ -11,10 +11,16 @@ app = {
         miperfil:"/perfil",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
+        userposts: "/post/get_user_P"
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
 	//lp : $("#content"), //seccion para insertar el contenido
+    
+    user : {
+        sv : false,
+        id : 0,
+    },
 
     likesValue : 0,
     dislikesValue : 0,
@@ -26,8 +32,6 @@ app = {
 
     publications : function(){
         if(this.pp) {
-            
-        
 		let html = `<b>No hay publicaciones</b>`;
 		this.pp.html("");
 		fetch(this.urls.posts)
@@ -58,7 +62,7 @@ app = {
                                             <span>${post.Content}</span>
                                         </div>
                                         <div class="topic">
-                                            <span>${post.ID_topic}</span>
+                                            <span>${post.topic}</span>
                                         </div>
                                     </div>
                                     <div class="publicacion-reaccion">
@@ -121,7 +125,71 @@ app = {
         }
     },
     
-
+    //Publicaciones para los usuarios
+    userPosts: function(uid){
+        let html = "<h2>Aún no hay publicaciones</h2>";
+        this.pp.html("");
+        fetch(this.urls.userposts + "&uid=" + uid)
+			.then(response => response.json())
+			.then(lpresp => {
+				if(lpresp.length > 0){
+					html = "";
+			 		let primera = true;
+			 		for(let post of lpresp){
+                        console.log(post.Username);
+			 			html += `
+                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
+                                    class="publicacion pplg ${ primera ? `active` : `` } prevpost"> 
+                                    <div class="publicacion-unidad">
+                                        <div class="username">
+                                            <small class="User">
+                                                <i class="bi bi-person-circle"></i>
+                                                <b>${ post.Username }</b>
+                                            </small>
+                                            <span class="fecha">
+                                                ${post.Date}
+                                            </span>
+                                        </div>    
+                                        <div class="titulo">
+                                            <span class="title">${post.Title}</span>  
+                                        </div>  
+                                        <div class="contenido">
+                                            <span>${post.Content}</span>
+                                        </div>
+                                        <div class="topic">
+                                            <span>${post.topic}</span>
+                                        </div>
+                                    </div>
+                                    <div class="publicacion-reaccion">
+                                        <div class="reacciones-container">
+                                            <select class="reaccionestab" name="reaccionestab" id="reaccionestab">
+                                                <option value="" selected>✔️</option>
+                                                <option value="Me gusta">👍</option>
+                                                <option value="Me enoja">😡</option>
+                                                <option value="Me entistece">😭</option>
+                                                <option value="Me asombra">😧</option>
+                                                <option value="Me divierte">😄</option>
+                                                <option value="Me encanta">💙</option>
+                                            </select>
+                                            <label for="reaccionestab">${post.reacciones}</label>
+                                        </div>
+                                        <div class="comments-container">
+                                            <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                                            <img src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                            <label for="iconocomment">${post.comments}</label>
+                                        </div>
+                                    </div>
+                                </a>
+                            `;
+              
+                        }
+                }
+                primera = false;
+                this.pp.html(html);
+			}).catch(err => console.error(err));
+    },
+    
     /*fetchInsert: function(id_form, fields, passwdiname1, passwdname2, key) {
         const rf = $(id_form);
         rf.on("submit", function(e) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-04-2024 a las 00:59:13
+-- Tiempo de generación: 25-04-2024 a las 18:46:43
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -35,6 +35,15 @@ CREATE TABLE `comments` (
   `ID_publication` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `comments`
+--
+
+INSERT INTO `comments` (`ID_comment`, `Content`, `Date`, `ID_user`, `ID_publication`) VALUES
+(1, 'JCBFHJFBVJBFVFV', '2024-04-17 18:42:41', 9, 15),
+(2, 'BGBGBGBGGB', '2024-04-17 18:43:19', 6, 17),
+(3, 'GggGGG', '2024-04-17 18:43:51', 9, 17);
+
 -- --------------------------------------------------------
 
 --
@@ -45,10 +54,29 @@ CREATE TABLE `publication` (
   `ID_publication` int(11) NOT NULL,
   `Title` varchar(50) NOT NULL,
   `Content` text NOT NULL,
-  `Date` date NOT NULL,
+  `Date` text NOT NULL,
+  `Active` int(15) NOT NULL,
   `ID_user` int(11) NOT NULL,
   `ID_topic` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `publication`
+--
+
+INSERT INTO `publication` (`ID_publication`, `Title`, `Content`, `Date`, `Active`, `ID_user`, `ID_topic`) VALUES
+(10, 'titulo', 'hola', '0000-00-00', 0, 12, 1),
+(11, 'titulo', 'hola', '0000-00-00', 0, 12, 1),
+(12, 'dd', 'qqq', '0000-00-00', 0, 9, 1),
+(13, 'vvv', 'vvv', '0000-00-00', 0, 9, 1),
+(14, 'fff', 'fff', '2024-04-14', 1, 9, 1),
+(15, 'fff', 'fff', ' April 14, 2024, 3:04 am', 1, 9, 1),
+(16, 'fhbvjf', 'vfvfvf', ' 2024-04-14 03:06:20', 1, 9, 1),
+(17, 'ccc', 'ccc', ' 14-04-2024', 1, 9, 1),
+(18, 'vv', 'vv', ' 13-04-2024', 1, 9, 1),
+(19, 'cc', 'cc', ' 13-04-2024 07:12', 0, 9, 1),
+(20, 'vvvv', 'vvv', ' 13-04-2024 07:13 pm', 0, 9, 1),
+(21, 'Hola Mundo', 'djdjgjgf', ' 25-04-2024 10:35 am', 0, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -78,6 +106,14 @@ CREATE TABLE `reactions_publications` (
   `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `reactions_publications`
+--
+
+INSERT INTO `reactions_publications` (`ID_reaction`, `ID_user`, `ID_type`, `ID_publication`, `Date`) VALUES
+(1, 9, 2, 15, '2024-04-02'),
+(2, 9, 5, 15, '2024-04-03');
+
 -- --------------------------------------------------------
 
 --
@@ -89,6 +125,18 @@ CREATE TABLE `reaction_type` (
   `Type` varchar(50) NOT NULL,
   `Description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reaction_type`
+--
+
+INSERT INTO `reaction_type` (`ID_type`, `Type`, `Description`) VALUES
+(1, 'Like', 'Like que nos brinda informacion sobre a quienes les gusta la publicacion'),
+(2, 'Me enoja', 'Reaccion que nos permite saber a quienes les enoja la publicacion o post'),
+(3, 'Me entristece', 'Reaccion que nos permite saber a que usuarios les hace sentir tristeza sobre la publicacion'),
+(4, 'Me asombra', 'Reaccion que nos brinda informacion sobre a que usuarios les asombra la publicacion'),
+(5, 'Me divierte ', 'Reaccion que nos permite saber si a el usuario le divierte la publicacion '),
+(6, 'Me encanta', 'Reaccion que nos permite saber si a los usuarios les encanta la publicacion');
 
 -- --------------------------------------------------------
 
@@ -152,7 +200,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`ID_user`, `Username`, `Password`, `Email`, `Biography`, `ID_Role`) VALUES
-(1, 'Administrador', '$2y$10$4frjVF590gCcjcf4mcHZyOtSqy4KFIrzm8/HgCqm4V26NSzHbgWFK', 'admin@greennet.com', NULL, 1);
+(1, 'Administrador', '$2y$10$4frjVF590gCcjcf4mcHZyOtSqy4KFIrzm8/HgCqm4V26NSzHbgWFK', 'admin@greennet.com', NULL, 1),
+(4, 'Cheto limpiador que emborracha', '$2y$10$zOOGi5SRFMxps815UITfYeh4D.aOgXI/Mi2FFm5S3Q3xQAAv58h2i', '11111@ddd', NULL, 2),
+(6, 'Hola mundo', '$2y$10$lWeAGCYjB6tLNnBnOjglcewQles9D3IQu5PPdInRFgfXHbHxlo5YK', 'avargas39@ucol.mx', NULL, 2),
+(9, 'prueba', '$2y$10$yWNsobiH1yE2u7faMocLQeLjZiBIMCehb3.kYeUwkv.FaEmnZss2a', 'prueba@u', NULL, 2),
+(10, 'Cheto limpiador que emborracha', '$2y$10$UnpmHO7/NZP.d3OtFI/5T.ZbqY46iz3nG8tCuwPnEnBTUWLaVzU.C', 'avargas39@ucol.mx', NULL, 2),
+(11, 'ffff', '$2y$10$jybsNc6njMqcLc0Qj2X5De4.C2wkY6SvwFOjW5hp/xEOTQsRJ7GAC', 'ddddd@ddd', NULL, 2),
+(12, 'dddddddd', '$2y$10$oWPF8Z9cMOye90CzJknh0.H0qTnPem2OOomjxZEKzsy4KNSrUcbuy', 'jbfhjrhjr@jee', NULL, 2),
+(13, 'HDUGJE', '$2y$10$zpuGTX7/yeiAg1c.Q7D1XOY0nSQ2Fk4ckP0EdtKT.Qla/goEd1GHe', 'karla@djnjeed', NULL, 2),
+(14, 'XMMgtgtt', '$2y$10$BlGvyXk3s7cQDamucb.EyurLGlCgMnFRBXrej8ZO2fPABcHNf4D3q', 'fverngrn@jifvv', NULL, 2),
+(15, 'vfvfbfbg', '$2y$10$wtBZj74ftQ7MRcektZueSeB3M2TDWtsynR41qRim43gR67s9zWKqa', 'frkjvgdkjs@rjnjvrjvrnr', NULL, 2),
+(16, 'vfdvf', '$2y$10$8WCuw/fuopXRqofMwqcPL.1lqudpXwcj.Ri4lTfw2/545K9BU6ms6', 'defbe@frkvkrnv', NULL, 2);
 
 --
 -- Índices para tablas volcadas
@@ -226,13 +284,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `ID_comment` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `publication`
 --
 ALTER TABLE `publication`
-  MODIFY `ID_publication` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_publication` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `reactions_comments`
@@ -244,13 +302,13 @@ ALTER TABLE `reactions_comments`
 -- AUTO_INCREMENT de la tabla `reactions_publications`
 --
 ALTER TABLE `reactions_publications`
-  MODIFY `ID_reaction` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_reaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `reaction_type`
 --
 ALTER TABLE `reaction_type`
-  MODIFY `ID_type` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `role`
@@ -268,7 +326,7 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Restricciones para tablas volcadas

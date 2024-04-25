@@ -102,47 +102,7 @@
             <h3>MIS PUBLICACIONES</h3>
             <!--Ciclo para imprimir publicaciones-->
             <section class="feed">
-            
-                    <?php /* foreach($publis as $p){ ?>
-                        <div class="publicacion">
-                            <div class="publicacion-unidad">
-                                <h2> <?php echo $p['Title']; ?> </h2>
-                                
-                                <div class="contenido"><p> <?php echo $p['Content'];?></p></div>
-                                <h><?php echo $p['Date']; ?></h><br>
-                            </div><br>
-                            <div class="opciones-miperfil">
-                                <button id="Edit_Button" title="Editar publicación" onclick="openEdit(<?php echo $p['ID_publication']; ?>)">
-                                <img src="/resources/img/edit-3-svgrepo-com.png"></button>
-                                <div class="EditarDiv" id="EditDiv">
-                                    <form action="index.php" method="POST" class="EditForm">
-                                            <div class="image-container">
-                                                <span>Editar Post</span>
-                                            </div>
-                                            <div class="input-container">
-                                                <input type="text" name="titulo" placeholder="Título" required value="<?php echo $p['Title']; ?>"> 
-                                                <textarea name="contenido" placeholder="Escribe tu idea..." required><?php echo $p['Content']; ?>"</textarea> 
-                                            </div>
-                                            <div class="button-container">
-                                                <button name="editB" value="" <?php echo $p["ID_publication"] ?> title="Editar publicación">Editar</button>
-                                                <button type="button" id="CancelarButton_Edit" class="CancelarButton">Cancelar</button>
-                                            </div>
-                                            <input type="hidden" name="m" value="">
-                                    </form>
-                                </div>
-
-                                <form action="index.php" method="POST">
-                                    
-                                    <button id="Delete_Button" name="deleB" value= "<?php echo $p["ID_publication"] ?>" title="Eliminar publicación">
-                                    <img src="/resources/img/delete-2-svgrepo-com.png"></button>
-                                    <input type="hidden" name="m" value="deletePubli">
-                                </form>
-                                <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
-                                    <img src="/resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png"></img></button>
-                            </div>
-                        </div>
-                    <?php } ?>
-                    ?>*/ ?>
+                
             </section>
             </div>
         </main>
@@ -192,6 +152,9 @@
                 }
             }).catch( err => console.error( err ))            
         })
-        app.publications();
+        app.user.sv = <?=$sesion->sv?'true':'false'?>;
+        app.user.id = "<?=$sesion->key?>";
+        // hacer variables js que se emparejen con las de php para poder enviarlas
+        app.userPosts(app.user.id);
     })
 </script>
