@@ -8,6 +8,7 @@ app = {
         logoutindex: "/home/logout",
         logoutlogin: "/login/logout",
         posts: "post/getP?_pp=_pu",
+        tema: "post/getP?_tm",
         miperfil:"/perfil",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
@@ -16,6 +17,8 @@ app = {
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
 	//lp : $("#content"), //seccion para insertar el contenido
+    tm : $(".temastab"),
+
     
     user : {
         sv : false,
@@ -111,6 +114,35 @@ app = {
             }).catch( err => console.error( err ));
         }
     },
+    
+    temas: function() {
+        if(this.tm) {
+            let html = `<b>No hay temas</b>`;
+            this.tm.html("");
+            fetch(this.urls.tema)
+                 .then(resp => {
+                 if (resp.headers.get('Content-Type').includes('json')) {
+                    return resp.json();
+                  } else {
+                    console.error("Unexpected response format. Not JSON.");
+                  }
+                })
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         let primera = true;
+                         for(let post of ppresp){
+                             html += `
+                                    <option value="${post.ID_publication}">${post.topic}</option>
+                                `;
+                            }
+                            primera = false;
+                        this.tm.html(html);
+                    }
+                }).catch( err => console.error( err ));
+            }
+    },
+
 
     toggleDetails: function() { //Función para desplegar el detailsdiv (tab de usuario)
         window.onload = function() { //Para que abra en cuanto abra la página DOM

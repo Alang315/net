@@ -92,7 +92,7 @@
                             <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido"></textarea>
                             <input type="file" id="imagen" name="imagen" class="publifile">
                             <select class="temastab" name="temastab" id="temastab">
-                                <option value="Me gusta">Elige tu tema</option>
+                               
                             </select>
                         </div>
                     </div>
@@ -127,6 +127,7 @@
 <script type="text/javascript">
     $(function(){
         const lf = $("#publi-form");
+        const select = $("#temastab");
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -136,6 +137,7 @@
             data.append("key",$("#key").val());
             data.append("tid",$("#tid").val());
             data.append("date",$("#date").val());
+            data.append("tema",$("#temastab").val());
             data.append("_cp","");
             fetch(app.urls.createPost,{
                 method : "POST",
@@ -156,5 +158,10 @@
         app.user.id = "<?=$sesion->key?>";
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.userPosts(app.user.id);
+        $(document).ready(function() {
+            select.click(function() {
+                app.temas();
+            });
+        });
     })
 </script>
