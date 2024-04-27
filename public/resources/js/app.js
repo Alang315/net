@@ -247,3 +247,4 @@ app = {
 */
 }
 app.toggleDetails(); //Abre la función antes de que cargue todo
+app.getTopics();

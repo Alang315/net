@@ -157,7 +157,8 @@
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.userPosts(app.user.id);
         select.click(function() { 
-            app.getTopics();
+            
         });
+        app.getTopics();
     })
 </script>
