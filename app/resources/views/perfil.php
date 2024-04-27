@@ -85,13 +85,13 @@
                         </div>
                         <!--Titulo y contenido de la nueva publicacion-->
                         <div class="input-container">
-                            <input type="text" name="titulo" placeholder="Título" id="titulo">
+                            <input type="text" name="titulo" placeholder="Título" id="titulo" required>
                             <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
                             <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
                             <input hidden type="text" value="1" name="tid" id="tid">
-                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido"></textarea>
+                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
                             <input type="file" id="imagen" name="imagen" class="publifile">
-                            <select class="temastab" name="temastab" id="temastab">
+                            <select class="temastab" name="temastab" id="temastab" required>
                                 <option value="Me gusta">Elige tu tema</option>
                             </select>
                         </div>
