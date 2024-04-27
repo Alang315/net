@@ -7,8 +7,8 @@ app = {
         log_in: "/login/getdata_login",
         logoutindex: "/home/logout",
         logoutlogin: "/login/logout",
-        posts: "post/getP?_pp=_pu",
-        tema: "post/getP?_tm",
+        posts: "post/getP?_pp",
+        getTopics: "post/getT",
         miperfil:"/perfil",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
@@ -17,7 +17,7 @@ app = {
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
 	//lp : $("#content"), //seccion para insertar el contenido
-    tm : $(".temastab"),
+    tm : $(".temastab"),// select para tomar los temas
 
     
     user : {
@@ -115,25 +115,19 @@ app = {
         }
     },
     
-    temas: function() {
+    getTopics: function() {
         if(this.tm) {
             let html = `<b>No hay temas</b>`;
             this.tm.html("");
-            fetch(this.urls.tema)
-                 .then(resp => {
-                 if (resp.headers.get('Content-Type').includes('json')) {
-                    return resp.json();
-                  } else {
-                    console.error("Unexpected response format. Not JSON.");
-                  }
-                })
+            fetch(this.urls.getTopics+ "?_gt")
+                 .then(resp => resp.json())
                  .then(ppresp => {
                     if(ppresp.length > 0){
                          html = "";
                          let primera = true;
-                         for(let post of ppresp){
+                         for(let topic of ppresp){
                              html += `
-                                    <option value="${post.ID_publication}">${post.topic}</option>
+                                    <option value="${topic.ID_topic}">${topic.Name}</option>
                                 `;
                             }
                             primera = false;

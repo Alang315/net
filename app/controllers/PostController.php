@@ -6,6 +6,7 @@ use app\models\comments;
 use app\models\publication;
 use app\models\reaction_type;
 use app\models\reactions_publications;
+use app\models\topics;
 use LDAP\Result;
 
 class PostController{
@@ -14,6 +15,7 @@ class PostController{
         require_view("error404");
     }
     
+    //Obtiene para obtener publicaciones
     public function getP(){
         if(!empty($_GET)){
             $pp = in_array('_pp', array_keys(filter_input_array(INPUT_GET)));
@@ -21,15 +23,15 @@ class PostController{
                 print_r($this->getPost());
             }else{
                 require_view("error404");
-                die;
+                die();
             }
         }else{
             require_view("error404");
-            die;
+            die();
         }
     }
    
-
+    //Obtiene para crear publicacion
     public function get_Publidata(){
         if(!empty($_POST)){
             $cp = in_array('_cp', array_keys(filter_input_array(INPUT_POST)));
@@ -45,6 +47,7 @@ class PostController{
 
     }
 
+    //obtiene para obtener publicaciones de un usuario en especifico
     public function get_user_P(){
         if(!empty($_GET)){
             $up = in_array('uid', array_keys(filter_input_array(INPUT_GET)));
@@ -60,6 +63,24 @@ class PostController{
             die;
         }
     }
+
+    //Obtiene para obtener temas de todas las publicaciones
+    public function getT(){
+        if(!empty($_GET)){
+            $gt = in_array('_gt', array_keys(filter_input_array(INPUT_GET)));
+            if($gt){
+                print_r(self::getTopics());
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+ //---------------------------- Modelos y Bd----------------------------------------------------------------------------------------
+
 
 //OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
     private function getPost($limit="", $pid = "", $uid = ""){
@@ -79,7 +100,7 @@ class PostController{
                          ->groupby("a.ID_publication DESC")
                          ->limit($limit)
                          ->getAll();
-                        return json_encode($resultP);
+                        return json_encode($resultP, JSON_UNESCAPED_UNICODE);
     }
     //LO COMENTE ESPERANDO REUTILIZARLO PARA CUANDO SE OBTENGA UNA SOLA PUBLICACION
         /*if($pid!="" || $limit==1){
@@ -132,12 +153,20 @@ class PostController{
         
     }*/
     //Crear Publoicacion
-    public function createPost($datos){
+    
+    private function createPost($datos){
         $post = new publication();
         $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"]]);
         $result = $post->insert();
         return $result;
     }
+
+    private function getTopics(){
+        $topic = new topics();
+        $result = $topic->select(["ID_topic, Name"])->getAll();
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
 
 
 

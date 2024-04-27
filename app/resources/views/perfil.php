@@ -88,7 +88,6 @@
                             <input type="text" name="titulo" placeholder="Título" id="titulo">
                             <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
                             <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
-                            <input hidden type="text" value="1" name="tid" id="tid">
                             <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido"></textarea>
                             <input type="file" id="imagen" name="imagen" class="publifile">
                             <select class="temastab" name="temastab" id="temastab">
@@ -135,9 +134,8 @@
             data.append("titulo",$("#titulo").val());
             data.append("contenido",$("#contenido").val());
             data.append("key",$("#key").val());
-            data.append("tid",$("#tid").val());
             data.append("date",$("#date").val());
-            data.append("tema",$("#temastab").val());
+            data.append("tid",$("#temastab").val());
             data.append("_cp","");
             fetch(app.urls.createPost,{
                 method : "POST",
@@ -158,10 +156,8 @@
         app.user.id = "<?=$sesion->key?>";
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.userPosts(app.user.id);
-        $(document).ready(function() {
-            select.click(function() {
-                app.temas();
-            });
+        select.click(function() { 
+            app.getTopics();
         });
     })
 </script>
