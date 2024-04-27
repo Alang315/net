@@ -7,7 +7,8 @@ app = {
         log_in: "/login/getdata_login",
         logoutindex: "/home/logout",
         logoutlogin: "/login/logout",
-        posts: "post/getP?_pp=_pu",
+        posts: "post/getP?_pp",
+        getTopics: "post/getT",
         miperfil:"/perfil",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
@@ -16,6 +17,8 @@ app = {
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
 	//lp : $("#content"), //seccion para insertar el contenido
+    tm : $(".temastab"),// select para tomar los temas
+
     
     user : {
         sv : false,
@@ -111,6 +114,29 @@ app = {
             }).catch( err => console.error( err ));
         }
     },
+    
+    getTopics: function() {
+        if(this.tm) {
+            let html = `<b>No hay temas</b>`;
+            this.tm.html("");
+            fetch(this.urls.getTopics+ "?_gt")
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         let primera = true;
+                         for(let topic of ppresp){
+                             html += `
+                                    <option value="${topic.ID_topic}">${topic.Name}</option>
+                                `;
+                            }
+                            primera = false;
+                        this.tm.html(html);
+                    }
+                }).catch( err => console.error( err ));
+            }
+    },
+
 
     toggleDetails: function() { //Función para desplegar el detailsdiv (tab de usuario)
         window.onload = function() { //Para que abra en cuanto abra la página DOM
@@ -221,3 +247,4 @@ app = {
 */
 }
 app.toggleDetails(); //Abre la función antes de que cargue todo
+app.getTopics();

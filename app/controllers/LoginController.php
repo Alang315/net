@@ -72,7 +72,7 @@ class LoginController {
         $remail = $user->where([["Email", $datos["email"]]])->getAll();
         $ruser = $user->where([["Username", $datos["name"]]])->getAll();
         if(count($remail) > 0 || count($ruser) > 0){
-           return json_encode(["r" => false, "m" => "El usuario ya esta registrado"]);
+           return json_encode(["r" => false, "m" => "El usuario ya esta registrado"], JSON_UNESCAPED_UNICODE);
            die;
         }
         $user->valores  = [$datos["name"], password_hash($datos["pass"], PASSWORD_DEFAULT), $datos["email"], NULL, 2];
@@ -95,12 +95,12 @@ class LoginController {
                 } else {
                     // Contraseña incorrecta
                     $this->sessionDestroy();
-                    return json_encode(["r" => false]);
+                    return json_encode(["r" => false], JSON_UNESCAPED_UNICODE);
                 }
             } else {
                 // No se encontró ningún usuario con el correo electrónico proporcionado
                 $this->sessionDestroy();
-                return json_encode(["r" => false]);
+                return json_encode(["r" => false], JSON_UNESCAPED_UNICODE);
             }
         } catch(Exception $e) {
             // Manejo de errores
@@ -117,7 +117,7 @@ class LoginController {
         $_SESSION['passwd'] = $datos[0]->Password;
         $_SESSION["key"] = $datos[0]->ID_user;
         session_write_close();
-        return json_encode(["r" => true]);
+        return json_encode(["r" => true], JSON_UNESCAPED_UNICODE);
     }
 
     //Metodo que valida las sesiones con las base de datos

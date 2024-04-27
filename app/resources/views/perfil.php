@@ -127,6 +127,7 @@
 <script type="text/javascript">
     $(function(){
         const lf = $("#publi-form");
+        const select = $("#temastab");
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -134,8 +135,8 @@
             data.append("titulo",$("#titulo").val());
             data.append("contenido",$("#contenido").val());
             data.append("key",$("#key").val());
-            data.append("tid",$("#tid").val());
             data.append("date",$("#date").val());
+            data.append("tid",$("#temastab").val());
             data.append("_cp","");
             fetch(app.urls.createPost,{
                 method : "POST",
@@ -156,5 +157,9 @@
         app.user.id = "<?=$sesion->key?>";
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.userPosts(app.user.id);
+        select.click(function() { 
+            
+        });
+        app.getTopics();
     })
 </script>
