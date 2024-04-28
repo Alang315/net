@@ -91,7 +91,7 @@
                             <input hidden type="text" value="1" name="tid" id="tid">
                             <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
                             <input type="file" id="imagen" name="imagen" class="publifile">
-                            <select class="temastab" name="temastab" id="temastab" required>
+                            <select class="temastab" name="temastab" id="temastab">
                                 <option value="Me gusta">Elige tu tema</option>
                             </select>
                         </div>
