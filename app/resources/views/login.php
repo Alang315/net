@@ -7,7 +7,7 @@
     login_header(["styles" => $styles]);
 ?>
 <body>
-    <img class="fondo-login" src="resources/img/fondo2.avif">
+    <img class="fondo-login" src="resources/img/mundo.jpeg">
     <div class="flecha">
         <button onclick="app.view('home')">< Regresar</button>
     </div>
