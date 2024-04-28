@@ -11,4 +11,6 @@ define('URL', IS_LOCAL ? 'http://appweb.des/' : 'REMOTE URL');
 define('CLASSES', ROOT . 'classes' . DS);
 define('CLASSES_PATH', ROOT . '..' . DS);
 
+date_default_timezone_set('America/Mexico_City');
+
 ?>

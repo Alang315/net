@@ -41,10 +41,15 @@ class DB extends PDO{
         return $this;
     }
 
-    public function count($c = ["*", "tt"]){
+    public function count($c = ["*"]){
         if(count($c) > 0){
             foreach($c as $counts){
-                $this->c .= ",count(" .$counts[0] . ")". $counts[1];
+                if($counts[0] == "*"){
+                    $this->c .= ",count(" .$counts[0] . ")". " AS " . "tt"; 
+                }
+                else{
+                    $this->c .= ",count(" .$counts[0] . ")". $counts[1];
+                }
             }
         }
         return $this;

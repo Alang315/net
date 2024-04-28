@@ -12,7 +12,8 @@ app = {
         miperfil:"/perfil",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
-        userposts: "/post/get_user_P"
+        userposts: "/post/get_user_P",
+        getReactions:"/post/getEmotes"//llaves uid, pid, type, deben de llevar valores
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
