@@ -79,6 +79,27 @@ class PostController{
             die();
         } 
     }
+    
+    //crea las reacciones y obtiene la cantidad de las reacciones
+    public function getEmotes(){
+        if(!empty($_GET)){
+            $gt = in_array('_ge', array_keys(filter_input_array(INPUT_GET)));
+            if($gt){
+                $user = filter_input_array(INPUT_GET)["uid"];
+                $pid =  filter_input_array(INPUT_GET)["pid"];
+                $type = filter_input_array(INPUT_GET)["type"];
+                print_r(self::insertReactions("",$user, $pid, $type));
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
+
  //---------------------------- Modelos y Bd----------------------------------------------------------------------------------------
 
 
@@ -152,8 +173,8 @@ class PostController{
         return $result;
         
     }*/
-    //Crear Publoicacion
     
+    //Crear Publicacion
     private function createPost($datos){
         $post = new publication();
         $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"]]);
@@ -161,14 +182,49 @@ class PostController{
         return $result;
     }
 
+    //Obtiene temas
     private function getTopics(){
         $topic = new topics();
         $result = $topic->select(["ID_topic, Name"])->getAll();
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
+    // Inserta Interaciones
+    public function insertReactions($killed ,$uid, $pid, $num){
+		$like = new reactions_publications();
+		$like_exists = $like->select(['ID_reaction', 'ID_type'])
+							->where([['ID_publication',$pid],['ID_user', $uid]])
+							->getAll();
+		if(count($like_exists) < 1){
+			$like->setValores([$uid,$num,$pid,date("d-m-Y h:i a")]);
+			$like->insert();
+		}else{
+			$likeData = $like_exists[0];
+			$tipo = $likeData->ID_type;
+			if ($tipo != $num) {
+				$like->where([['ID_publication', $pid], ['ID_user', $uid]])->update(['ID_type' => $num]);
+			} else {
+				$like->where([['ID_publication', $pid], ['ID_user', $uid]])->delete();
+			}
+        }
+        $reactions = self::getReactions("", $pid);
+        return $reactions;
+		//return $like->count()->where([['ID_publication',$pid]])->getAll();
+    }
 
+    //Obtiene reacciones
+    private function getReactions($killed, $pid){
+        $like = new reactions_publications();
+        $liky = $like->select(["ID_publication", "ID_type"])->count()->where([['ID_publication', $pid],['ID_type', 1]])->getAll();
+        $angry = $like->select(["ID_publication", "ID_type"])->count()->where([['ID_publication', $pid],['ID_type', 2]])->getAll();
+        $sad = $like->select(["ID_publication", "ID_type"])->count()->where([['ID_publication', $pid],['ID_type', 3]])->getAll();
+        $sorprised = $like->select(["ID_publication", "ID_type"])->count()->where([['ID_publication', $pid],['ID_type', 4]])->getAll();
+        $funny = $like->select(["ID_publication", "ID_type"])->count()->where([['ID_publication', $pid],['ID_type', 5]])->getAll();
+        $iloveit = $like->select(["ID_publication", "ID_type"])->count()->where([['ID_publication', $pid],['ID_type', 6]])->getAll();
+        $reactions = json_encode(array_merge($liky, $angry, $sad, $sorprised, $funny, $iloveit), JSON_UNESCAPED_UNICODE);
 
+        return $reactions;
+    }
 
 
 }
