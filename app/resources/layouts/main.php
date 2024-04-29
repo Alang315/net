@@ -9,7 +9,7 @@ function head($session = null){?>
     <title>Start</title>
 </head>
 <body>
-    <h1>Greennet</h1>
+    <h1>GreenNet</h1>
     <button onclick="app.view('login')">Ir al login</button>
     <button onclick="app.view('register')">Ir a registrarse</button>
 </body>
@@ -18,7 +18,7 @@ function head($session = null){?>
 
 <?php 
 function scripts($script = ""){?>
-<!---Se mandan a llamar todos los scripts generales desde aca--->
+<!---Se mandan a llamar todos los scripts generales desde acá--->
     <script src="/resources/js/jquery.js"></script>
     <script src="/resources/js/app.js"></script>
 
@@ -29,5 +29,3 @@ function scripts($script = ""){?>
     ?>
     
 <?php } ?>
-
-

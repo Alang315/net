@@ -1,6 +1,6 @@
 <?php
 $layouts = ["main_header", "main_footer", "main"];
-$styles = ["style"];
+$styles = ["fonts", "style"];
 
 foreach ($layouts as $l) {
     require_layout($l);
@@ -18,7 +18,9 @@ main_header(["styles" => $styles],$sesion);
         <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : ''; ?></p>
         <ul>
             <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
-            <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">CERRAR SESION</button></h2>" : "";  ?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
         </ul>
 </div>
 
@@ -63,7 +65,7 @@ main_header(["styles" => $styles],$sesion);
         </div>
         <!--Ciclo para imprimir publicaciones-->
         <section class="feed">
-            <h1>Holas</h1>
+            <h1>PUBLICACIONES</h1>
         </section>
     </main>
     <!-- PANEL DERECHO -->

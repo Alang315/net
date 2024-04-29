@@ -7,6 +7,8 @@ use app\controllers\HomeController as Home;
 use app\controllers\LoginController as Login;
 use app\controllers\ErrorController as ErrorController;
 use app\controllers\PerfilController as Perfil;
+use app\controllers\AdminuserController as Adminuser;
+use app\controllers\AdminpublicController as Adminpublic;
 use app\controllers\PostController as Post;
 
 class Router {
@@ -31,6 +33,10 @@ class Router {
                 $controller = new Post(); break;
             case 'PerfilController':
                 $controller = new Perfil(); break;
+            case 'AdminpublicController':
+                $controller = new Adminpublic(); break;
+            case 'AdminuserController':
+                $controller = new Adminuser(); break;
             default :
                 $controller = new ErrorController();
                 $action = 'error404';

@@ -1,6 +1,6 @@
 <?php
     $layouts = ["perfil_header", "perfil_footer", "main"];
-    $styles = ["fonts", "perfil"];
+    $styles = ["fonts", "admin_public"];
     
     foreach ($layouts as $l) {
         require_layout($l);
@@ -17,10 +17,10 @@
         <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
         <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
         <ul>
-            <li><button class='miperfilbtn' onclick="app.view('home')">Regresar a inicio</button></li>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button onclick=\"app.view('admin_public')\">Administrar publicaciones</button></li>" : "";?>
+            <li><button onclick="app.view('home')">Ir a inicio</button></li>
+            <?php echo isset($sesion->sv) ? "<li><button onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
             <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button onclick=\"app.view('admin_user')\">Administrar usuarios</button></li>" : "";?>
-            <h2><button class='cerrarsesionbtn' onclick="app.view('logoutperfil')">Cerrar sesión</button></h2>
+            <?php echo isset($sesion->sv) ? "<li><button onclick=\"app.view('logoutindex')\">CERRAR SESION</button></li>" : "";  ?>
         </ul>
     </div>
     <div class="miperfil-arriba">
@@ -87,34 +87,76 @@
                         </div>
                         <!--Titulo y contenido de la nueva publicacion-->
                         <div class="input-container">
-                            <input type="text" name="titulo" placeholder="Título" id="titulo" required>
+                            <input type="text" name="titulo" placeholder="Título" id="titulo">
                             <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
                             <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
                             <input hidden type="text" value="1" name="tid" id="tid">
-                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
-                            <input type="file" id="imagen" name="imagen" class="publifile">
-                            <select class="temastab" name="temastab" id="temastab" required>
-                                <option value="Me gusta">Elige tu tema</option>
-                            </select>
+                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido"></textarea>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="feedmain">
+         
+
             <h3>MIS PUBLICACIONES</h3>
             <!--Ciclo para imprimir publicaciones-->
             <section class="feed">
-                
+            <?php /* foreach($publis as $p){ ?>
+                <div class="publicacion">
+                    <div class="publicacion-unidad">
+                        <h2> <?php echo $p['Title']; ?> </h2>
+                        
+                        <div class="contenido"><p> <?php echo $p['Content'];?></p></div>
+                        <h><?php echo $p['Date']; ?></h><br>
+                    </div><br>
+                    <div class="opciones-miperfil">
+                        
+                        <button id="Edit_Button" title="Editar publicación" onclick="openEdit(<?php echo $p['ID_publication']; ?>)">
+                        <img src="/resources/img/edit-3-svgrepo-com.png"></button>
+                        <div class="EditarDiv" id="EditDiv">
+                            <form action="index.php" method="POST" class="EditForm">
+                                    <div class="image-container">
+                                        <span>Editar Post</span>
+                                    </div>
+                                    <div class="input-container">
+                                        <input type="text" name="titulo" placeholder="Título" required value="<?php echo $p['Title']; ?>"> 
+                                        <textarea name="contenido" placeholder="Escribe tu idea..." required><?php echo $p['Content']; ?>"</textarea> 
+                                    </div>
+                                    <div class="button-container">
+                                        <button name="editB" value="" <?php echo $p["ID_publication"] ?> title="Editar publicación">Editar</button>
+                                        <button type="button" id="CancelarButton_Edit" class="CancelarButton">Cancelar</button>
+                                    </div>
+                                    <input type="hidden" name="m" value="">
+                            </form>
+                        </div>
+
+                        <form action="index.php" method="POST">
+                            
+                            <button id="Delete_Button" name="deleB" value= "<?php echo $p["ID_publication"] ?>" title="Eliminar publicación">
+                            <img src="/resources/img/delete-2-svgrepo-com.png"></button>
+                            <input type="hidden" name="m" value="deletePubli">
+                        </form>
+                        <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                            <img src="/resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png"></img></button>
+                    </div>
+                </div>
+            <?php } ?>
+            ?>*/ ?>
             </section>
-            </div>
         </main>
         <!--Ciclo para imprimir comentarios-->
         <section class="comentarios">
-            <div class="publicacion-unidad">
-                <div class="contenido">
-
+            <!--
+                <div class="publicacion-unidad">
+                    <div class="contenido">
+                    <h1>COMENTARIOS</h1><br>
+                    <h2>Aquí se abre un panel con los comentarios de la publicación seleccionada</h2><br><br>
+                    <h3>EJEMPLO DE COMENTARIO</h3><br>
+                    <h3>En algún punto de mi vida comencé a cuestionarme el hecho de que tanto la familia como la sociedad en general, marcan un camino de por dónde deberías ir o cuáles deberían ser tus metas.</h3><br>
+                    <h3>En lugar de intentar adoctrinar a las personas desde pequeñas y hacerles sentir mal por no ser el modelo "perfecto" que se desea; se debería inculcar el encontrar la felicidad.</h3><br>
+                    <h3>No todos desean tener una gran empresa y estar entre ejecutivos, el sueño de toda mujer no es casarse y ser ama de casa, no a todas las personas les agrada la idea de vivir en la ciudad de por vida, y así hay varios ejemplos más.</h3><br>
+                    </div>
                 </div>
-            </div>
+            -->
         </section>
     </div>
     <div id="Sombreado"></div>
@@ -122,14 +164,12 @@
 <?php 
     $scripts = ["app", "jquery"];
     perfil_footer(["scripts" => $scripts, $sesion]);
-   scripts();
 ?>
 </html>
 
 <script type="text/javascript">
     $(function(){
         const lf = $("#publi-form");
-        const select = $("#temastab");
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -137,8 +177,8 @@
             data.append("titulo",$("#titulo").val());
             data.append("contenido",$("#contenido").val());
             data.append("key",$("#key").val());
+            data.append("tid",$("#tid").val());
             data.append("date",$("#date").val());
-            data.append("tid",$("#temastab").val());
             data.append("_cp","");
             fetch(app.urls.createPost,{
                 method : "POST",
@@ -155,13 +195,5 @@
                 }
             }).catch( err => console.error( err ))            
         })
-        app.user.sv = <?=$sesion->sv?'true':'false'?>;
-        app.user.id = "<?=$sesion->key?>";
-        // hacer variables js que se emparejen con las de php para poder enviarlas
-        app.userPosts(app.user.id);
-        select.click(function() { 
-            
-        });
-        app.getTopics();
     })
 </script>

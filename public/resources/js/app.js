@@ -10,6 +10,8 @@ app = {
         posts: "post/getP?_pp",
         getTopics: "post/getT",
         miperfil:"/perfil",
+        adminpublic: "/adminpublic",
+        adminuser: "/adminuser",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
         userposts: "/post/get_user_P",
@@ -20,7 +22,6 @@ app = {
 	//lp : $("#content"), //seccion para insertar el contenido
     tm : $(".temastab"),// select para tomar los temas
 
-    
     user : {
         sv : false,
         id : 0,

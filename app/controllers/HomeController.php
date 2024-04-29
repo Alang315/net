@@ -20,6 +20,7 @@ class HomeController {
             $sesion->passwd = $_SESSION["passwd"];
             $sesion ->user = $_SESSION["user"];
             $sesion->email = $_SESSION["email"];
+            $sesion->role = $_SESSION["role"];
             require_view("home", $sesion);
         }
         else{

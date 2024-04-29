@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\models\user;
 use stdClass;
 
-class PerfilController {
+class AdminuserController {
     public function __construct() {
         
     }
@@ -20,7 +20,7 @@ class PerfilController {
             $sesion ->user = $_SESSION["user"];
             $sesion->email = $_SESSION["email"];
             $sesion->role = $_SESSION["role"];
-            require_view("perfil", $sesion);
+            require_view("adminuser", $sesion);
         }
         else{
             require_view("error404"); // funcion para reenviar vistas

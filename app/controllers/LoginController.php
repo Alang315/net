@@ -116,6 +116,7 @@ class LoginController {
         $_SESSION['user'] = $datos[0]->Username;
         $_SESSION['passwd'] = $datos[0]->Password;
         $_SESSION["key"] = $datos[0]->ID_user;
+        $_SESSION["role"] = $datos[0]->ID_Role;
         session_write_close();
         return json_encode(["r" => true], JSON_UNESCAPED_UNICODE);
     }
