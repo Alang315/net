@@ -18,8 +18,8 @@
         <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
         <ul>
             <li><button class='miperfilbtn' onclick="app.view('home')">Regresar a inicio</button></li>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button onclick=\"app.view('admin_public')\">Administrar publicaciones</button></li>" : "";?>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button onclick=\"app.view('admin_user')\">Administrar usuarios</button></li>" : "";?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
             <h2><button class='cerrarsesionbtn' onclick="app.view('logoutperfil')">Cerrar sesión</button></h2>
         </ul>
     </div>
