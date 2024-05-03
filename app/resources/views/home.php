@@ -23,7 +23,35 @@ main_header(["styles" => $styles],$sesion);
             <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
         </ul>
 </div>
-
+<div class="divNewpost" id="divnewpost">
+    <form id="publi-form" method="post" class="form-publi">        
+            <div class="mi-perfil">
+                
+                <div class="image-container">
+                    <div class="cerrarbtn">
+                        <button class="cancel" id="cerrartabbtn">X</button>
+                    </div>
+                    <div class="datos">
+                        <span>Crear Post</span>
+                        <img src= "/resources/img/perfil_img.jpg" alt="Imagen">
+                        <button type="submit">Enviar</button> 
+                    </div>
+                </div>
+                <!--Titulo y contenido de la nueva publicacion-->
+                <div class="input-container">
+                    <input type="text" name="titulo" placeholder="Título" id="titulo" required>
+                    <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
+                    <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
+                    <input hidden type="text" value="1" name="tid" id="tid">
+                    <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
+                    <input type="file" id="imagen" name="imagen" class="publifile">
+                    <select class="temastab" name="temastab" id="temastab" required>
+                        <option value="Me gusta">Elige tu tema</option>
+                    </select>
+                </div>
+            </div>
+    </form>
+</div>
 <div class="app">
     <!-- PANEL IZQUIERDO -->
     <aside class="navegacion">
@@ -77,15 +105,55 @@ main_header(["styles" => $styles],$sesion);
         </div>
     </section>
 </div>
+<div id="Sombreado"></div>
+</body>
 <?php scripts();
 $scripts = ["app", "jquery"];
 main_footer(["scripts" => $scripts]);?>
 <script type="text/javascript">
     $(function(){
+        const lf = $("#publi-form");
+        const select = $("#temastab");
+        const Sombreado = $('#Sombreado');
+        const divnewpost = $('#divnewpost');
+        lf.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("titulo",$("#titulo").val());
+            data.append("contenido",$("#contenido").val());
+            data.append("key",$("#key").val());
+            data.append("date",$("#date").val());
+            data.append("tid",$("#temastab").val());
+            data.append("_cp","");
+            fetch(app.urls.createPost,{
+                method : "POST",
+                body : data
+            })
+            .then ( resp => resp.json())
+            .then ( resp => {
+                if(resp.r !== false){
+                    alert("Se creo la publicacion")
+                    $("#titulo").val(''); //Borra el campo de titulo
+                    $("#contenido").val(''); //Borra el campo de contenido
+                    Sombreado.css('display', 'none');
+                    divnewpost.css('display', 'none');
+                }else{
+                    alert("No se pudo realizar la accion");
+                }
+            }).catch( err => console.error( err ))            
+        })
+        select.click(function() { 
+            
+        });
         
+        app.getTopics();
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.publications();
         //app.lastPost(1);
+        app.user.sv = "<?=isset($sesion->sv) ?'true':'false'?>";
+
+        app.user.id = "<?=isset($sesion->key) ? $sesion->key : 0 ?>";
     });
 </script>
 <?php main_footer(); ?>

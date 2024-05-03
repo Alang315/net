@@ -99,6 +99,22 @@ class PostController{
         } 
     }
 
+    public function getEmotesResult(){
+        if(!empty($_GET)){
+            $gt = in_array('_gE', array_keys(filter_input_array(INPUT_GET)));
+            if($gt){
+                $pid =  filter_input_array(INPUT_GET)["pid"];
+                print_r(self::getReactions("",$pid));
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
 
  //---------------------------- Modelos y Bd----------------------------------------------------------------------------------------
 
