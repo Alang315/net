@@ -1,0 +1,147 @@
+
+
+.container-2 {
+    margin-top: 1px;
+    padding: 40px;
+    background-color: #448c3f;
+    color: white;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.table-responsive {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    border: 1px solid #e7e7e7;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.buttonnew {
+    text-align: right;
+}
+
+.btn-success {
+    background-color: #559050; 
+    color: #ffffff; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+    border-radius: 5px; 
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 1px;
+    border-style: none;
+    
+}
+
+.btn-success:hover {
+    background-color: #000000; 
+    color: #ffffff; 
+
+}
+
+
+.container-2 {
+    margin-top: 6rem;
+    
+}
+
+/* Estilos para el contenedor de la tabla */
+.table-responsive {
+    display: auto;
+    grid-template-columns: 14rem auto;
+    gap: 1rem;
+    background: #e8e8e8; 
+    padding: 2rem;
+    margin-bottom: 2rem;
+    
+}
+
+
+/* Estilos para los encabezados de la tabla */
+.table th {
+    background: #559050; 
+     
+    padding: 0.8rem;
+    color: #ffffff; 
+    
+}
+
+/* Estilos para las celdas de la tabla */
+.table td {
+    text-align: center;
+    padding: 0.8rem;
+    border-bottom: 1px solid #e3e3e3; 
+    transition: color 0.3s, background 0.3s;
+
+    
+}
+
+.table td:hover {
+    background: #d8d8d8; 
+   
+}
+
+
+.btnEditar {
+    background-color: #007bff; 
+    color: white;
+    border: 1px solid hsl(211, 100%, 50%); 
+    border-radius: 11px; 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 10px;
+}
+
+.btnEditar:hover {
+    background-color: #0056b3; 
+    border-color: #0056b3; 
+}
+
+.btnEliminar {
+    background-color: #dc3545; 
+    color: white;
+    cursor: pointer;
+    border: 1px solid #dc3545; 
+    border-radius: 11px; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+}
+
+.btnEliminar:hover {
+    background-color: #c82333; 
+    border-color: #c82333; 
+}
+
+/* Estilos para la barra de búsqueda en la administración */
+.busquedaAdmin {
+    margin-top: 60px;
+}
+
+.search-bar {
+   margin-left: 32%;
+    width: 40%; 
+    padding: 10px; 
+    font-size: 16px;
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease; 
+}
+
+/* Estilo cuando se enfoca */
+.search-bar:focus {
+    outline: none; 
+    border-color: #66afe9;
+    box-shadow: 0 0 5px #66afe9; 
+}
+
+
+
