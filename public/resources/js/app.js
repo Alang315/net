@@ -15,21 +15,29 @@ app = {
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
         userposts: "/post/get_user_P",
-        getReactions:"/post/getEmotes"//llaves uid, pid, type, deben de llevar valores
+        getReactions:"/post/getEmotes",//llaves uid, pid, type, deben de llevar valores
+        getEmotes:"/post/getEmotesResult",
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
 	//lp : $("#content"), //seccion para insertar el contenido
     tm : $(".temastab"),// select para tomar los temas
+    rs : $(".reaccioning"),
+    rs2 : $(".reaccioning2"),
+    rp : $(".optionre"), 
+    rt : $("#reaccionestab"),
+    le : $(".MostrarlistaEMoji"),
+    le2 : $(".MostrarlistaEMoji2"),
+    isSelectClicked: false,
 
     user : {
         sv : false,
         id : 0,
     },
 
-    likesValue : 0,
-    dislikesValue : 0,
-    hahasValue : 0,
+    //likesValue : 0,
+    //dislikesValue : 0,
+    //hahasValue : 0,
 
     view: function(url){
         location.replace(this.urls[url])
@@ -46,8 +54,7 @@ app = {
 			 		html = "";
 			 		let primera = true;
 			 		for(let post of ppresp){
-                        console.log(post.Username);
-			 			html += `
+                        html += `
                                 <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
                                     class="publicacion pplg ${ primera ? `active` : `` } prevpost"> 
                                     <div class="publicacion-unidad">
@@ -69,54 +76,121 @@ app = {
                                         <div class="topic">
                                             <span>${post.topic}</span>
                                         </div>
-                                    </div>
-                                    <div class="publicacion-reaccion">
-                                        <div class="reacciones-container">
-                                            <select class="reaccionestab" name="reaccionestab" id="reaccionestab">
-                                                <option value="" selected>✔️</option>
-                                                <option value="Me gusta">👍</option>
-                                                <option value="Me enoja">😡</option>
-                                                <option value="Me entistece">😭</option>
-                                                <option value="Me asombra">😧</option>
-                                                <option value="Me divierte">😄</option>
-                                                <option value="Me encanta">💙</option>
-                                            </select>
-                                            <label for="reaccionestab">${post.reacciones}</label>
                                         </div>
-                                        <div class="comments-container">
-                                            <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
-                                            <img src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
-                                            </button>
-                                            <label for="iconocomment">${post.comments}</label>
+                                        <div class="publicacion-reaccion">
+                                            <div class="reacciones-container">
+                                                <select class="reaccionestab" name="reaccionestab" id="reaccionestab" onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})">
+                                                    <option class="optionre" value="0" disabled data-index="0">👍</option>
+                                                    <option class="optionre" value="1" data-index="1">👍</option>
+                                                    <option class="optionre" value="2" data-index="2">😡</option>
+                                                    <option class="optionre" value="3" data-index="3">😭</option>
+                                                    <option class="optionre" value="4" data-index="4">😧</option>
+                                                    <option class="optionre" value="5" data-index="5">😄</option>
+                                                    <option class="optionre" value="6" data-index="6">💙</option>
+                                                </select>
+
+                                                <label
+                                                    for="reaccionestab" 
+                                                    class="reaccioning"
+                                                    id="totalreaccion"
+                                                    onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
+                                                    onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
+                                                    ${post.reacciones}
+                                                </label>
+                                                
+                                            </div>
+                                            <div class="comments-container">
+                                                <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                                                <img src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
+                                                </button>
+                                                <label for="iconocomment">${post.comments}</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            `;
-              
-                        }
-                        
+                                        <div class="pub-reaccion-span">
+                                            <span></span>
+                                        </div> 
+                                        <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
+                                            <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
+                                                
+                                            </ul>
+                                        </div>
+                                    </a>
+                                `;
+                        }                    
                         primera = false;
-                    this.pp.html(html);
-                    let items = document.querySelectorAll('.pplg');
-                    items.forEach(item => {
-                        item.addEventListener('click', function(){
-                            items.forEach(item => {
-                                item.classList.remove('active');
-                                let fecha = item.querySelector('.blanco');
-                                fecha.classList.remove('text-light');
-                                fecha.classList.add('text-muted');
-                            });
-                            this.classList.add('active');
-                            let fecha = this.querySelector('.blanco');
-                            fecha.classList.remove('text-muted');
-                            fecha.classList.add('text-light');
-                        });
-                    });
+                        this.pp.html(html);
                 }
             }).catch( err => console.error( err ));
         }
     },
+
+    openPost: function(){
+
+    },
+
+    getEmotes: function(pid, typer, user) {
+        let html = `<b>0</b>`;
+        console.log(pid);
+        console.log(typer);
+        console.log(user);
+            this.rs.html("");
+            fetch(this.urls.getReactions+ "?_ge"+"&pid="+pid+"&uid="+user+ "&type="+typer)
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    console.log(user);
+                    if(ppresp.length > 0){
+                        let rs2 = document.querySelectorAll('.reaccioning2');
+                         console.log(ppresp);
+                         html = "";
+                         let primera = true;
+                         console.log(ppresp[0].tt);
+                         console.log(ppresp[1].tt);
+                         console.log(ppresp[2].tt);
+                         console.log(ppresp[3].tt);
+                         console.log(ppresp[4].tt);
+                         console.log(ppresp[5].tt);
+                         for(let reaccion of ppresp){
+                             html += `
+                                    <b>${reaccion.tt}</b>
+                                `;
+                            }
+                            primera = false;
+                            
+                        this.rs2.html(html);
+                        
+                    }
+                }).catch( err => console.error( err ));
+            
+    },
+    MotrarEmojis: function(pid,le, div) {
+        console.log(pid);
+        console.log(le);
+        console.log(div);
+        div[0].style.display = "flex";
+        const totalReacciones = document.querySelectorAll('.reaccioning');
+
+        totalReacciones.forEach((totalReaccion, index) => {
+            fetch(this.urls.getEmotes+ "?_gE"+ "&pid=" + pid) 
+                .then(resp => resp.json())
+                .then((ppresp) => {                        
+                    let html = '';
+                    if (ppresp.length > 0) {
+                        for(let reaccion of ppresp){
+                            html += `<span>${reaccion.tt}</span>`;
+                        }
+                        for(let elemento of le) {
+                            elemento.innerHTML = html;
+                        }
+                    }                
+            }).catch(err => console.error(err));                
+        });
     
+    
+    },
+    CerrarDivMostrarEmojis: function(div) {
+        console.log(div);
+        div[0].style.display = "none";
+    },
     getTopics: function() {
         if(this.tm) {
             let html = `<b>No hay temas</b>`;
@@ -152,6 +226,27 @@ app = {
             }
         }
     },
+
+    newposttab: function() { 
+        const detailsDiv = document.getElementById('divnewpost');
+        const cerrartab = document.getElementById('cerrartabbtn');
+        const btnAbrir = document.getElementById('crearpubicon');
+        const Sombreado = document.getElementById('Sombreado');
+        if (btnAbrir && detailsDiv) {
+            btnAbrir.addEventListener('click', () => {
+                detailsDiv.style.display = 'flex';
+                Sombreado.style.display = 'flex';
+            });
+        
+        };
+        if(cerrartab) {
+            cerrartab.addEventListener('click', () => {
+                detailsDiv.style.display = 'none';
+                Sombreado.style.display = 'none';
+            });
+        }
+    
+    },
     
     //Publicaciones para los usuarios
     userPosts: function(uid){
@@ -165,7 +260,7 @@ app = {
 			 		let primera = true;
 			 		for(let post of lpresp){
                         console.log(post.Username);
-			 			html += `
+                        html += `
                                 <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
                                     class="publicacion pplg ${ primera ? `active` : `` } prevpost"> 
                                     <div class="publicacion-unidad">
@@ -199,14 +294,31 @@ app = {
                                                 <option value="Me divierte">😄</option>
                                                 <option value="Me encanta">💙</option>
                                             </select>
-                                            <label for="reaccionestab">${post.reacciones}</label>
+                                        
+                                            <label
+                                                for="reaccionestab" 
+                                                class="reaccioning"
+                                                id="totalreaccion"
+                                                onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
+                                                onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
+                                                ${post.reacciones}
+                                            </label>
                                         </div>
+                                        
                                         <div class="comments-container">
                                             <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
                                             <img src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
                                             </button>
                                             <label for="iconocomment">${post.comments}</label>
                                         </div>
+                                    </div>
+                                    <div class="pub-reaccion-span">
+                                        <span></span>
+                                    </div> 
+                                    <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
+                                        <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
+                                            
+                                        </ul>
                                     </div>
                                 </a>
                             `;
@@ -248,5 +360,7 @@ app = {
     }
 */
 }
+
 app.toggleDetails(); //Abre la función antes de que cargue todo
 app.getTopics();
+app.newposttab();

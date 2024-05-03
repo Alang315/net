@@ -23,6 +23,35 @@
             <h2><button class='cerrarsesionbtn' onclick="app.view('logoutperfil')">Cerrar sesión</button></h2>
         </ul>
     </div>
+    <div class="divNewpost" id="divnewpost">
+        <form id="publi-form" method="post" class="form-publi">        
+                <div class="mi-perfil">
+                    
+                    <div class="image-container">
+                        <div class="cerrarbtn">
+                            <button class="cancel" id="cerrartabbtn">X</button>
+                        </div>
+                        <div class="datos">
+                            <span>Crear Post</span>
+                            <img src= "/resources/img/perfil_img.jpg" alt="Imagen">
+                            <button type="submit">Enviar</button> 
+                        </div>
+                    </div>
+                    <!--Titulo y contenido de la nueva publicacion-->
+                    <div class="input-container">
+                        <input type="text" name="titulo" placeholder="Título" id="titulo" required>
+                        <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
+                        <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
+                        <input hidden type="text" value="1" name="tid" id="tid">
+                        <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
+                        <input type="file" id="imagen" name="imagen" class="publifile">
+                        <select class="temastab" name="temastab" id="temastab" required>
+                            <option value="Me gusta">Elige tu tema</option>
+                        </select>
+                    </div>
+                </div>
+        </form>
+    </div>
     <div class="miperfil-arriba">
         <div class="mitad">
             <div class="foto-miperfil"><img src= "/resources/img/perfil.jpg" width="40%" alt="Foto de perfil"></div>

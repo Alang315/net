@@ -27,9 +27,16 @@ function perfil_header($args = [], $sesion = null){
             <a onclick="app.view('home')"><img src="/resources/img/logo.png" alt="Logo del foro" class="img-logo"></a>
             <h1 class="nombre-logo">GreenNet</h1>
         </div>
-        <div class="perfil">
-            <p class= "nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : ""; ?></p>
-            <img src= "/resources/img/perfil.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
+        <div class="opcionesheader">
+            <div class="iconocrear" id="iconocrear">
+                <button id="btncrearposthead" class="botoncrearpub" alt="Crear publicación">
+                    <img src= "/resources/img/create-note-alt-svgrepo-com.png" alt="Crear Publicación" class="img-logo" id="crearpubicon" onclick="app.newposttab()">
+                </button>
+            </div>
+            <div class="perfil">
+                <p class= "nombre-perfil"><?php  ?></p>
+                <img src= "/resources/img/perfil.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
+            </div>
         </div>
     </header>
 <?php }?>
