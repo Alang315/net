@@ -29,6 +29,15 @@ app = {
     le : $(".MostrarlistaEMoji"),
     le2 : $(".MostrarlistaEMoji2"),
     isSelectClicked: false,
+    
+    emotes: {
+        1: "👍",
+        2: "😡",
+        3: "😭",   
+        4: "😧",   
+        5: "😄", 
+        6: "💙",   
+    },
 
     user : {
         sv : false,
@@ -160,10 +169,8 @@ app = {
         }
         
     },
+    
     MotrarEmojis: function(pid,le, div) {
-        // console.log(pid);
-        // console.log(le);
-        // console.log(div);
         div[0].style.display = "flex";
         const totalReacciones = document.querySelectorAll('.reaccioning');
 
@@ -173,8 +180,11 @@ app = {
                 .then((ppresp) => {                        
                     let html = '';
                     if (ppresp.length > 0) {
+                        i = 1;
                         for(let reaccion of ppresp){
+                            html += `<b>${app.emotes[i]}</b>`;
                             html += `<span>${reaccion.tt}</span>`;
+                            i++;
                         }
                         for(let elemento of le) {
                         
