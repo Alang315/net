@@ -80,7 +80,7 @@ app = {
                                         <div class="publicacion-reaccion">
                                             <div class="reacciones-container">
                                                 <select class="reaccionestab" name="reaccionestab" id="reaccionestab" onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})">
-                                                    <option class="optionre" value="0" disabled data-index="0">👍</option>
+                                                    <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
                                                     <option class="optionre" value="1" data-index="1">👍</option>
                                                     <option class="optionre" value="2" data-index="2">😡</option>
                                                     <option class="optionre" value="3" data-index="3">😭</option>
@@ -92,7 +92,7 @@ app = {
                                                 <label
                                                     for="reaccionestab" 
                                                     class="reaccioning"
-                                                    id="totalreaccion"
+                                                    id="totalreaccion-${post.ID_publication}"
                                                     onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
                                                     onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
                                                     ${post.reacciones}
@@ -129,43 +129,41 @@ app = {
     },
 
     getEmotes: function(pid, typer, user) {
-        let html = `<b>0</b>`;
-        console.log(pid);
-        console.log(typer);
-        console.log(user);
+        if(user == 0) {
+            var respuesta = confirm("Debes iniciar sesión para reaccionar ¿Desea iniciar sesión?");
+            if (respuesta) {
+                app.view("login");
+            } else {
+                
+            }
+        } else {
+            let html = `<b>0</b>`;
+            console.log(pid);
+            console.log(typer);
+            console.log(user);
             this.rs.html("");
             fetch(this.urls.getReactions+ "?_ge"+"&pid="+pid+"&uid="+user+ "&type="+typer)
-                 .then(resp => resp.json())
-                 .then(ppresp => {
-                    console.log(user);
+                    .then(resp => resp.json())
+                    .then(ppresp => {
                     if(ppresp.length > 0){
-                        let rs2 = document.querySelectorAll('.reaccioning2');
-                         console.log(ppresp);
-                         html = "";
-                         let primera = true;
-                         console.log(ppresp[0].tt);
-                         console.log(ppresp[1].tt);
-                         console.log(ppresp[2].tt);
-                         console.log(ppresp[3].tt);
-                         console.log(ppresp[4].tt);
-                         console.log(ppresp[5].tt);
-                         for(let reaccion of ppresp){
-                             html += `
-                                    <b>${reaccion.tt}</b>
-                                `;
-                            }
-                            primera = false;
-                            
+                        console.log(ppresp);
+                        let total = 0
+                        html = "";
+                        for(let reaccion of ppresp){
+                            html += `<b>${reaccion.tt}</b>`;
+                            total += reaccion.tt
+                        }
                         this.rs2.html(html);
-                        
+                        $(`#totalreaccion-${pid}`).html(total)
                     }
-                }).catch( err => console.error( err ));
-            
+            }).catch( err => console.error( err ));
+        }
+        
     },
     MotrarEmojis: function(pid,le, div) {
-        console.log(pid);
-        console.log(le);
-        console.log(div);
+        // console.log(pid);
+        // console.log(le);
+        // console.log(div);
         div[0].style.display = "flex";
         const totalReacciones = document.querySelectorAll('.reaccioning');
 
@@ -179,18 +177,18 @@ app = {
                             html += `<span>${reaccion.tt}</span>`;
                         }
                         for(let elemento of le) {
+                        
                             elemento.innerHTML = html;
                         }
-                    }                
+                    }
             }).catch(err => console.error(err));                
         });
-    
-    
     },
     CerrarDivMostrarEmojis: function(div) {
-        console.log(div);
+        // console.log(div);
         div[0].style.display = "none";
     },
+
     getTopics: function() {
         if(this.tm) {
             let html = `<b>No hay temas</b>`;
