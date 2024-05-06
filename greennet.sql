@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-05-2024 a las 02:38:58
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 06-05-2024 a las 02:45:22
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,19 +48,26 @@ CREATE TABLE `publication` (
   `Date` text NOT NULL,
   `Active` int(15) NOT NULL,
   `ID_user` int(11) NOT NULL,
-  `ID_topic` int(11) NOT NULL
+  `ID_topic` int(11) NOT NULL,
+  `Image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `publication`
 --
 
-INSERT INTO `publication` (`ID_publication`, `Title`, `Content`, `Date`, `Active`, `ID_user`, `ID_topic`) VALUES
-(1, 'HOLA MUNDO', 'Este es mi primer post, me alegra estar aqui', '10-04-2024 10:20 a.m.', 1, 2, 1),
-(2, 'NATURALEZA PRECIOSA', 'El rescostarse debajo de un árbol y disfrutar de la sombra y el viento, es algo tan simple pero tan genial. ¿Porqué no proteger esto tan grandioso?', '12-04-2024 11:30 p.m.', 1, 3, 1),
-(3, '¿EDUCACIÓN O ADOCTRINAMIENTO?', '¿El sistema educativo actual es de calidad o en realidad dirige a un adoctrinamiento para ser un empleado más?, Algo cuestionable desde hace tiempo es el hecho de que en la educación no hay materias tales como la Educación Financiera', '16-04-2024 07:30 p.m.', 1, 2, 1),
-(4, 'SIMPLEMENTE HERMOSO', 'Amo correr en un campo abierto, sentirme libre y sin preocupaciones, simplemente es algo que causa un sentimiento satisfactorio', ' 25-04-2024 10:35 am', 1, 3, 1),
-(26, 'CALOR 🥵', 'Cada año hace más calor', ' 02-05-2024 06:35 pm', 1, 18, 2);
+INSERT INTO `publication` (`ID_publication`, `Title`, `Content`, `Date`, `Active`, `ID_user`, `ID_topic`, `Image`) VALUES
+(1, 'HOLA MUNDO', 'Este es mi primer post, me alegra estar aqui', '10-04-2024 10:20 a.m.', 1, 2, 1, NULL),
+(2, 'NATURALEZA PRECIOSA', 'El rescostarse debajo de un árbol y disfrutar de la sombra y el viento, es algo tan simple pero tan genial. ¿Porqué no proteger esto tan grandioso?', '12-04-2024 11:30 p.m.', 1, 3, 1, NULL),
+(3, '¿EDUCACIÓN O ADOCTRINAMIENTO?', '¿El sistema educativo actual es de calidad o en realidad dirige a un adoctrinamiento para ser un empleado más?, Algo cuestionable desde hace tiempo es el hecho de que en la educación no hay materias tales como la Educación Financiera', '16-04-2024 07:30 p.m.', 1, 2, 1, NULL),
+(4, 'SIMPLEMENTE HERMOSO', 'Amo correr en un campo abierto, sentirme libre y sin preocupaciones, simplemente es algo que causa un sentimiento satisfactorio', ' 25-04-2024 10:35 am', 1, 3, 1, NULL),
+(26, 'CALOR 🥵', 'Cada año hace más calor', ' 02-05-2024 06:35 pm', 1, 18, 2, NULL),
+(27, 'Publicacion de saul', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet tellus id nibh condimentum malesuada. Vestibulum dictum tellus pretium, aliquet nibh sed, pharetra orci. Duis quis quam ut velit malesuada fringilla. Mauris elementum hendrerit ante ac sollicitudin. Quisque nisi dui, fringilla ac accumsan id, blandit in velit. Donec posuere neque eu porttitor fermentum. Nunc blandit nibh ut nisl tincidunt, a ullamcorper nulla tristique. Nullam consequat felis eu ipsum varius tempor. Ut ut elit eget velit volutpat efficitur quis nec nisl. Quisque laoreet vestibulum velit, quis tempus erat placerat sed. Nam interdum ligula quis enim porta, a congue est tincidunt. Proin pulvinar, lorem a finibus congue, neque diam malesuada ex, a dictum ipsum tellus a nisl. Nam quis odio vestibulum, elementum nibh vel, rhoncus odio. Donec eleifend sagittis arcu aliquet pharetra. Aenean sed sem ut urna sagittis iaculis imperdiet vitae lectus. Sed sollicitudin laoreet diam, id luctus tortor aliquet ut.', ' 04-05-2024 05:45 pm', 1, 19, 3, NULL),
+(28, 'Publicacion de Saul', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet tellus id nibh condimentum malesuada. Vestibulum dictum tellus pretium, aliquet nibh sed, pharetra orci. Duis quis quam ut velit malesuada fringilla. Mauris elementum hendrerit ante ac sollicitudin. Quisque nisi dui, fringilla ac accumsan id, blandit in velit. Donec posuere neque eu porttitor fermentum. Nunc blandit nibh ut nisl tincidunt, a ullamcorper nulla tristique. Nullam consequat felis eu ipsum varius tempor. Ut ut elit eget velit volutpat efficitur quis nec nisl. Quisque laoreet vestibulum velit, quis tempus erat placerat sed. Nam interdum ligula quis enim porta, a congue est tincidunt. Proin pulvinar, lorem a finibus congue, neque diam malesuada ex, a dictum ipsum tellus a nisl. Nam quis odio vestibulum, elementum nibh vel, rhoncus odio. Donec eleifend sagittis arcu aliquet pharetra. Aenean sed sem ut urna sagittis iaculis imperdiet vitae lectus. Sed sollicitudin laoreet diam, id luctus tortor aliquet ut.', ' 04-05-2024 05:46 pm', 1, 19, 3, NULL),
+(29, 'Prueba1', 'qwertyuiopghyu', ' 04-05-2024 06:47 pm', 0, 19, 2, NULL),
+(30, 'Prueba2: Imagen', 'aasasasas', ' 04-05-2024 07:43 pm', 1, 19, 1, 'code.png'),
+(31, 'Prueba 3: Imagen', 'sdfvgbhnjmk', ' 04-05-2024 08:12 pm', 0, 19, 3, '_43e98328-9cc9-41df-b9b6-658fc278ff74.jpeg'),
+(32, 'PRUEBA POST MERGE', 'DCFVGBHNJMK', ' 05-05-2024 06:39 pm', 1, 19, 1, '_ececc4fd-bf07-40fd-b4f8-57989c4f1cbb.jpeg');
 
 -- --------------------------------------------------------
 
@@ -179,7 +186,8 @@ INSERT INTO `user` (`ID_user`, `Username`, `Password`, `Email`, `Biography`, `ID
 (1, 'Administrador', '$2y$10$4frjVF590gCcjcf4mcHZyOtSqy4KFIrzm8/HgCqm4V26NSzHbgWFK', 'admin@greennet.com', NULL, 1),
 (2, 'Wolfkarl', '$2y$10$tFbURbIWv7uC83aTJUryFOK1OWX7qP/92UDKCAXX/Qwv//gTqbidy', 'karlarmlp@gmail.com', NULL, 2),
 (3, 'Alan VP', '$2y$10$lWeAGCYjB6tLNnBnOjglcewQles9D3IQu5PPdInRFgfXHbHxlo5YK', 'avargas39@ucol.mx', NULL, 2),
-(18, 'Gabito', '$2y$10$g/Frv7pxE2QkrYrkjlwBFelz/1AxOXGMAs6mbyCR9QLMakbz8eF/W', 'lramirez68@ucol.mx', NULL, 2);
+(18, 'Gabito', '$2y$10$g/Frv7pxE2QkrYrkjlwBFelz/1AxOXGMAs6mbyCR9QLMakbz8eF/W', 'lramirez68@ucol.mx', NULL, 2),
+(19, 'Saul Bus', '$2y$10$qVdFwt/JkoG6bgMoPj.H4O1RKy2HDUiLoP/LHIbq6FBMcBrGTKJ9W', 'zaulbushta@gmail.com', NULL, 2);
 
 --
 -- Índices para tablas volcadas
@@ -259,7 +267,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT de la tabla `publication`
 --
 ALTER TABLE `publication`
-  MODIFY `ID_publication` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `ID_publication` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `reactions_comments`
@@ -295,7 +303,7 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restricciones para tablas volcadas
