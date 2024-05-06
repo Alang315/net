@@ -82,10 +82,15 @@ app = {
                                         <div class="contenido">
                                             <span>${post.Content}</span>
                                         </div>
+                                        ${post.Image?`
+                                        <div class="image-publication">
+                                            <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                        </div>`
+                                        :``}
                                         <div class="topic">
                                             <span>${post.topic}</span>
                                         </div>
-                                        </div>
+                                    </div>
                                         <div class="publicacion-reaccion">
                                             <div class="reacciones-container">
                                                 <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
@@ -273,26 +278,31 @@ app = {
                             console.log(post.Username);
                             html += `
                                 <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
-                                class="publicacion pplg ${ primera ? `active` : `` } prevpost"> 
-                                <div class="publicacion-unidad">
-                                    <div class="username">
-                                        <small class="User">
-                                            <i class="bi bi-person-circle"></i>
-                                            <b>${ post.Username }</b>
-                                        </small>
-                                        <span class="fecha">
-                                            ${post.Date}
-                                        </span>
-                                    </div>    
-                                    <div class="titulo">
-                                        <span class="title">${post.Title}</span>  
-                                    </div>  
-                                    <div class="contenido">
-                                        <span>${post.Content}</span>
-                                    </div>
-                                    <div class="topic">
-                                        <span>${post.topic}</span>
-                                    </div>
+                                    class="publicacion pplg ${ primera ? `active` : `` } prevpost"> 
+                                    <div class="publicacion-unidad">
+                                        <div class="username">
+                                            <small class="User">
+                                                <i class="bi bi-person-circle"></i>
+                                                <b>${ post.Username }</b>
+                                            </small>
+                                            <span class="fecha">
+                                                ${post.Date}
+                                            </span>
+                                        </div>    
+                                        <div class="titulo">
+                                            <span class="title">${post.Title}</span>  
+                                        </div>  
+                                        <div class="contenido">
+                                            <span>${post.Content}</span>
+                                        </div>
+                                        ${post.Image?`
+                                        <div class="image-publication">
+                                            <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                        </div>`
+                                        :``}
+                                        <div class="topic">
+                                            <span>${post.topic}</span>
+                                        </div>
                                     </div>
                                     <div class="publicacion-reaccion">
                                         <div class="reacciones-container">

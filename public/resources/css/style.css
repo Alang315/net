@@ -622,6 +622,11 @@ header {
     font-size: 22px;
     letter-spacing: 1px;
 }
+
+.publicacion-unidad .image-publication img{
+    width:100%;
+}
+
 .publicacion-unidad .topic span {
     background-color: #ff7b00;
     width: auto;

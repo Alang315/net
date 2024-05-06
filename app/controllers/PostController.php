@@ -7,6 +7,7 @@ use app\models\publication;
 use app\models\reaction_type;
 use app\models\reactions_publications;
 use app\models\topics;
+use app\classes\ImageUpload;
 use LDAP\Result;
 
 class PostController{
@@ -37,6 +38,7 @@ class PostController{
             $cp = in_array('_cp', array_keys(filter_input_array(INPUT_POST)));
             if($cp){
                 $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $datos["imagen"] = ImageUpload::upload_image('imagen');
                 print_r($this->createPost($datos));
             }else{
                 require_view("error404");
@@ -122,7 +124,7 @@ class PostController{
 //OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
     private function getPost($limit="", $pid = "", $uid = ""){
         $posts = new publication();
-        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic', 'a.Date'])
+        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic', 'a.Date', 'a.Image'])
                         ->count([["DISTINCT rp.ID_reaction", "reacciones"], ["DISTINCT c.ID_comment", "comments"]])
                          ->group_concat("DISTINCT rt.ID_type", "reacciones_IDS")
                          ->join([['user b', 'a.ID_user = b.ID_user', " "], 
@@ -193,7 +195,7 @@ class PostController{
     //Crear Publicacion
     private function createPost($datos){
         $post = new publication();
-        $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"]]);
+        $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"], $datos["imagen"]]);
         $result = $post->insert();
         return $result;
     }
