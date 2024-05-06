@@ -107,7 +107,7 @@
         <main class="publicaciones">
             <!--Panel para crear publicaciones-->
             <div class="publicacion-crear">
-                <form id="publi-form" method="post">
+                <form id="publi-formUser" method="post">
                     <div class="mi-perfil">
                         <div class="image-container">
                             <span>Crear Post</span>
@@ -116,13 +116,13 @@
                         </div>
                         <!--Titulo y contenido de la nueva publicacion-->
                         <div class="input-container">
-                            <input type="text" name="titulo" placeholder="Título" id="titulo" required>
-                            <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
-                            <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
+                            <input type="text" name="titulo" placeholder="Título" id="titulo2" required>
+                            <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key2"> 
+                            <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date2">
                             <input hidden type="text" value="1" name="tid" id="tid">
-                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
-                            <input type="file" id="imagen" name="imagen" class="publifile">
-                            <select class="temastab" name="temastab" id="temastab" required>
+                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido2" required></textarea>
+                            <input type="file" id="imagen2" name="imagen" class="publifile">
+                            <select class="temastab" name="temastab" id="temastab2" required>
                                 <option value="Me gusta">Elige tu tema</option>
                             </select>
                         </div>
@@ -158,6 +158,7 @@
 <script type="text/javascript">
     $(function(){
         const lf = $("#publi-form");
+        const uf = $("#publi-formUser");
         const select = $("#temastab");
         lf.on("submit", function(e){
             e.preventDefault();
@@ -168,6 +169,7 @@
             data.append("key",$("#key").val());
             data.append("date",$("#date").val());
             data.append("tid",$("#temastab").val());
+            data.append("imagen", $("#imagen")[0].files[0]);
             data.append("_cp","");
             fetch(app.urls.createPost,{
                 method : "POST",
@@ -179,6 +181,31 @@
                     alert("Se creo la publicacion")
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
+                }else{
+                    alert("No se pudo realizar la accion");
+                }
+            }).catch( err => console.error( err ))            
+        })
+        uf.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("titulo",$("#titulo2").val());
+            data.append("contenido",$("#contenido2").val());
+            data.append("key",$("#key2").val());
+            data.append("date",$("#date2").val());
+            data.append("tid",$("#temastab2").val());
+            data.append("_cp","");
+            fetch(app.urls.createPost,{
+                method : "POST",
+                body : data
+            })
+            .then ( resp => resp.json())
+            .then ( resp => {
+                if(resp.r !== false){
+                    alert("Se creo la publicacion")
+                    $("#titulo2").val(''); //Borra el campo de titulo
+                    $("#contenido2").val(''); //Borra el campo de contenido
                 }else{
                     alert("No se pudo realizar la accion");
                 }

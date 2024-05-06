@@ -83,14 +83,25 @@ app = {
                                         <div class="contenido">
                                             <span>${post.Content}</span>
                                         </div>
+                                        ${post.Image?`
+                                        <div class="image-publication">
+                                            <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                        </div>`
+                                        :``}
                                         <div class="topic">
                                             <span>${post.topic}</span>
                                         </div>
+
                                         </div>
                                     </a>    
+
+                                    </div>
+
                                         <div class="publicacion-reaccion">
                                             <div class="reacciones-container">
-                                                <select class="reaccionestab" name="reaccionestab" id="reaccionestab" onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})">
+                                                <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
+                                                onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
+                                                onclick="return false;">
                                                     <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
                                                     <option class="optionre" value="1" data-index="1">👍</option>
                                                     <option class="optionre" value="2" data-index="2">😡</option>
@@ -284,7 +295,7 @@ app = {
     MotrarEmojis: function(pid,le, div) {
         div[0].style.display = "flex";
         const totalReacciones = document.querySelectorAll('.reaccioning');
-
+        
         totalReacciones.forEach((totalReaccion, index) => {
             fetch(this.urls.getEmotes+ "?_gE"+ "&pid=" + pid) 
                 .then(resp => resp.json())
@@ -332,7 +343,6 @@ app = {
             }
     },
 
-
     toggleDetails: function() { //Función para desplegar el detailsdiv (tab de usuario)
         window.onload = function() { //Para que abra en cuanto abra la página DOM
             const detailsDiv = document.getElementById('detailsDiv');
@@ -364,22 +374,22 @@ app = {
                 Sombreado.style.display = 'none';
             });
         }
-    
     },
     
     //Publicaciones para los usuarios
     userPosts: function(uid){
-        let html = "<h2>Aún no hay publicaciones</h2>";
-        this.pp.html("");
-        fetch(this.urls.userposts + "&uid=" + uid)
-			.then(response => response.json())
-			.then(lpresp => {
-				if(lpresp.length > 0){
-					html = "";
-			 		let primera = true;
-			 		for(let post of lpresp){
-                        console.log(post.Username);
-                        html += `
+        if(this.pp) {
+            let html = "<h2>Aún no hay publicaciones</h2>";
+            this.pp.html("");
+            fetch(this.urls.userposts + "&uid=" + uid)
+                .then(response => response.json())
+                .then(lpresp => {
+                    if(lpresp.length > 0){
+                        html = "";
+                        let primera = true;
+                        for(let post of lpresp){
+                            console.log(post.Username);
+                            html += `
                                 <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
                                     class="publicacion pplg ${ primera ? `active` : `` } prevpost"> 
                                     <div class="publicacion-unidad">
@@ -398,6 +408,11 @@ app = {
                                         <div class="contenido">
                                             <span>${post.Content}</span>
                                         </div>
+                                        ${post.Image?`
+                                        <div class="image-publication">
+                                            <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                        </div>`
+                                        :``}
                                         <div class="topic">
                                             <span>${post.topic}</span>
                                         </div>
@@ -442,41 +457,13 @@ app = {
                                         </div>
                                 `;
                         }
-                }
-                primera = false;
-                this.pp.html(html);
-			}).catch(err => console.error(err));
+                    }
+                    primera = false;
+                    this.pp.html(html);
+                }).catch(err => console.error(err));
+        }
     },
-    
-    /*fetchInsert: function(id_form, fields, passwdiname1, passwdname2, key) {
-        const rf = $(id_form);
-        rf.on("submit", function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            const data = new FormData();
-            fields.forEach(field => {
-                data.append(field.name, $("#" + field.name).val());
-            });
-            if ($("#" + passwdiname1).val() === $("#" + passwdname2).val()) {
-                data.append("", controller);
-                fetch(app.routes.doregister, {
-                        method: "POST",
-                        body: data
-                    })
-                    .then(resp => resp.json())
-                    .then(resp => {
-                        if (resp.r !== false) {
-                            app.view("inisession");
-                        } else {
-                            $("#error").removeClass("d-none");
-                        }
-                    }).catch(err => console.error(err));
-            } else {
-                alert("Las contraseñas no coinciden.")
-            }
-        })
-    }
-*/
+   
 }
 
 app.toggleDetails(); //Abre la función antes de que cargue todo
