@@ -129,8 +129,7 @@ header {
     min-width: 60%;
     max-width: 60%;
     margin-top: 1px;
-    height: 20%;
-    min-height: 20%;
+    height: 50px;
     background-color: #e4edf4;
     box-shadow: 0 0 10px #34343433;
     text-decoration: none;
@@ -142,11 +141,16 @@ header {
 .MostrarReacciones ul {
     text-decoration: none;
     color: black;
+    align-items: center;
+    justify-content: center;
 }
 .MostrarReacciones ul span {
     text-decoration: none;
     color: black;
     font-size: 1.2rem;
+    margin-right: 0.4rem;
+    align-items: center;
+    justify-content: center;
 }
 
 #detailsDiv {
