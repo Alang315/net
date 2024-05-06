@@ -125,6 +125,7 @@ main_footer(["scripts" => $scripts]);?>
             data.append("key",$("#key").val());
             data.append("date",$("#date").val());
             data.append("tid",$("#temastab").val());
+            data.append("imagen", $("#imagen")[0].files[0]);
             data.append("_cp","");
             fetch(app.urls.createPost,{
                 method : "POST",

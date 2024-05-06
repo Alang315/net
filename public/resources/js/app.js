@@ -82,10 +82,15 @@ app = {
                                         <div class="contenido">
                                             <span>${post.Content}</span>
                                         </div>
+                                        ${post.Image?`
+                                        <div class="image-publication">
+                                            <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                        </div>`
+                                        :``}
                                         <div class="topic">
                                             <span>${post.topic}</span>
                                         </div>
-                                        </div>
+                                    </div>
                                         <div class="publicacion-reaccion">
                                             <div class="reacciones-container">
                                                 <select class="reaccionestab" name="reaccionestab" id="reaccionestab" onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})">
@@ -287,6 +292,11 @@ app = {
                                         <div class="contenido">
                                             <span>${post.Content}</span>
                                         </div>
+                                        ${post.Image?`
+                                        <div class="image-publication">
+                                            <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                        </div>`
+                                        :``}
                                         <div class="topic">
                                             <span>${post.topic}</span>
                                         </div>
