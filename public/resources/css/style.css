@@ -58,6 +58,103 @@ header {
     color: white;
    
 }
+.opcionesheader {
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.iconocrear .botoncrearpub {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 2.5rem;
+    max-width: 2.5rem;
+}
+.botoncrearpub img {
+    width: 100%;
+    max-width: 100%;
+    height: 20%;
+    max-height: 20%;
+    min-height: 20%;
+}
+
+.divNewpost {
+    z-index: 3;
+    display: none;
+    position: absolute;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+}
+.divNewpost .form-publi {
+    max-width: 50rem;
+    width: 50rem;
+    min-width: 35rem;
+}
+.cerrarbtn {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    left: 0;
+    display: flex;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+.divNewpost .cancel {
+    background-color: gray;
+    margin-left: 0%;
+    margin-top: -20%;
+    float: left;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 0.2rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    max-width: 20%;
+    min-width: 20%;
+}
+
+.MostrarReacciones {
+    display: none;
+    z-index: 3;
+    width: 60%;
+    min-width: 60%;
+    max-width: 60%;
+    margin-top: 1px;
+    height: 50px;
+    background-color: #e4edf4;
+    box-shadow: 0 0 10px #34343433;
+    text-decoration: none;
+    padding: 10px 10px;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+}
+.MostrarReacciones ul {
+    text-decoration: none;
+    color: black;
+    align-items: center;
+    justify-content: center;
+}
+.MostrarReacciones ul span {
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+    margin-right: 0.4rem;
+    align-items: center;
+    justify-content: center;
+}
+
 #detailsDiv {
     display: none;
     position: absolute;
@@ -147,6 +244,16 @@ header {
 }
 #EditDiv .EditForm {
     background-color: red;
+}
+#Sombreado {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #11173262;
+    z-index: 1;
+    display: none;
 }
 
 .logo{
@@ -515,6 +622,11 @@ header {
     font-size: 22px;
     letter-spacing: 1px;
 }
+
+.publicacion-unidad .image-publication img{
+    width:100%;
+}
+
 .publicacion-unidad .topic span {
     background-color: #ff7b00;
     width: auto;

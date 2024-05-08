@@ -1,4 +1,5 @@
 <?php
+
     $layouts = ["main_header", "main_footer", "main"];
     $styles = ["fonts", "style", "admin_user"];
     
@@ -11,50 +12,84 @@
     date_default_timezone_set('America/Mexico_City');
     
 ?>
-    <header>
-        <h3 class="text-center text-light">GreenNet</h3>
-        <h4 class="text-center text-light">Administracion de <span class="badge badge-danger">Usuarios</span></h4> 
-    </header>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <button id="btnNuevo" type="button" class="btn btn-success">Nuevo</button>
+<!--Panel del perfil-->
+<div id="detailsDiv">
+        <b>GreenNet</b><br>
+        <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : ''; ?></p>
+        <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : ''; ?></p>
+        <ul>
+            <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
+        </ul>
+</div>
+
+   
+        <!--<br><hr>-->
+
+<div class="container-2">
+    <h2 class="text-center text-light">Administración de <span class="badge badge-danger">Usuarios</span></h2> 
+</div> 
+
+<div class="busquedaAdmin">
+    <div class="row">
+        <div class="col-lg-12">
+            <input type="search" class="search-bar" name="search" id="search" placeholder="Buscar...">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre de usuario</th>
+                            <th>Correo electrónico</th>
+                            <th>Purikitaka si</th>
+                            <th>Purikitaka no</th>
+                            <th>             </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Karla</td>
+                            <td>karlarmlp@gmail.com</td>
+                            <td>takaraka tiki</td>
+                            <td>takaraka tiki taka</td>
+                            <td>
+                                <div class="text-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btnEditar">Editar</button>
+                                        <button type="button" class="btnEliminar">x</button>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                        
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="table-responsive">
-                    <table id="tablaPersonas" class="table table-striped table-bordered table-condensed"
-                        style="width:100%">
-                        <thead class="text-center">
-                            <tr>
-                                <th>Id</th>
-                                <th>Nombre de usuario</th>
-                                <th>Correo electrónico</th>
-                                <th>Purikitaka si</th>
-                                <th>Purikitaka no</th>
-                            </tr>
-                           </thead>
-                        <tbody>
-                               <tr>
-                                <td>1</td>
-                                <td>Karla</td>
-                                <td>karlarmlp@gmail.com</td>
-                                <td>takaraka tiki</td>
-                                <td>takaraka tiki taka</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="buttonnew">
+            <button id="btnNuevo" type="button" class="btn btn-success">Nuevo</button>
         </div>
     </div>
-    <div id="Sombreado"></div>
-</body>
+</div>
+<div id="Sombreado"></div>
+
 <?php 
     $scripts = ["app", "jquery"];
     main_footer(["scripts" => $scripts, $sesion]);
@@ -63,6 +98,13 @@
 
 <script type="text/javascript">
     $(function(){
+        // Evento para eliminar usuario al hacer clic en el botón
+        $(".btnEliminar").click(function() {
+            //agregar la lógica para eliminar el usuario
+
+            alert("Eliminar usuario"); // alerta
+        });
+
         const lf = $("#publi-form");
         lf.on("submit", function(e){
             e.preventDefault();

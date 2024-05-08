@@ -7,6 +7,7 @@ use app\models\publication;
 use app\models\reaction_type;
 use app\models\reactions_publications;
 use app\models\topics;
+use app\classes\ImageUpload;
 use LDAP\Result;
 
 class PostController{
@@ -37,6 +38,7 @@ class PostController{
             $cp = in_array('_cp', array_keys(filter_input_array(INPUT_POST)));
             if($cp){
                 $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $datos["imagen"] = ImageUpload::upload_image('imagen');
                 print_r($this->createPost($datos));
             }else{
                 require_view("error404");
@@ -99,6 +101,42 @@ class PostController{
         } 
     }
 
+    public function getEmotesResult(){
+        if(!empty($_GET)){
+            $gt = in_array('_gE', array_keys(filter_input_array(INPUT_GET)));
+            if($gt){
+                $pid =  filter_input_array(INPUT_GET)["pid"];
+                print_r(self::getReactions("",$pid));
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
+    public function openpost(){
+        if(!empty($_GET)){
+            $op = in_array('_Op', array_keys(filter_input_array(INPUT_GET)));
+            if($op){
+                if(isset(filter_input_array(INPUT_GET)["pid"])){
+                    $pid =  filter_input_array(INPUT_GET)["pid"];
+                    print_r(self::getPost(1, $pid));
+                }else{
+                    require_view("error404");
+                }
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
 
  //---------------------------- Modelos y Bd----------------------------------------------------------------------------------------
 
@@ -106,7 +144,7 @@ class PostController{
 //OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
     private function getPost($limit="", $pid = "", $uid = ""){
         $posts = new publication();
-        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic', 'a.Date'])
+        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic', 'a.Date', 'a.Image'])
                         ->count([["DISTINCT rp.ID_reaction", "reacciones"], ["DISTINCT c.ID_comment", "comments"]])
                          ->group_concat("DISTINCT rt.ID_type", "reacciones_IDS")
                          ->join([['user b', 'a.ID_user = b.ID_user', " "], 
@@ -115,69 +153,31 @@ class PostController{
                          ["reaction_type rt", "rp.ID_type = rt.ID_type OR rc.ID_type = rt.ID_type", "left"],
                          ["comments c", "a.ID_publication = c.ID_publication", "left"], 
                          ["topics t", "a.ID_topic = t.ID_topic", "inner"]
-                         ])
-                         ->where($pid != "" ? [['a.ID_publication', $pid], ["a.Active", 1]] : [["a.Active", 1]]) //corregir el obtener el id de a publi si no se especifica
-                         ->where($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]])
-                         ->groupby("a.ID_publication DESC")
+                         ])                                                 //Operador terniario dentro de otro operador 
+                                                                    //terniario, obtiene las publicaciones de un usuario o una publicacion especifica
+                         ->where($pid != "" ? [['a.ID_publication', $pid], ["a.Active", 1]] : ($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]]))
+                         //->where($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]])
+                         ->groupby($pid != "" ?  "" : "a.ID_publication DESC")
                          ->limit($limit)
                          ->getAll();
-                        return json_encode($resultP, JSON_UNESCAPED_UNICODE);
+            if($pid!= "" || $limit==1){
+                $comments = new comments();
+                $resultC = $comments->select(['a.ID_comment, a.Content, a.Date, u.Username, u.Email'])
+                                    ->join([["user u ", "a.ID_user = u.ID_user", "inner"],
+                                    ["publication pu ", "pu.ID_publication = a.ID_publication", "inner"]])
+                                    ->where([['a.ID_publication', $pid]])
+                                    ->getAll();
+                $result = array_merge($resultP, $resultC);
+            }else{
+                $result = $resultP;
+            }
+            return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
-    //LO COMENTE ESPERANDO REUTILIZARLO PARA CUANDO SE OBTENGA UNA SOLA PUBLICACION
-        /*if($pid!="" || $limit==1){
-            $comments = new comments();
-            $resultC = $comments->select(['id'])
-                                ->count()
-                                ->where([['postId',json_decode($resultP)[0]->id]])
-                                ->getAll();
-            //$interacts = new ();
-            $resultL = $interacts->select(['id'])
-                                 ->count()
-                                 ->where([['postId',json_decode($resultP)[0]->id],['tipo',1]])
-                                 ->get();
-            $resultML = $interacts->select(['id'])
-                                  ->count()
-                                  ->where([['postId',json_decode($resultP)[0]->id],['tipo',1],
-                                             ['userId',$this->userId]])
-                                  ->get();
-            $resultLo = $interacts->select(['id'])
-                                  ->count()
-                                  ->where([['postId',json_decode($resultP)[0]->id],['tipo',2]])
-                                  ->get();
-             $resultMLo = $interacts->select(['id'])
-                                   ->count()
-                                   ->where([['postId',json_decode($resultP)[0]->id],['tipo',2],
-                                              ['userId',$this->userId]])
-                                   ->get();
-            $resultH = $interacts->select(['id'])
-                                  ->count()
-                                  ->where([['postId',json_decode($resultP)[0]->id],['tipo',3]])
-                                  ->get();
-             $resultMH = $interacts->select(['id'])
-                                   ->count()
-                                   ->where([['postId',json_decode($resultP)[0]->id],['tipo',3],
-                                              ['userId',$this->userId]])
-                                   ->get();
-            $result = json_encode(array_merge(
-                        json_decode($resultP),
-                        json_decode($resultC),
-                        json_decode($resultL),
-                        json_decode($resultML),
-                        json_decode($resultLo),
-                        json_decode($resultMLo),
-                        json_decode($resultH),
-                        json_decode($resultMH)));
-        }else{
-            $result = $resultP;
-        }
-        return $result;
-        
-    }*/
     
     //Crear Publicacion
     private function createPost($datos){
         $post = new publication();
-        $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"]]);
+        $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"], $datos["imagen"]]);
         $result = $post->insert();
         return $result;
     }
