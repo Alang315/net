@@ -29,10 +29,11 @@ function perfil_header($args = [], $sesion = null){
             <h1 class="nombre-logo">GreenNet</h1>
         </div>
         <div class="opcionesheader">
-            <div class="iconocrear" id="iconocrear">
+                <p class= "nombre-perfil"><div class="iconocrear" id="iconocrear">
                 <button id="btncrearposthead" class="botoncrearpub" alt="Crear publicación">
                     <img src= "/resources/img/create-note-alt-svgrepo-com.png" alt="Crear Publicación" class="img-logo" id="crearpubicon" onclick="app.newposttab()">
                 </button>
+                </p>
             </div>
             <div class="perfil">
                 <p class= "nombre-perfil"><?php  ?></p>

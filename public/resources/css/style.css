@@ -484,13 +484,17 @@ header {
 .publicaciones {
     /*background-color: black;*/
     background-image: url(../img/Plants_2.jpg);
-    flex: 7 0 0;
+    flex: 6.5 0 0;
     border-right: 1px solid var(--background-mid-light-color);
     border-left: 1px solid var(--background-mid-light-color);
-    overflow-y: auto;
     display: flex;
     justify-content: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+.feedmain {
+    overflow-y: auto;
+    flex: 7 0 0;
+    padding-bottom: 5rem;
 }
 
 .publicacion {

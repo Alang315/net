@@ -59,14 +59,8 @@ main_header(["styles" => $styles],$sesion);
         <div class="temas">
             <h2>Temas</h2>
             <div class="temasopciones">
-            <ul>
-                <li>FIN DE LA POBREZA</li>
-                <li>HAMBRE CERO</li>
-                <li>SALUD Y BIENESTAR</li>
-                <li>EDUCACIÓN DE CALIDAD</li>
-                <li>IGUALDAD DE GÉNERO</li>
-                <li>AGUA LIMPIA Y SANEAMIENTO</li>
-                <li>ENERGÍA ASEQUIBLE Y NO CONTAMINANTE</li>
+            <ul class="temaslista">
+               
             </ul>
             </div>
         </div>
@@ -92,9 +86,11 @@ main_header(["styles" => $styles],$sesion);
         
         </div>
         <!--Ciclo para imprimir publicaciones-->
-        <section class="feed">
-            <h1>PUBLICACIONES</h1>
-        </section>
+        <div class="feedmain">
+            <section class="feed">
+                <h1>PUBLICACIONES</h1>
+            </section>
+        </div>
     </main>
     <!-- PANEL DERECHO -->
     <section class="comentarios">
