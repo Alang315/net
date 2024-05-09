@@ -149,7 +149,7 @@
     <div id="Sombreado"></div>
 </body>
 <?php 
-    $scripts = ["app", "jquery"];
+    $scripts = ["app", "jquery", "sweetalert"];
     perfil_footer(["scripts" => $scripts, $sesion]);
    scripts();
 ?>
@@ -178,11 +178,11 @@
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    alert("Se creo la publicacion")
+                    publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
                 }else{
-                    alert("No se pudo realizar la accion");
+                    //nocreada() //alert que dice que no se pudo crear la publicación
                 }
             }).catch( err => console.error( err ))            
         })
@@ -203,11 +203,11 @@
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    alert("Se creo la publicacion")
+                    publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo2").val(''); //Borra el campo de titulo
                     $("#contenido2").val(''); //Borra el campo de contenido
                 }else{
-                    alert("No se pudo realizar la accion");
+                    //nocreada() //alert que dice que no se pudo crear la publicación
                 }
             }).catch( err => console.error( err ))            
         })

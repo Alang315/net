@@ -398,16 +398,15 @@ header {
 }
 
 .miperfil-arriba {
-    padding: 3%;
+    padding: 1%;
     background-image: url(../img/fondo_multi.png);
-    /*background-color: #fff;*/
     border-radius: 8px;
     display: flex;
     flex-direction: column;
 }
 
 .miperfil-arriba .mitad {
-    padding: 2%;
+    padding: 1%;
     background-color: var(--primary-color);
     border-radius: 8px;
     color: #000;
@@ -416,14 +415,14 @@ header {
 
 .miperfil-arriba .mitad p {
     font-family: monospace;
-    font-size: 180%;
+    font-size: 150%;
     margin-left: 600px;     
 }
 
 .foto-miperfil {
     padding: 0;
     top: 11%;
-    width: 500px;
+    width: 300px;
     position: absolute;
     left: 50%;
     margin-left: -300px;
@@ -696,6 +695,12 @@ header {
     padding: 2px;
     border-radius: 0.3rem;
 }
+
+.link-publi {
+    text-decoration: none;
+    color: #000;
+}
+
 .publicacion-reaccion {
     align-items: center;
     display: flex;
