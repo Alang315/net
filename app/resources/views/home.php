@@ -42,7 +42,7 @@ main_header(["styles" => $styles],$sesion);
                     <input type="text" name="titulo" placeholder="Título" id="titulo" required>
                     <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
                     <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
-                    <input hidden type="text" value="1" name="tid" id="tid">
+                    <input hidden type="text" value="<?php echo isset($sesion->key) && $sesion->key == 1 ? $sesion->key : 0?>" id="state" name="state">
                     <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
                     <input type="file" id="imagen" name="imagen" class="publifile">
                     <select class="temastab" name="temastab" id="temastab" required>
@@ -126,6 +126,7 @@ main_header(["styles" => $styles],$sesion);
             data.append("key",$("#key").val());
             data.append("date",$("#date").val());
             data.append("tid",$("#temastab").val());
+            data.append("state",$("#state").val());
             data.append("imagen", $("#imagen")[0].files[0]);
             data.append("_cp","");
             fetch(app.urls.createPost,{

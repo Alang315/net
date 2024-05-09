@@ -387,11 +387,11 @@ app = {
                         html = "";
                         let primera = true;
                         for(let post of lpresp){
-                            console.log(post.Username);
                             html += `
                             <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
-                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
-                                    class="link-publi"> 
+                                ${post.Active == 1 ?`
+                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)" 
+                                    class="link-publi">`: ``}
                                     <div class="publicacion-unidad">
                                         <div class="username">
                                             <small class="User">
@@ -417,7 +417,11 @@ app = {
                                             <span>${post.topic}</span>
                                         </div>
                                     </div>
-                                </a>
+                                    ${post.Active == 1?`
+                                    <h3>Publi Aceptada</h3>`
+                                    : `<h3>Publi Pendiente</h3>`}
+                                    ${post.Active==1 ?`
+                                </a>`:``}
                                     <div class="publicacion-reaccion">
                                         <div class="reacciones-container">
                                             <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
@@ -457,10 +461,10 @@ app = {
                                             
                                         </ul>
                                     </div>
-                            </div>
+                                </div>
                                 
-                            `;
-              
+                                `;
+                            
                         }
                     }
                     primera = false;
