@@ -66,24 +66,8 @@
                 <div class="temas">
                     <h2>Temas</h2>
                     <div class="temasopciones">
-                    <ul>
-                        <li>FIN DE LA POBREZA</li>
-                        <li>HAMBRE CERO</li>
-                        <li>SALUD Y BIENESTAR</li>
-                        <li>EDUCACIÓN DE CALIDAD</li>
-                        <li>IGUALDAD DE GÉNERO</li>
-                        <li>AGUA LIMPIA Y SANEAMIENTO</li>
-                        <li>ENERGÍA ASEQUIBLE Y NO CONTAMINANTE</li>
-                        <li>TRABAJO DECENTE Y CRECIMIENTO ECONÓMICO</li>
-                        <li>INDUSTRIA, INNOVACIÓN E INFRAESTRUCTURA</li>
-                        <li>REDUCCIÓN DE LAS DESIGUALDADES</li>
-                        <li>CIUDADES Y COMUNIDADES SOSTENIBLE</li>
-                        <li>PRODUCCIÓN Y CONSUMO RESPONSABLE</li>
-                        <li>ACCIÓN POR EL CLIMA</li>
-                        <li>VIDA SUBMARINA</li>
-                        <li>VIDA DE ECOSISTEMAS TERRESTRES</li>
-                        <li>PAZ, JUSTICIA E INSTITUCIONES SÓLIDAS</li>
-                        <li>ALIANZAS PARA LOGRAR LOS OBJETIVOS</li>
+                    <ul class="temaslista">
+                        
                         
                     </ul>
                     </div>
@@ -91,7 +75,7 @@
                 <!--Buscador-->
                 <div class="busqueda">
                     <h2>¿Buscas algo?</h2>
-                    <input type="search" class="search-bar" name="search" id="search" placeholder="Escribe aquí...">
+                    <input type="search" class="search-bar" name="search" id="search2" placeholder="Escribe aquí...">
                     <div class="populares">
                     <h2>Popular</h2>
                     <ul>
@@ -215,6 +199,7 @@
         app.user.id = "<?=$sesion->key?>";
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.userPosts(app.user.id);
+        app.BuscadorPerfil(app.user.id);
         select.click(function() { 
             
         });
