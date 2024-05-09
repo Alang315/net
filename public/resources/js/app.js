@@ -609,7 +609,7 @@ app = {
                         let foundPost = false;
                         let primera = true;
                         for(let post of ppresp){
-                            if(post.Title.includes(searchTerm) || post.Content.includes(searchTerm) || post.Username.includes(searchTerm)) {
+                            if(post.Title.includes(searchTerm) || post.Content.includes(searchTerm)) {
                                 foundPost = true;
                                 html += `
                                 <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
