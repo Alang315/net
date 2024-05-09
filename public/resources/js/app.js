@@ -607,7 +607,6 @@ app = {
                     if(ppresp.length > 0){                     
                         html = "";
                         let foundPost = false;
-                        let primera = true;
                         for(let post of ppresp){
                             if(post.Title.includes(searchTerm) || post.Content.includes(searchTerm)) {
                                 foundPost = true;
