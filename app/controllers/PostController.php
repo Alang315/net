@@ -144,7 +144,7 @@ class PostController{
 //OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
     private function getPost($limit="", $pid = "", $uid = ""){
         $posts = new publication();
-        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic', 'a.Date', 'a.Image'])
+        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic','t.ID_topic as ID_topic', 'a.Date', 'a.Image'])
                         ->count([["DISTINCT rp.ID_reaction", "reacciones"], ["DISTINCT c.ID_comment", "comments"]])
                          ->group_concat("DISTINCT rt.ID_type", "reacciones_IDS")
                          ->join([['user b', 'a.ID_user = b.ID_user', " "], 

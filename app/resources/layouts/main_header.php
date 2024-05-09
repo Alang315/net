@@ -31,13 +31,14 @@ function main_header($args = [],$sesion = null){
         </div>
         <div class="opcionesheader">
             <div class="iconocrear" id="iconocrear">
-            <p class="nombre-perfil"><?php echo !isset($sesion->sv) ? "" : "<button class='botoncrearpub' id='btncrearposthead' alt='Crear publicación'>
-                    <img src= '/resources/img/create-note-alt-svgrepo-com.png' alt='Crear Publicación' class='img-logo' id='crearpubicon' onclick=\"app.newposttab()\">
-                </button>" ?> </p>
+               <?php echo !isset($sesion->sv) ? "" : "<button class='botoncrearpub' id='btncrearposthead' alt='Crear publicación'>
+                        <img src= '/resources/img/create-note-alt-svgrepo-com.png' alt='Crear Publicación' class='img-logo' id='crearpubicon' onclick=\"app.newposttab()\">
+                    </button>" ?> 
+               
             </div>
             <div class="perfil">
                 <p class="nombre-perfil"><?php echo !isset($sesion->sv) ? "<h2><button class='registerbtn' onclick=\"app.view('login')\"> Registrate o Inicia sesion</button></h2>" : "" ?> </p><!--Pone en el header el boton para registrarse o no -->
-                <img src="/resources/img/perfil_img.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
+                <img src="/resources/img/perfil.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
             </div>
         </div>
     </header>
