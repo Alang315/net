@@ -107,9 +107,10 @@ main_header(["styles" => $styles],$sesion);
 </div>
 <div id="Sombreado"></div>
 </body>
-<?php scripts();
-$scripts = ["app", "jquery"];
-main_footer(["scripts" => $scripts]);?>
+<?php 
+    $scripts = ["app", "jquery", "sweetalert"];
+    main_footer(["scripts" => $scripts]);
+?>
 <script type="text/javascript">
     $(function(){
         const lf = $("#publi-form");
@@ -134,13 +135,13 @@ main_footer(["scripts" => $scripts]);?>
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    alert("Se creo la publicacion")
+                    publicreada()
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
                     Sombreado.css('display', 'none');
                     divnewpost.css('display', 'none');
                 }else{
-                    alert("No se pudo realizar la accion");
+                    //nocreada() //alert que dice que no se pudo crear la publicación
                 }
             }).catch( err => console.error( err ))            
         })

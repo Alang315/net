@@ -1,5 +1,9 @@
-<?php function main_footer($args = [], $sesion = null){ ?>
-    
+<?php function main_footer($args = [], $sesion = null){
+    if (isset($args['scripts'])) {
+        foreach ($args['scripts'] as $s) {
+            echo_script_js($s);
+        }
+    } ?>
      
 </body>
 </html>
