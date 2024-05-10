@@ -42,7 +42,7 @@
                         <input type="text" name="titulo" placeholder="Título" id="titulo" required>
                         <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
                         <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
-                        <input hidden type="text" value="1" name="tid" id="tid">
+                        <input hidden type="text" value="<?php echo isset($sesion->key) && $sesion->key == 1 ? $sesion->key : 0?>" id="state" name="state">
                         <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
                         <input type="file" id="imagen" name="imagen" class="publifile">
                         <select class="temastab" name="temastab" id="temastab" required>
@@ -103,9 +103,9 @@
                             <input type="text" name="titulo" placeholder="Título" id="titulo2" required>
                             <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key2"> 
                             <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date2">
-                            <input hidden type="text" value="1" name="tid" id="tid">
+                            <input hidden type="text" value="<?php echo isset($sesion->key) && $sesion->key == 1 ? $sesion->key : 0?>" id="state" name="state">
                             <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido2" required></textarea>
-                            <input type="file" id="imagen2" name="imagen" class="publifile">
+                            <input type="file" id="imagen2" name="imagen2" class="publifile">
                             <select class="temastab" name="temastab" id="temastab2" required>
                                 <option value="Me gusta">Elige tu tema</option>
                             </select>
@@ -140,6 +140,10 @@
 </html>
 
 <script type="text/javascript">
+    app.user.sv = <?=$sesion->sv?'true':'false'?>;
+    app.user.id = "<?=$sesion->key?>";
+    // hacer variables js que se emparejen con las de php para poder enviarlas
+
     $(function(){
         const lf = $("#publi-form");
         const uf = $("#publi-formUser");
@@ -153,6 +157,7 @@
             data.append("key",$("#key").val());
             data.append("date",$("#date").val());
             data.append("tid",$("#temastab").val());
+            data.append("state",$("#state").val());
             data.append("imagen", $("#imagen")[0].files[0]);
             data.append("_cp","");
             fetch(app.urls.createPost,{
@@ -165,6 +170,7 @@
                     publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
+                    app.userPosts(app.user.id)
                 }else{
                     //nocreada() //alert que dice que no se pudo crear la publicación
                 }
@@ -179,6 +185,8 @@
             data.append("key",$("#key2").val());
             data.append("date",$("#date2").val());
             data.append("tid",$("#temastab2").val());
+            data.append("state",$("#state").val());
+            data.append("imagen", $("#imagen2")[0].files[0]);
             data.append("_cp","");
             fetch(app.urls.createPost,{
                 method : "POST",
@@ -190,14 +198,12 @@
                     publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo2").val(''); //Borra el campo de titulo
                     $("#contenido2").val(''); //Borra el campo de contenido
+                    app.userPosts(app.user.id)
                 }else{
                     //nocreada() //alert que dice que no se pudo crear la publicación
                 }
             }).catch( err => console.error( err ))            
         })
-        app.user.sv = <?=$sesion->sv?'true':'false'?>;
-        app.user.id = "<?=$sesion->key?>";
-        // hacer variables js que se emparejen con las de php para poder enviarlas
         app.userPosts(app.user.id);
         app.BuscadorPerfil(app.user.id);
         select.click(function() { 

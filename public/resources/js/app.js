@@ -342,6 +342,7 @@ app = {
                 }).catch( err => console.error( err ));
             }
     },
+
     getTopicslist: function() {
         if(this.tl) {
             let html = `<b>No hay ningún tema</b>`;
@@ -735,8 +736,9 @@ app = {
                         for(let post of lpresp){
                             html += `
                             <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
+                                ${post.Active == 1 ?`
                                 <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
-                                    class="link-publi"> 
+                                    class="link-publi">`: ``} 
                                     <div class="publicacion-unidad">
                                         <div class="username">
                                             <small class="User">
@@ -762,7 +764,11 @@ app = {
                                             <span>${post.topic}</span>
                                         </div>
                                     </div>
-                                </a>
+                                    ${post.Active == 1?`
+                                    <h3>Publi Aceptada</h3>`
+                                    : `<h3>Publi Pendiente</h3>`}
+                                    ${post.Active==1 ?`
+                                </a>`:``}
                                     <div class="publicacion-reaccion">
                                         <div class="reacciones-container">
                                             <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
