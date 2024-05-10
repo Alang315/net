@@ -12,7 +12,7 @@ class AdminpublicController {
 
     public function index() {
         $result = $this->sessionValidate();
-        if(!is_null($result)){
+        if(!is_null($result) && $_SESSION["key"] == 1){
             $sesion = new stdClass();
             $sesion->sv = true;
             $sesion->key = $_SESSION["key"];
