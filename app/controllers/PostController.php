@@ -155,8 +155,7 @@ class PostController{
                          ["topics t", "a.ID_topic = t.ID_topic", "inner"]
                          ])                                                 //Operador terniario dentro de otro operador 
                                                                     //terniario, obtiene las publicaciones de un usuario o una publicacion especifica
-                         ->where($pid != "" ? [['a.ID_publication', $pid], ["a.Active", 1]] : ($uid != "" ? [['a.ID_user', $uid]/*, ["a.Active", 1]*/] : [["a.Active", 1]] ))
-                         //->where($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]])
+                         ->where($pid != "" ? [['a.ID_publication', $pid], /*["a.Active", 1]*/] : ($uid != "" ? [['a.ID_user', $uid]/*, ["a.Active", 1]*/] : [["a.Active  NOT", "2"]]))
                          ->groupby($pid != "" ?  "" : "a.ID_publication DESC")
                          ->limit($limit)
                          ->getAll();
