@@ -51,29 +51,11 @@
                             <th>Id</th>
                             <th>Nombre de usuario</th>
                             <th>Correo electrónico</th>
-                            <th>Purikitaka si</th>
-                            <th>Purikitaka no</th>
-                            <th>             </th>
+                            <th>#Publicaciones</th>
+                            <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Karla</td>
-                            <td>karlarmlp@gmail.com</td>
-                            <td>takaraka tiki</td>
-                            <td>takaraka tiki taka</td>
-                            <td>
-                                <div class="text-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btnEditar">Editar</button>
-                                        <button type="button" class="btnEliminar">x</button>
-                                    </div>
-                                </div>
-                            </td>
-
-                        </tr>
-                        
+                    <tbody class="Tbody">
                     </tbody>
                 </table>
             </div>
@@ -97,13 +79,18 @@
 </html>
 
 <script type="text/javascript">
-    $(function(){
-        // Evento para eliminar usuario al hacer clic en el botón
-        $(".btnEliminar").click(function() {
-            //agregar la lógica para eliminar el usuario
+    
+    app.getPeopleAdmin();
 
+    $(".btnEliminar").click(function() {
+            //agregar la lógica para eliminar el usuario
+            console.log("Se toqueteo");
             alert("Eliminar usuario"); // alerta
         });
+
+        
+    $(function(){
+        // Evento para eliminar usuario al hacer clic en el botón
 
         const lf = $("#publi-form");
         lf.on("submit", function(e){

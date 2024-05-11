@@ -8,9 +8,6 @@
     }
     
     main_header(["styles" => $styles], $sesion);
-
-    date_default_timezone_set('America/Mexico_City');
-    
 ?>
 
 <!--Panel del perfil-->
@@ -41,6 +38,10 @@
     </div>
 </div>
 
+<button id="changeA">Boton para ver publicaciones activas</button>
+<button id="changeI">Boton para ver publicaciones Inactivas</button>
+
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -56,7 +57,7 @@
                             <th>         </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="Tbody">
                         <tr>
                             <td>1</td>
                             <td>¿Qué es el calentamiento global?</td>
@@ -99,10 +100,14 @@
 <script type="text/javascript">
     $(function(){
         // Evento para eliminar usuario al hacer clic en el botón
-        $(".btnEliminar").click(function() {
+        $("#changeA").click(function() {
             //agregar la lógica para eliminar el usuario
+            app.getPostAdmin("1")
+        });
 
-            alert("Eliminar usuario"); // alerta
+        $("#changeI").click(function() {
+            //agregar la lógica para eliminar el usuario
+            app.getPostAdmin("0")
         });
 
         const lf = $("#publi-form");
@@ -132,4 +137,5 @@
             }).catch( err => console.error( err ))            
         })
     })
+    app.getPostAdmin()
 </script>

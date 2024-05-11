@@ -18,6 +18,7 @@ app = {
         getReactions:"/post/getEmotes",//llaves uid, pid, type, deben de llevar valores
         getEmotes:"/post/getEmotesResult",
         openpost:"/post/openpost",
+        people:"/user/get_people",
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
@@ -30,6 +31,7 @@ app = {
     rt : $("#reaccionestab"),
     le : $(".MostrarlistaEMoji"),
     le2 : $(".MostrarlistaEMoji2"),
+    ap: $(".Tbody"),
     isSelectClicked: false,
 
     emotes: {
@@ -65,6 +67,7 @@ app = {
 			 		html = "";
 			 		let primera = true;
 			 		for(let post of ppresp){
+                        if(post.Active ==1)
                         html += `
                             <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
                                 <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
@@ -316,6 +319,7 @@ app = {
             }).catch(err => console.error(err));                
         });
     },
+
     CerrarDivMostrarEmojis: function(div) {
         // console.log(div);
         div[0].style.display = "none";
@@ -362,7 +366,8 @@ app = {
                 }).catch( err => console.error( err ));
             }
     },
-    filterPostsByTopic: function(topicId) {
+
+    filterPostsByTopic: function(topicId, active= "1") {
         if(this.pp) {
             let html = `<b>No hay publicaciones</b>`;
             this.pp.html("");
@@ -374,7 +379,7 @@ app = {
                         let primera = true;
                         let foundPost = false;
                         for(let post of ppresp){
-                            if(post.ID_topic === topicId) {
+                            if(post.ID_topic === topicId && post.Active == active) {
                                 foundPost = true;
                                 html += `
                                 <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
@@ -487,6 +492,7 @@ app = {
             });        
         }
     },
+
     filterPostsBySearch: function(searchTerm) {
         if(this.pp) {
             let html = `<b>No hay publicaciones</b>`;
@@ -598,6 +604,7 @@ app = {
             });        
         }
     },
+
     filterPostsBySearchPerfil: function(searchTerm, uid) {
         if(this.pp) {
             let html = `<b>Hola</b>`;
@@ -819,6 +826,79 @@ app = {
                 }).catch(err => console.error(err));
         }
     },
+
+    getPostAdmin: function(active = "0"){
+        if(this.ap){
+            let html = `<b>No hay ningúna Publicacion</b>`;
+            this.ap.html("");
+            fetch(this.urls.posts)
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         for(let post of ppresp){
+                            if(post.Active == active)
+                             html += `
+                            <tr>
+                                <td>${post.ID_publication}</td>
+                                <td>${post.Title}</td>
+                                <td>${post.Date}</td>
+                                ${post.Active ==1 ?` 
+                                <td>Sí</td>`: `<td>NO</td>`}
+                                <td>${post.topic}</td>
+                                <td>
+                                    <div class="text-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btnEditar">Revisar</button>
+                                            ${post.Active == 1 ? `
+                                            <button type="button" class="btnEliminar">Eliminar</button>
+                                            `:`                                            
+                                            <button type="button" class="btnEliminar">Rechazar</button>`}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                                `;
+                            }
+                    this.ap.html(html);
+                    }
+                }).catch( err => console.error( err ));
+        }
+
+    },
+
+    getPeopleAdmin: function(){
+        if(this.ap){
+            let html = `<b>No hay ningún usuario</b>`;
+            this.ap.html("");
+            fetch(this.urls.people + "?_gu")
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         for(let user of ppresp){
+                             html += `
+                            <tr>
+                                <td>${user.ID_user}</td>
+                                <td>${user.Username}</td>
+                                <td>${user.Email}</td>
+                                <td>${user.Nposts}</td>
+                                <td>
+                                    <div class="text-center">
+                                        <div class="btn-group">
+                                            <button type="button" value ="${user.ID_user}" class="btnEliminar">Eliminar</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                                `;
+                            }
+                    this.ap.html(html);
+                    }
+                }).catch( err => console.error( err ));
+        }
+    }
+
    
 }
 
