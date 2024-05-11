@@ -884,10 +884,8 @@ app = {
                                 <td>${user.Email}</td>
                                 <td>${user.Nposts}</td>
                                 <td>
-                                    <div class="text-center">
-                                        <div class="btn-group">
-                                            <button type="button" value ="${user.ID_user}" class="btnEliminar">Eliminar</button>
-                                        </div>
+                                    <div class="text-center btn-group">
+                                        <button onclick="deleteuser()" type="button" value ="${user.ID_user}" class="btnEliminar">Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
