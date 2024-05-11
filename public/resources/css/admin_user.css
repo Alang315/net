@@ -1,22 +1,28 @@
-
-
 .container-2 {
-    margin-top: 1px;
-    padding: 40px;
+    margin-top: 6rem;
+    z-index: -1;
+    position: relative;
+    top: -8%; left: 0;
+    padding: 1%;
     background-color: #448c3f;
     color: white;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }
 
+/* Estilos para el contenedor de la tabla */
 .table-responsive {
-    margin-top: 50px;
+    display: auto;
+    grid-template-columns: 14rem auto;
+    gap: 1rem;
+    margin-top: -4%;
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;
     padding: 20px;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
+    background: #e8e8e8;
     background-color: #ffffff;
     color: rgb(0, 0, 0);
 }
@@ -45,24 +51,6 @@
     color: #ffffff; 
 
 }
-
-
-.container-2 {
-    margin-top: 6rem;
-    
-}
-
-/* Estilos para el contenedor de la tabla */
-.table-responsive {
-    display: auto;
-    grid-template-columns: 14rem auto;
-    gap: 1rem;
-    background: #e8e8e8; 
-    padding: 2rem;
-    margin-bottom: 2rem;
-    
-}
-
 
 /* Estilos para los encabezados de la tabla */
 .table th {
@@ -121,8 +109,10 @@
 }
 
 /* Estilos para la barra de búsqueda en la administración */
-.busquedaAdmin {
+.busqueda-admin {
     margin-top: 60px;
+    position: relative;
+    top: -11%; left: 0;
 }
 
 .search-bar {
