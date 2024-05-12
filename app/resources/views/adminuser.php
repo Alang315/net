@@ -10,7 +10,6 @@
     main_header(["styles" => $styles], $sesion);
 
     date_default_timezone_set('America/Mexico_City');
-    
 ?>
 
 <!--Panel del perfil-->
@@ -34,7 +33,7 @@
 </div> 
 <!--Buscador-->
 <div class="busqueda-admin">
-    <div class="row">
+    <div class="row-buscar">
         <div class="col-lg-12">
             <input type="search" class="search-bar" name="search" id="search" placeholder="Buscar...">
         </div>
@@ -42,7 +41,7 @@
 </div>
 
 <div class="container">
-    <div class="row">
+    <div class="row-table">
         <div class="col-lg-12">
             <div class="table-responsive"> <!--Contenedor de la tabla-->
                 <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
@@ -64,7 +63,7 @@
 </div>
 
 <div class="container">
-    <div class="row">
+    <div class="row-new">
         <div class="buttonnew">
             <button id="btnNuevo" type="button" class="btn btn-success">Nuevo</button>
         </div>

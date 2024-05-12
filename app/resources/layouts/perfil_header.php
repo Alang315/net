@@ -26,7 +26,7 @@ function perfil_header($args = [], $sesion = null){
     <header>
         <div class="logo" id="logo">
             <a onclick="app.view('home')"><img src="/resources/img/logo.png" alt="Logo del foro" class="img-logo"></a>
-            <h1 class="nombre-logo">GreenNet</h1>
+            <a onclick="app.view('home')"><h1 class="nombre-logo">GreenNet</h1></a>
         </div>
         <div class="opcionesheader">
                 <p class= "nombre-perfil"><div class="iconocrear" id="iconocrear">

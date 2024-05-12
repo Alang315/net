@@ -1,8 +1,7 @@
 .container-2 {
-    margin-top: 6rem;
-    z-index: -1;
-    position: relative;
+    position: sticky;
     top: -8%; left: 0;
+    margin-top: 1%;
     padding: 1%;
     background-color: #448c3f;
     color: white;
@@ -12,14 +11,16 @@
 
 /* Estilos para el contenedor de la tabla */
 .table-responsive {
+    position: sticky;
+    top: -20%; left: 0;
     display: auto;
     grid-template-columns: 14rem auto;
     gap: 1rem;
-    margin-top: -4%;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 20px;
+    margin-top: 4%;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 0.5rem;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
     background: #e8e8e8;
@@ -42,23 +43,19 @@
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 1px;
-    border-style: none;
-    
+    border-style: none;   
 }
 
 .btn-success:hover {
     background-color: #000000; 
     color: #ffffff; 
-
 }
 
 /* Estilos para los encabezados de la tabla */
 .table th {
     background: #559050; 
-     
     padding: 0.8rem;
     color: #ffffff; 
-    
 }
 
 /* Estilos para las celdas de la tabla */
@@ -67,15 +64,11 @@
     padding: 0.8rem;
     border-bottom: 1px solid #e3e3e3; 
     transition: color 0.3s, background 0.3s;
-
-    
 }
 
 .table td:hover {
-    background: #d8d8d8; 
-   
+    background: #d8d8d8;  
 }
-
 
 .btnEditar {
     background-color: #007bff; 
@@ -110,13 +103,18 @@
 
 /* Estilos para la barra de búsqueda en la administración */
 .busqueda-admin {
-    margin-top: 60px;
+    position: sticky;
+    top: -20%; left: 0;
+    margin-top: 1%;
+}
+
+.row-buscar {
     position: relative;
-    top: -11%; left: 0;
+    left: -2%;
 }
 
 .search-bar {
-   margin-left: 32%;
+    margin-left: 32%;
     width: 40%; 
     padding: 10px; 
     font-size: 16px;

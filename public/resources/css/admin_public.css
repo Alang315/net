@@ -1,28 +1,113 @@
-
-
 .container-2 {
-    margin-top: 1px;
-    padding: 40px;
+    position: sticky;
+    top: -8%; left: 0;
+    margin-top: 1%;
+    padding: 1%;
     background-color: #448c3f;
     color: white;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }
 
+/* Estilos para el contenedor de la tabla */
 .table-responsive {
-    margin-top: 50px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 20px;
+    position: sticky;
+    top: -20%; left: 0;
+    display: auto;
+    grid-template-columns: 14rem auto;
+    gap: 1rem;
+    margin-top: 1%;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 0.5rem;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
+    background: #e8e8e8;
     background-color: #ffffff;
     color: rgb(0, 0, 0);
 }
 
-.buttonnew {
-    text-align: right;
+/* Vista de la publicación que se abre al darle al botón de "Revisas" */
+.container-revisar {
+    display: none;
+    background-color: #000;
+    position: relative;
+    top: 0; left: 0;
+    margin-top: -37%;
+    width: 100%;
+    min-height: 120%;
+    z-index: 0;
+}
+
+.feed {
+    position: relative;
+    top: 0; left: 0;
+    margin-top: 0;
+    width: 100%;
+    height: flex;
+    max-height: 0;
+    z-index: 0;
+}
+
+.btnRegresar-openView {
+    display: flex;
+	justify-content: flex-end;
+	align-items: center;
+    position:absolute; 
+    top:3.5%; left:57%;
+    font-size: 16px;
+}
+
+.btnRegresar-openView button {
+    background-color: gray;
+    color: white;
+    border-radius: 1.2rem;
+    padding: 1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btnRegresar-openView button:hover {
+    background-color: orangered;
+}
+
+.btnAceptar-openView {
+    background-color: #007bff; 
+    color: white;
+    border: 1px solid hsl(211, 100%, 50%); 
+    border-radius: 11px; 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    position:absolute; 
+    top:4.5%; left:66%;
+    font-size: 20px;
+}
+
+.btnAceptar-openView:hover {
+    background-color: #0056b3; 
+    border-color: #0056b3; 
+}
+
+.btnEliminar-openView {
+    background-color: #dc3545; 
+    color: white;
+    cursor: pointer;
+    border: 1px solid #dc3545; 
+    border-radius: 11px; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    position:absolute; 
+    top:4.5%; left:80%;
+    font-size: 20px;
+}
+
+.btnEliminar-openView:hover {
+    background-color: #c82333; 
+    border-color: #c82333; 
 }
 
 .btn-success {
@@ -43,34 +128,13 @@
 .btn-success:hover {
     background-color: #000000; 
     color: #ffffff; 
-
 }
-
-
-.container-2 {
-    margin-top: 6rem;
-    
-}
-
-/* Estilos para el contenedor de la tabla */
-.table-responsive {
-    display: auto;
-    grid-template-columns: 14rem auto;
-    gap: 1rem;
-    background: #e8e8e8; 
-    padding: 2rem;
-    margin-bottom: 2rem;
-    
-}
-
 
 /* Estilos para los encabezados de la tabla */
 .table th {
     background: #559050; 
-     
     padding: 0.8rem;
     color: #ffffff; 
-    
 }
 
 /* Estilos para las celdas de la tabla */
@@ -78,18 +142,57 @@
     text-align: center;
     padding: 0.8rem;
     border-bottom: 1px solid #e3e3e3; 
-    transition: color 0.3s, background 0.3s;
-
-    
+    transition: color 0.3s, background 0.3s;  
 }
 
 .table td:hover {
     background: #d8d8d8; 
-   
 }
 
+.change {
+    padding: auto;
+    margin-top: 1%;
+    margin-left: 35%;
+    z-index: 1;
+}
 
-.btnEditar {
+.btn-changeA {
+    font-size: 17px;
+    background-color: #007bff; 
+    color: white;
+    border: 1px solid hsl(211, 100%, 50%); 
+    border-radius: 11px; 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 10px;
+    border: 4px solid #000;
+}
+
+.btn-changeA:hover {
+    background-color: #0056b3; 
+    border-color: #0056b3; 
+}
+
+.btn-changeI {
+    font-size: 17px;
+    background-color: #007bff; 
+    color: white;
+    border: 1px solid hsl(211, 100%, 50%); 
+    border-radius: 11px; 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 10px;
+    border: 4px solid #000;
+}
+
+.btn-changeI:hover {
+    background-color: #0056b3; 
+    border-color: #0056b3; 
+}
+
+.btnRevisar {
     background-color: #007bff; 
     color: white;
     border: 1px solid hsl(211, 100%, 50%); 
@@ -100,7 +203,7 @@
     margin-right: 10px;
 }
 
-.btnEditar:hover {
+.btnRevisar:hover {
     background-color: #0056b3; 
     border-color: #0056b3; 
 }
@@ -121,8 +224,15 @@
 }
 
 /* Estilos para la barra de búsqueda en la administración */
-.busquedaAdmin {
-    margin-top: 60px;
+.busqueda-admin {
+    position: sticky;
+    top: -20%; left: 0;
+    margin-top: 1%;
+}
+
+.row-buscar {
+    position: relative;
+    left: -2%;
 }
 
 .search-bar {
