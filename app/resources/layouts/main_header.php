@@ -27,7 +27,7 @@ function main_header($args = [],$sesion = null){
     <header>
         <div class="logo" id="logo">
             <a onclick="app.view('home')"><img src="/resources/img/logo.png" alt="Logo del foro" class="img-logo"></a>
-            <h1 class="nombre-logo">GreenNet</h1>
+            <a onclick="app.view('home')"><h1 class="nombre-logo">GreenNet</h1></a>
         </div>
         <div class="opcionesheader">
             <div class="iconocrear" id="iconocrear">
@@ -37,7 +37,7 @@ function main_header($args = [],$sesion = null){
                
             </div>
             <div class="perfil">
-                <p class="nombre-perfil"><?php echo !isset($sesion->sv) ? "<h2><button class='registerbtn' onclick=\"app.view('login')\"> Registrate o Inicia sesion</button></h2>" : "" ?> </p><!--Pone en el header el boton para registrarse o no -->
+                <p class="nombre-perfil"><?php echo !isset($sesion->sv) ? "<h2><button class='registerbtn' onclick=\"app.view('login')\"> Regístrate o Inicia sesion</button></h2>" : "" ?> </p><!--Pone en el header el boton para registrarse o iniciar sesión -->
                 <img src="/resources/img/perfil.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
             </div>
         </div>

@@ -13,8 +13,7 @@ function usercreado(){
 
 /* Confirmar que se ha creado la publicación */
 function publicreada(){
-    Swal.fire({
-                       
+    Swal.fire({ 
         icon: "success",
         title: "Se ha creado la publicación",
         showConfirmButton: false,
@@ -66,5 +65,49 @@ function deleteuser(){
         } /*else if (result.isDenied) {
             Swal.fire("Usuario no eliminado", "", "info");
         }*/
+    });
+}
+
+/* Cuestionar al Admin si desea eliminar una publicación activa */
+function deletepubli(){
+    Swal.fire({
+        icon:"info",
+        title: "¿Está seguro de eliminar esta publicación?",
+        text: "Una vez eliminada no podrá revertir esta acción",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("¡Publicación eliminada!", "", "success");
+        }
+    });
+}
+
+/* Confirm para cuando rechaza una publicación */
+function declinepost(){
+    Swal.fire({
+        icon:"question",
+        title: "Rechazar publicación",
+        text: "Al rechazar una publicación esta se elimina y no podrá revertir esta acción",
+        showCancelButton: true,
+        confirmButtonText: "Rechazar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("¡Publicación rechazada!", "", "success");
+        }
+    });
+}
+
+function aceptarpost(){
+    Swal.fire({
+        icon:"question",
+        title: "Aceptar publicación",
+        text: "Al aceptar esta publicación esta será publicada, si desea eliminarla más tarde, puede hacerlo desde el panel de publicaciones activas",
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("¡Publicación aceptada y publicada!", "", "success");
+        }
     });
 }

@@ -151,6 +151,7 @@ app = {
     },
 
     openPost: function(event, pid, element){
+        console.log(pid)
         event.preventDefault();
         let i = 0;
         let posthtml = "<h2>La publicación no esta disponible</h2>";
@@ -172,6 +173,36 @@ app = {
                 this.pp.html(posthtml);
 			}).catch(err => console.error(err));
     },
+
+    /* openPost para Revisar en la vista de administrar publicaciones */
+    openView: function(event, pid, element){
+        console.log(pid)
+        div = $('.div')
+            if(div = revisar){
+                div.style.display = 'flex';
+            }
+        event.preventDefault();
+        let i = 0;
+        let posthtml = "<h2>La publicación no esta disponible</h2>";
+        let comentaryhtml =  "";
+        this.pp.html("");
+        this.lp.html("");
+        fetch(this.urls.openpost + "?_Op" + "&pid=" + pid)
+			.then(response => response.json())
+			.then(post => {
+				if(post.length > 0){
+                    posthtml = this.postHTMLstructure(post, 1);
+                    for(let comemnts of post){
+                        comentaryhtml += this.postHTMLstructure(post, 2, i);
+                        i++;
+                    }
+                    comentaryhtml = comentaryhtml == "" ? "<h2>Los comentarios no estan disponibles o no hay en esta publicacion</h2>" : comentaryhtml
+                }
+                this.lp.html(comentaryhtml);
+                this.pp.html(posthtml);
+			}).catch(err => console.error(err));
+    },
+
 
     postHTMLstructure : function (post, option = "", i = 0){
         //console.table(post);
@@ -849,11 +880,12 @@ app = {
                                 <td>
                                     <div class="text-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btnEditar">Revisar</button>
+                                            <button type="button" href="#" onclick="app.openView(event,${post.ID_publication}, this)" class="btnRevisar">Revisar</button>
+                                        
                                             ${post.Active == 1 ? `
-                                            <button type="button" class="btnEliminar">Eliminar</button>
+                                            <button onclick="deletepubli()" type="button" class="btnEliminar">Eliminar</button>
                                             `:`                                            
-                                            <button type="button" class="btnEliminar">Rechazar</button>`}
+                                            <button onclick="declinepost()" type="button" class="btnEliminar">Rechazar</button>`}
                                         </div>
                                     </div>
                                 </td>
