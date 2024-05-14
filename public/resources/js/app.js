@@ -19,6 +19,9 @@ app = {
         getEmotes:"/post/getEmotesResult",
         openpost:"/post/openpost",
         people:"/user/get_people",
+        deleteUser: "/user/DU",
+        deletePubli: "/post/DP",
+        activePost: "/post/Ac",
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
@@ -151,7 +154,6 @@ app = {
     },
 
     openPost: function(event, pid, element){
-        console.log(pid)
         event.preventDefault();
         let i = 0;
         let posthtml = "<h2>La publicación no esta disponible</h2>";
@@ -176,7 +178,6 @@ app = {
 
     /* openPost para Revisar en la vista de administrar publicaciones */
     openView: function(event, pid, element){
-        console.log(pid)
         div = $('.div')
             if(div = revisar){
                 div.style.display = 'flex';
@@ -197,6 +198,18 @@ app = {
                         i++;
                     }
                     comentaryhtml = comentaryhtml == "" ? "<h2>Los comentarios no estan disponibles o no hay en esta publicacion</h2>" : comentaryhtml
+                    botonD = post[0].Active == 0 ?`<button onclick="declinepost1(this)" value="${post[0].ID_publication}" type="button" class="btnEliminar-openView">Rechazar Publicación</button>`: `
+                    <button onclick="deletepubli1(this)" value="${post[0].ID_publication}" type="button" class="btnEliminar-openView">Eliminar Publicacion</button>`
+                    
+                    botonA = post[0].Active == 0 ?`<button onclick="aceptarpost(this)" value="${post[0].ID_publication}" type="button" class="btnAceptar-openView">Aceptar publicación</button>`:`
+                    <button value="${post.ID_publication}" type="button" class="btnAceptar-openView">Ta bien</button>`
+
+                    backB  = `<div class="btnRegresar-openView"><button onclick="app.view('adminpublic')">< Regresar</button></div>`
+                }
+                if($("#text-center")){
+                    var div = $("#text-center")
+                    var elements = backB + botonA + botonD
+                    div.html(elements);
                 }
                 this.lp.html(comentaryhtml);
                 this.pp.html(posthtml);
@@ -883,9 +896,9 @@ app = {
                                             <button type="button" href="#" onclick="app.openView(event,${post.ID_publication}, this)" class="btnRevisar">Revisar</button>
                                         
                                             ${post.Active == 1 ? `
-                                            <button onclick="deletepubli()" type="button" class="btnEliminar">Eliminar</button>
+                                            <button onclick="deletepubli(this)" value="${post.ID_publication}" type="button" class="btnEliminar">Eliminar</button>
                                             `:`                                            
-                                            <button onclick="declinepost()" type="button" class="btnEliminar">Rechazar</button>`}
+                                            <button onclick="declinepost(this)" value="${post.ID_publication}" type="button" class="btnEliminar">Rechazar</button>`}
                                         </div>
                                     </div>
                                 </td>
@@ -917,7 +930,7 @@ app = {
                                 <td>${user.Nposts}</td>
                                 <td>
                                     <div class="text-center btn-group">
-                                        <button onclick="deleteuser()" type="button" value ="${user.ID_user}" class="btnEliminar">Eliminar</button>
+                                        <button onclick="deleteuser(this)" type="button" value ="${user.ID_user}" class="btnEliminar">Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
@@ -927,9 +940,39 @@ app = {
                     }
                 }).catch( err => console.error( err ));
         }
-    }
+    },
 
-   
+    deleteElement: function(index, elementId, recharge){ //Metodo para eliminar cualquier elemento 
+        var destiny = ""
+        switch(index){
+            case 1: destiny = this.urls.deletePubli + "?_dP" + "&pid=" + elementId; break;
+            case 2: destiny = this.urls.deleteUser + "?_dU" + "&uid=" + elementId;break;
+            case 3: destiny = ""; break;
+        }
+            
+        fetch(destiny)
+            .then(resp => resp.json())
+            .then(succes => {
+                if(succes.r != false){
+                    recharge();
+                    alert(succes.m);
+                }else
+                    alert("No es posible realizar esta accion")
+            }).catch( err => console.error( err ));
+    },
+
+    activePost: function(elementId, accion = null){
+        fetch(this.urls.activePost + "?_aC" + "&pid=" + elementId)
+            .then(resp => resp.json())
+            .then(succes => {
+                if(succes.r != false){
+                    alert(succes.m);
+                    if(typeof accion === "function")
+                        accion()
+                }else
+                    alert("No es posible realizar esta accion")
+            }).catch( err => console.error( err ));
+    }
 }
 
 app.toggleDetails(); //Abre la función antes de que cargue todo

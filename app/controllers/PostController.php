@@ -137,6 +137,48 @@ class PostController{
         } 
     }
 
+    public function DP(){
+        if(!empty($_GET)){
+            $op = in_array('_dP', array_keys(filter_input_array(INPUT_GET)));
+            if($op){
+                if(isset(filter_input_array(INPUT_GET)["pid"])){
+                    $pid =  filter_input_array(INPUT_GET)["pid"];
+                    print_r(self::delete_Post($pid));
+                }else{
+                    require_view("error404");
+                }
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
+    public function Ac(){
+        if(!empty($_GET)){
+            $op = in_array('_aC', array_keys(filter_input_array(INPUT_GET)));
+            if($op){
+                if(isset(filter_input_array(INPUT_GET)["pid"])){
+                    $pid =  filter_input_array(INPUT_GET)["pid"];
+                    print_r(self::activePost($pid));
+                }else{
+                    require_view("error404");
+                }
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
+    
+
 
  //---------------------------- Modelos y BD----------------------------------------------------------------------------------------
 
@@ -225,6 +267,25 @@ class PostController{
         return $reactions;
     }
 
+    private function delete_Post($pid){
+        $publi = new publication();
+        $result = $publi->where([["ID_publication", $pid]])->delete();
+        if($result){
+            return json_encode(["r" => true, "m" => "Se elimino la publicacion satisfactoriamente"], JSON_UNESCAPED_UNICODE);
+        }else{
+            return false;
+        } 
+    }
+
+    private function activePost($pid){
+        $publi = new publication();
+        $result = $publi->where([["ID_publication", $pid]])->update(["Active" => "1"]);
+        if($result){
+            return json_encode(["r" => true, "m" => "Se Activo la publicacion satisfactoriamente"], JSON_UNESCAPED_UNICODE);
+        }else{
+            return json_encode(["r" => false], JSON_UNESCAPED_UNICODE);;
+        } 
+    }
 
 }
 

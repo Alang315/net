@@ -87,10 +87,7 @@
 
 <div id="revisar" class="container-revisar">
     <div class="feed contenido"></div>
-    <div class="change text-center">
-        <div class="btnRegresar-openView"><button onclick="app.view('adminpublic')">< Regresar</button></div>
-        <button onclick="aceptarpost()" type="button" class="btnAceptar-openView">Aceptar publicación</button>
-        <button onclick="declinepost()" type="button" class="btnEliminar-openView">Rechazar Publicación</button>
+    <div class="change text-center" id="text-center">
     </div>
 </div>
 

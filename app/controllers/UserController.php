@@ -78,17 +78,51 @@ class UserController {
             require_view("error404");
             die;
         }
-    }    
+    }
+    
+    public function DU(){
+        $result = self::sessionValidate();
+        if(!is_null($result)){
+            if(!empty($_GET)){
+                $gu = in_array('_dU', array_keys(filter_input_array(INPUT_GET)));
+                if($gu){
+                    $key = filter_input_array(INPUT_GET)["uid"];
+                    print_r($this->delete_User($key));
+                }else{
+                    require_view("error404");
+                    die;
+                }
+            }else{
+                require_view("error404");
+                die;
+            }
+        }else{
+            require_view("error404");
+            die;
+        }
+    }
 
     private function get_Users(){
         $users = new user;
         $result = $users->select(["a.ID_user, a.Username, a.Email"])
         ->count([["b.ID_user", "Nposts"]])
-        ->join([["publication b","b.ID_user = a.ID_user ", " "]])
+        ->join([["publication b","b.ID_user = a.ID_user ", "left"]])
+        ->where([["a.ID_user  NOT ", 1]])
         ->groupby("a.ID_user, a.Username, a.Email")
         ->getAll();
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     } 
+
+    private function delete_User($uid){
+        $user = new user();
+        $result = $user->where([["ID_user", $uid]])->delete();
+        if($result){
+            return json_encode(["r" => true, "m" => "Se elimino el usuario satisfactoriamente"], JSON_UNESCAPED_UNICODE);
+        }
+        else{
+            return false;
+        }
+    }
 }
 
 ?>
