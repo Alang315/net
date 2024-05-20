@@ -154,7 +154,6 @@ function deleteTopic(){
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire("¡Tema eliminado!", "", "success");
-=======
                 function charge(){
                     app.getPostAdmin()
                 }
