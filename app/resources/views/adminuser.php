@@ -21,6 +21,7 @@
             <li><button class='miperfilbtn' onclick="app.view('home')">Ir a inicio</button></li>
             <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
             <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('temas')\">Temas</button></li>" : "";?>
             <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
         </ul>
 </div>
@@ -62,13 +63,6 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row-new">
-        <div class="buttonnew">
-            <button id="btnNuevo" type="button" class="btn btn-success">Nuevo</button>
-        </div>
-    </div>
-</div>
 <div id="Sombreado"></div>
 
 <?php 
