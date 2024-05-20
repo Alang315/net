@@ -74,12 +74,6 @@
 <script type="text/javascript">
     
     app.getPeopleAdmin();
-
-    $(".btnEliminar").click(function() {
-            //agregar la lógica para eliminar el usuario
-            console.log("Se toqueteo");
-        });
-
         
     $(function(){
         // Evento para eliminar usuario al hacer clic en el botón
