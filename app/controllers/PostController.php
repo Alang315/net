@@ -183,8 +183,8 @@ class PostController{
 
     //Obtiene temas
     private function getTopics(){
-        $topic = new topics();
-        $result = $topic->select(["ID_topic, Name"])->getAll();
+        $topic = new topics();                                               
+        $result = $topic->select(["ID_topic, Name, Description"])->getAll(); // Obtiene los atributos "ID, el Nombre y la Descripción" de los Temas
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 

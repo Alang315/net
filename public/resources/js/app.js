@@ -19,6 +19,7 @@ app = {
         getEmotes:"/post/getEmotesResult",
         openpost:"/post/openpost",
         people:"/user/get_people",
+        temas: "/temas",
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
@@ -927,9 +928,38 @@ app = {
                     }
                 }).catch( err => console.error( err ));
         }
-    }
+    },
 
-   
+    // Función para imrpirmir los temas en la tabla
+    getTopicsAdmin: function(){
+        if(this.ap){
+            let html = `<b>No hay ningún tema</b>`;
+            this.ap.html("");
+            fetch(this.urls.getTopics + "?_gt")
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         for(let topic of ppresp){
+                             html += `
+                            <tr>
+                                <td>${topic.ID_topic}</td>
+                                <td>${topic.Name}</td>
+                                <td>${topic.Description}</td>
+                                <td>
+                                    <div class="text-center btn-group">
+                                        <button onclick="" type="button" value ="${topic.ID_topic}" class="btnEditar">Editar</button>
+                                        <button onclick="deleteTopic()" type="button" value ="${topic.ID_topic}" class="btnEliminar">Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                                `;
+                            }
+                    this.ap.html(html);
+                    }
+                }).catch( err => console.error( err ));
+        }
+    }
 }
 
 app.toggleDetails(); //Abre la función antes de que cargue todo

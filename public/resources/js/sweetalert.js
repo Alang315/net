@@ -98,6 +98,7 @@ function declinepost(){
     });
 }
 
+/* Confirm para cuando el administrador acepte una publicación */
 function aceptarpost(){
     Swal.fire({
         icon:"question",
@@ -108,6 +109,21 @@ function aceptarpost(){
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire("¡Publicación aceptada y publicada!", "", "success");
+        }
+    });
+}
+
+/* Eliminar tema */
+function deleteTopic(){
+    swal.fire({
+        icon:"question",
+        title:"Eliminar Tema",
+        text:"¿Desea eliminar este tema?, no podrá revertir esta acción",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar tema",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("¡Tema eliminado!", "", "success");
         }
     });
 }

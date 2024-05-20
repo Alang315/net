@@ -1,7 +1,7 @@
 <?php
 
     $layouts = ["main_header", "main_footer", "main"];
-    $styles = ["fonts", "style", "admin_user"];
+    $styles = ["fonts", "style", "temas"];
     
     foreach ($layouts as $l) {
         require_layout($l);
@@ -21,7 +21,7 @@
             <li><button class='miperfilbtn' onclick="app.view('home')">Ir a inicio</button></li>
             <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
             <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
-            <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('temas')\">Temas</button></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
             <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
         </ul>
 </div>
@@ -30,7 +30,7 @@
         <!--<br><hr>-->
 
 <div class="container-2">
-    <h2 class="text-center text-light">Administración de <span class="badge badge-danger">Usuarios</span></h2> 
+    <h2 class="text-center text-light">Administración de <span class="badge badge-danger">Temas</span></h2> 
 </div> 
 <!--Buscador-->
 <div class="busqueda-admin">
@@ -45,13 +45,12 @@
     <div class="row-table">
         <div class="col-lg-12">
             <div class="table-responsive"> <!--Contenedor de la tabla-->
-                <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
+                <table id="tablaTemas" class="table table-striped table-bordered table-condensed">
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>Nombre de usuario</th>
-                            <th>Correo electrónico</th>
-                            <th>#Publicaciones</th>
+                            <th>Nombre del tema</th>
+                            <th>Descripción</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -73,7 +72,7 @@
 
 <script type="text/javascript">
     
-    app.getPeopleAdmin();
+    app.getTopicsAdmin();
 
     $(".btnEliminar").click(function() {
             //agregar la lógica para eliminar el usuario
