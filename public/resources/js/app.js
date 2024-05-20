@@ -18,19 +18,25 @@ app = {
         getReactions:"/post/getEmotes",//llaves uid, pid, type, deben de llevar valores
         getEmotes:"/post/getEmotesResult",
         openpost:"/post/openpost",
+        people:"/user/get_people",
+        deleteUser: "/user/DU",
+        deletePubli: "/post/DP",
+        activePost: "/post/Ac",
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
 	lp : $(".contenido"), //seccion para insertar el contenido
     tm : $(".temastab"),// select para tomar los temas
+    tl : $(".temaslista"),
     rs : $(".reaccioning"),
     rs2 : $(".reaccioning2"),
     rp : $(".optionre"), 
     rt : $("#reaccionestab"),
     le : $(".MostrarlistaEMoji"),
     le2 : $(".MostrarlistaEMoji2"),
+    ap: $(".Tbody"),
     isSelectClicked: false,
-    
+
     emotes: {
         1: "👍",
         2: "😡",
@@ -64,9 +70,11 @@ app = {
 			 		html = "";
 			 		let primera = true;
 			 		for(let post of ppresp){
+                        if(post.Active ==1)
                         html += `
+                            <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
                                 <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
-                                    class="publicacion pplg ${ primera ? `active` : `` } prevpost"> 
+                                    class="link-publi"> 
                                     <div class="publicacion-unidad">
                                         <div class="username">
                                             <small class="User">
@@ -92,50 +100,50 @@ app = {
                                             <span>${post.topic}</span>
                                         </div>
 
-                                        </div>
-                                    </a>    
-
                                     </div>
+                                </a>
 
-                                        <div class="publicacion-reaccion">
-                                            <div class="reacciones-container">
-                                                <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
-                                                onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
-                                                onclick="return false;">
-                                                    <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
-                                                    <option class="optionre" value="1" data-index="1">👍</option>
-                                                    <option class="optionre" value="2" data-index="2">😡</option>
-                                                    <option class="optionre" value="3" data-index="3">😭</option>
-                                                    <option class="optionre" value="4" data-index="4">😧</option>
-                                                    <option class="optionre" value="5" data-index="5">😄</option>
-                                                    <option class="optionre" value="6" data-index="6">💙</option>
-                                                </select>
+                                
+                                    <div class="publicacion-reaccion">
+                                        <div class="reacciones-container">
+                                            <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
+                                            onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
+                                            onclick="return false;">
+                                                <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
+                                                <option class="optionre" value="1" data-index="1">👍</option>
+                                                <option class="optionre" value="2" data-index="2">😡</option>
+                                                <option class="optionre" value="3" data-index="3">😭</option>
+                                                <option class="optionre" value="4" data-index="4">😧</option>
+                                                <option class="optionre" value="5" data-index="5">😄</option>
+                                                <option class="optionre" value="6" data-index="6">💙</option>
+                                            </select>
 
-                                                <label
-                                                    for="reaccionestab" 
-                                                    class="reaccioning"
-                                                    id="totalreaccion-${post.ID_publication}"
-                                                    onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
-                                                    onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
-                                                    ${post.reacciones}
-                                                </label>
-                                                
-                                            </div>
-                                            <div class="comments-container">
-                                                <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
-                                                <img src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
-                                                </button>
-                                                <label for="iconocomment">${post.comments}</label>
-                                            </div>
+                                            <label
+                                                for="reaccionestab" 
+                                                class="reaccioning"
+                                                id="totalreaccion-${post.ID_publication}"
+                                                onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
+                                                onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
+                                                ${post.reacciones}
+                                            </label>
+                                        </div>        
+                                        
+                                        <div class="comments-container">
+                                            <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                                            <img  height="40px" widgth="40px" src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                            <label for="iconocomment">${post.comments}</label>
                                         </div>
-                                        <div class="pub-reaccion-span">
-                                            <span></span>
-                                        </div> 
-                                        <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
-                                            <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
+                                    </div>
+                                    <div class="pub-reaccion-span">
+                                        <span></span>
+                                    </div> 
+                                    <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
+                                        <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
                                                 
-                                            </ul>
-                                        </div>
+                                        </ul>
+                                    </div>
+                            </div>
                                 `;
                         }                    
                         primera = false;
@@ -145,10 +153,10 @@ app = {
         }
     },
 
-    openPost : function(event, pid, element){
+    openPost: function(event, pid, element){
         event.preventDefault();
         let i = 0;
-        let posthtml = "<h2>La publicacion no esta disponible</h2>";
+        let posthtml = "<h2>La publicación no esta disponible</h2>";
         let comentaryhtml =  "";
         this.pp.html("");
         this.lp.html("");
@@ -168,32 +176,78 @@ app = {
 			}).catch(err => console.error(err));
     },
 
+    /* openPost para Revisar en la vista de administrar publicaciones */
+    openView: function(event, pid, element){
+        div = $('.div')
+            if(div = revisar){
+                div.style.display = 'flex';
+            }
+        event.preventDefault();
+        let i = 0;
+        let posthtml = "<h2>La publicación no esta disponible</h2>";
+        let comentaryhtml =  "";
+        this.pp.html("");
+        this.lp.html("");
+        fetch(this.urls.openpost + "?_Op" + "&pid=" + pid)
+			.then(response => response.json())
+			.then(post => {
+				if(post.length > 0){
+                    posthtml = this.postHTMLstructure(post, 1);
+                    for(let comemnts of post){
+                        comentaryhtml += this.postHTMLstructure(post, 2, i);
+                        i++;
+                    }
+                    comentaryhtml = comentaryhtml == "" ? "<h2>Los comentarios no estan disponibles o no hay en esta publicacion</h2>" : comentaryhtml
+                    botonD = post[0].Active == 0 ?`<button onclick="declinepost1(this)" value="${post[0].ID_publication}" type="button" class="btnEliminar-openView">Rechazar Publicación</button>`: `
+                    <button onclick="deletepubli1(this)" value="${post[0].ID_publication}" type="button" class="btnEliminar-openView">Eliminar Publicacion</button>`
+                    
+                    botonA = post[0].Active == 0 ?`<button onclick="aceptarpost(this)" value="${post[0].ID_publication}" type="button" class="btnAceptar-openView">Aceptar publicación</button>`:`
+                    <button value="${post.ID_publication}" type="button" class="btnAceptar-openView">Ta bien</button>`
+
+                    backB  = `<div class="btnRegresar-openView"><button onclick="app.view('adminpublic')">< Regresar</button></div>`
+                }
+                if($("#text-center")){
+                    var div = $("#text-center")
+                    var elements = backB + botonA + botonD
+                    div.html(elements);
+                }
+                this.lp.html(comentaryhtml);
+                this.pp.html(posthtml);
+			}).catch(err => console.error(err));
+    },
+
+
     postHTMLstructure : function (post, option = "", i = 0){
         //console.table(post);
         let PostStructure = "", CommentaryStructure = ""  
         
         if(option ==1 && post[0])
             PostStructure =  ` 
-            
-            <div class="publicacion-unidad">
-                <div class="username">
-                    <small class="User">
-                        <i class="bi bi-person-circle"></i>
-                        <b>${ post[0].Username }</b>
-                    </small>
-                    <span class="fecha">
-                        ${post[0].Date}
-                    </span>
-                </div>    
-                <div class="titulo">
-                    <span class="title">${post[0].Title}</span>  
-                </div>  
-                <div class="contenido">
-                    <span>${post[0].Content}</span>
-                </div>
-                <div class="topic">
-                    <span>${post[0].topic}</span>
-                </div>
+            <div class="publicacion pplg">
+                <div class="publicacion-unidad">
+                    <div class="username">
+                        <small class="User">
+                            <i class="bi bi-person-circle"></i>
+                            <b>${ post[0].Username }</b>
+                        </small>
+                        <span class="fecha">
+                            ${post[0].Date}
+                        </span>
+                    </div>    
+                    <div class="titulo">
+                        <span class="title">${post[0].Title}</span>  
+                    </div>  
+                    <div class="contenido">
+                        <span>${post[0].Content}</span>
+                    </div>
+                    ${post[0].Image?`
+                        <div class="image-publication">
+                            <img src="/images/${post[0].Image}" alt="Imagen de la publicación"> 
+                        </div>`
+                    :``}
+                    <div class="topic">
+                        <span>${post[0].topic}</span>
+                    </div>
                 </div>
                 <div class="publicacion-reaccion">
                     <div class="reacciones-container">
@@ -232,14 +286,12 @@ app = {
                         
                     </ul>
                 </div>
+            </div>
         `;  
     
     if(option == 2 &&  i >0)
         CommentaryStructure = `
                 <div class="commentarrys">
-                    <div>
-                        <h3>${post[i].Email}</h3> 
-                    </div>
                     <div>
                         <h3>${post[i].Username}</h3>  
                     </div>
@@ -261,12 +313,7 @@ app = {
 
     getEmotes: function(pid, typer, user) {
         if(user == 0) {
-            var respuesta = confirm("Debes iniciar sesión para reaccionar ¿Desea iniciar sesión?");
-            if (respuesta) {
-                app.view("login");
-            } else {
-                
-            }
+            entravisit()
         } else {
             let html = `<b>0</b>`;
             console.log(pid);
@@ -291,7 +338,7 @@ app = {
         }
         
     },
-    
+
     MotrarEmojis: function(pid,le, div) {
         div[0].style.display = "flex";
         const totalReacciones = document.querySelectorAll('.reaccioning');
@@ -316,6 +363,7 @@ app = {
             }).catch(err => console.error(err));                
         });
     },
+
     CerrarDivMostrarEmojis: function(div) {
         // console.log(div);
         div[0].style.display = "none";
@@ -323,7 +371,7 @@ app = {
 
     getTopics: function() {
         if(this.tm) {
-            let html = `<b>No hay temas</b>`;
+            let html = `<b>No hay ningún tema</b>`;
             this.tm.html("");
             fetch(this.urls.getTopics+ "?_gt")
                  .then(resp => resp.json())
@@ -343,6 +391,128 @@ app = {
             }
     },
 
+    getTopicslist: function() {
+        if(this.tl) {
+            let html = `<b>No hay ningún tema</b>`;
+            this.tl.html("");
+            fetch(this.urls.getTopics+ "?_gt")
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         for(let topic of ppresp){
+                             html += `
+                                    <li value="${topic.ID_topic}" onclick="app.filterPostsByTopic(${topic.ID_topic})">${topic.Name}</li>
+                                `;
+                            }
+                        this.tl.html(html);
+                    }
+                }).catch( err => console.error( err ));
+            }
+    },
+
+    filterPostsByTopic: function(topicId, active= "1") {
+        if(this.pp) {
+            let html = `<b>No hay publicaciones</b>`;
+            this.pp.html("");
+            fetch(this.urls.posts)
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                        html = "";
+                        let primera = true;
+                        let foundPost = false;
+                        for(let post of ppresp){
+                            if(post.ID_topic === topicId && post.Active == active) {
+                                foundPost = true;
+                                html += `
+                                <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
+                                    <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
+                                        class="link-publi"> 
+                                        <div class="publicacion-unidad">
+                                            <div class="username">
+                                                <small class="User">
+                                                    <i class="bi bi-person-circle"></i>
+                                                    <b>${ post.Username }</b>
+                                                </small>
+                                                <span class="fecha">
+                                                    ${post.Date}
+                                                </span>
+                                            </div>    
+                                            <div class="titulo">
+                                                <span class="title">${post.Title}</span>  
+                                            </div>  
+                                            <div class="contenido">
+                                                <span>${post.Content}</span>
+                                            </div>
+                                            ${post.Image?`
+                                            <div class="image-publication">
+                                                <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                            </div>`
+                                            :``}
+                                            <div class="topic">
+                                                <span>${post.topic}</span>
+                                            </div>
+
+                                        </div>
+                                    </a>     
+                                    <div class="publicacion-reaccion">
+                                        <div class="reacciones-container">
+                                            <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
+                                            onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
+                                            onclick="return false;">
+                                                <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
+                                                <option class="optionre" value="1" data-index="1">👍</option>
+                                                <option class="optionre" value="2" data-index="2">😡</option>
+                                                <option class="optionre" value="3" data-index="3">😭</option>
+                                                <option class="optionre" value="4" data-index="4">😧</option>
+                                                <option class="optionre" value="5" data-index="5">😄</option>
+                                                <option class="optionre" value="6" data-index="6">💙</option>
+                                            </select>
+
+                                            <label
+                                                for="reaccionestab" 
+                                                class="reaccioning"
+                                                id="totalreaccion-${post.ID_publication}"
+                                                onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
+                                                onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
+                                                ${post.reacciones}
+                                            </label>
+                                        </div>        
+                                        
+                                        <div class="comments-container">
+                                            <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                                            <img  height="40px" widgth="40px" src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                            <label for="iconocomment">${post.comments}</label>
+                                        </div>
+                                    </div>
+                                    <div class="pub-reaccion-span">
+                                        <span></span>
+                                    </div> 
+                                    <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
+                                        <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
+                                                
+                                        </ul>
+                                    </div>
+                                </div>
+                                `;
+                            } 
+                        }
+                        if(!foundPost){
+                            html = `
+                                <div class="pub-reaccion-span">
+                                    <span>No hay publicaciones con este tema</span>
+                                </div> 
+                            `;
+                        }
+                        this.pp.html(html);
+                        
+                    }
+                }).catch( err => console.error( err ));
+        }
+    },
+
     toggleDetails: function() { //Función para desplegar el detailsdiv (tab de usuario)
         window.onload = function() { //Para que abra en cuanto abra la página DOM
             const detailsDiv = document.getElementById('detailsDiv');
@@ -356,11 +526,237 @@ app = {
         }
     },
 
+    Buscador: function() {
+        const buscador = document.getElementById('search');
+        if(buscador) {
+            buscador.addEventListener('input', function(event) {
+                event.preventDefault();
+                let searchTerm = buscador.value;
+                app.filterPostsBySearch(searchTerm);
+            });        
+        }
+    },
+
+    filterPostsBySearch: function(searchTerm) {
+        if(this.pp) {
+            let html = `<b>No hay publicaciones</b>`;
+            this.pp.html("");
+            fetch(this.urls.posts)
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                        html = "";
+                        let foundPost = false;
+                        let primera = true;
+                        for(let post of ppresp){
+                            if(post.Title.includes(searchTerm) || post.Content.includes(searchTerm) || post.Username.includes(searchTerm)) {
+                                foundPost = true;
+                                html += `
+                                <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
+                                    <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
+                                        class="link-publi"> 
+                                        <div class="publicacion-unidad">
+                                            <div class="username">
+                                                <small class="User">
+                                                    <i class="bi bi-person-circle"></i>
+                                                    <b>${ post.Username }</b>
+                                                </small>
+                                                <span class="fecha">
+                                                    ${post.Date}
+                                                </span>
+                                            </div>    
+                                            <div class="titulo">
+                                                <span class="title">${post.Title}</span>  
+                                            </div>  
+                                            <div class="contenido">
+                                                <span>${post.Content}</span>
+                                            </div>
+                                            ${post.Image?`
+                                            <div class="image-publication">
+                                                <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                            </div>`
+                                            :``}
+                                            <div class="topic">
+                                                <span>${post.topic}</span>
+                                            </div>
+
+                                        </div>
+                                    </a>     
+                                    <div class="publicacion-reaccion">
+                                        <div class="reacciones-container">
+                                            <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
+                                            onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
+                                            onclick="return false;">
+                                                <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
+                                                <option class="optionre" value="1" data-index="1">👍</option>
+                                                <option class="optionre" value="2" data-index="2">😡</option>
+                                                <option class="optionre" value="3" data-index="3">😭</option>
+                                                <option class="optionre" value="4" data-index="4">😧</option>
+                                                <option class="optionre" value="5" data-index="5">😄</option>
+                                                <option class="optionre" value="6" data-index="6">💙</option>
+                                            </select>
+
+                                            <label
+                                                for="reaccionestab" 
+                                                class="reaccioning"
+                                                id="totalreaccion-${post.ID_publication}"
+                                                onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
+                                                onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
+                                                ${post.reacciones}
+                                            </label>
+                                        </div>        
+                                        
+                                        <div class="comments-container">
+                                            <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                                            <img  height="40px" widgth="40px" src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                            <label for="iconocomment">${post.comments}</label>
+                                        </div>
+                                    </div>
+                                    <div class="pub-reaccion-span">
+                                        <span></span>
+                                    </div> 
+                                    <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
+                                        <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
+                                                
+                                        </ul>
+                                    </div>
+                                </div>
+                                `;
+                            }
+                        }
+                        if(!foundPost){
+                            html = `
+                                <div class="pub-reaccion-span">
+                                    <span>No se encontró tu busqueda</span>
+                                </div> 
+                            `;
+                        }
+                        this.pp.html(html);
+                    }
+                }).catch( err => console.error( err ));
+        }
+    },
+
+    BuscadorPerfil: function(uid) {
+        const buscador = document.getElementById('search2');
+        if(buscador) {
+            buscador.addEventListener('input', function(event) {
+                event.preventDefault();
+                let searchTerm = buscador.value;
+                app.filterPostsBySearchPerfil(searchTerm, uid);
+            });        
+        }
+    },
+
+    filterPostsBySearchPerfil: function(searchTerm, uid) {
+        if(this.pp) {
+            let html = `<b>Hola</b>`;
+            this.pp.html("");
+            fetch(this.urls.userposts + "&uid=" + uid)
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){                     
+                        html = "";
+                        let foundPost = false;
+                        for(let post of ppresp){
+                            if(post.Title.includes(searchTerm) || post.Content.includes(searchTerm)) {
+                                foundPost = true;
+                                html += `
+                                <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
+                                    <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
+                                        class="link-publi"> 
+                                        <div class="publicacion-unidad">
+                                            <div class="username">
+                                                <small class="User">
+                                                    <i class="bi bi-person-circle"></i>
+                                                    <b>${ post.Username }</b>
+                                                </small>
+                                                <span class="fecha">
+                                                    ${post.Date}
+                                                </span>
+                                            </div>    
+                                            <div class="titulo">
+                                                <span class="title">${post.Title}</span>  
+                                            </div>  
+                                            <div class="contenido">
+                                                <span>${post.Content}</span>
+                                            </div>
+                                            ${post.Image?`
+                                            <div class="image-publication">
+                                                <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                            </div>`
+                                            :``}
+                                            <div class="topic">
+                                                <span>${post.topic}</span>
+                                            </div>
+
+                                        </div>
+                                    </a>     
+                                    <div class="publicacion-reaccion">
+                                        <div class="reacciones-container">
+                                            <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
+                                            onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
+                                            onclick="return false;">
+                                                <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
+                                                <option class="optionre" value="1" data-index="1">👍</option>
+                                                <option class="optionre" value="2" data-index="2">😡</option>
+                                                <option class="optionre" value="3" data-index="3">😭</option>
+                                                <option class="optionre" value="4" data-index="4">😧</option>
+                                                <option class="optionre" value="5" data-index="5">😄</option>
+                                                <option class="optionre" value="6" data-index="6">💙</option>
+                                            </select>
+
+                                            <label
+                                                for="reaccionestab" 
+                                                class="reaccioning"
+                                                id="totalreaccion-${post.ID_publication}"
+                                                onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
+                                                onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
+                                                ${post.reacciones}
+                                            </label>
+                                        </div>        
+                                        
+                                        <div class="comments-container">
+                                            <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                                            <img  height="40px" widgth="40px" src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                            <label for="iconocomment">${post.comments}</label>
+                                        </div>
+                                    </div>
+                                    <div class="pub-reaccion-span">
+                                        <span></span>
+                                    </div> 
+                                    <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
+                                        <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
+                                                
+                                        </ul>
+                                    </div>
+                                </div>
+                                `;
+                            }
+                        }
+                        if(!foundPost){
+                            html = `
+                                <div class="pub-reaccion-span">
+                                    <span>No se encontró tu busqueda</span>
+                                </div> 
+                            `;
+                        }
+                        this.pp.html(html);
+                    }
+                }).catch( err => console.error( err ));
+        }
+    },
+    
+
     newposttab: function() { 
         const detailsDiv = document.getElementById('divnewpost');
         const cerrartab = document.getElementById('cerrartabbtn');
         const btnAbrir = document.getElementById('crearpubicon');
         const Sombreado = document.getElementById('Sombreado');
+        const tituloForm = document.getElementById('titulo');
+        const ContenidoForm = document.getElementById('contenido');
         if (btnAbrir && detailsDiv) {
             btnAbrir.addEventListener('click', () => {
                 detailsDiv.style.display = 'flex';
@@ -369,7 +765,8 @@ app = {
         
         };
         if(cerrartab) {
-            cerrartab.addEventListener('click', () => {
+            cerrartab.addEventListener('click', (e) => {
+                e.preventDefault();
                 detailsDiv.style.display = 'none';
                 Sombreado.style.display = 'none';
             });
@@ -388,10 +785,11 @@ app = {
                         html = "";
                         let primera = true;
                         for(let post of lpresp){
-                            console.log(post.Username);
                             html += `
+                            <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
+                                ${post.Active == 1 ?`
                                 <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
-                                    class="publicacion pplg ${ primera ? `active` : `` } prevpost"> 
+                                    class="link-publi">`: ``} 
                                     <div class="publicacion-unidad">
                                         <div class="username">
                                             <small class="User">
@@ -416,46 +814,55 @@ app = {
                                         <div class="topic">
                                             <span>${post.topic}</span>
                                         </div>
+                                    </div>
+                                    ${post.Active == 1?`
+                                    <h3>Publi Aceptada</h3>`
+                                    : `<h3>Publi Pendiente</h3>`}
+                                    ${post.Active==1 ?`
+                                </a>`:``}
+                                    <div class="publicacion-reaccion">
+                                        <div class="reacciones-container">
+                                            <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
+                                            onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
+                                            onclick="return false;">
+                                                <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
+                                                <option value="Me gusta">👍</option>
+                                                <option value="Me enoja">😡</option>
+                                                <option value="Me entistece">😭</option>
+                                                <option value="Me asombra">😧</option>
+                                                <option value="Me divierte">😄</option>
+                                                <option value="Me encanta">💙</option>
+                                            </select>
+                                        
+                                            <label
+                                                for="reaccionestab" 
+                                                class="reaccioning"
+                                                id="totalreaccion-${post.ID_publication}"
+                                                onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
+                                                onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
+                                                ${post.reacciones}
+                                            </label>
                                         </div>
-                                    </a>    
-                                        <div class="publicacion-reaccion">
-                                            <div class="reacciones-container">
-                                                <select class="reaccionestab" name="reaccionestab" id="reaccionestab" onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})">
-                                                    <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
-                                                    <option class="optionre" value="1" data-index="1">👍</option>
-                                                    <option class="optionre" value="2" data-index="2">😡</option>
-                                                    <option class="optionre" value="3" data-index="3">😭</option>
-                                                    <option class="optionre" value="4" data-index="4">😧</option>
-                                                    <option class="optionre" value="5" data-index="5">😄</option>
-                                                    <option class="optionre" value="6" data-index="6">💙</option>
-                                                </select>
-
-                                                <label
-                                                    for="reaccionestab" 
-                                                    class="reaccioning"
-                                                    id="totalreaccion-${post.ID_publication}"
-                                                    onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
-                                                    onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
-                                                    ${post.reacciones}
-                                                </label>
-                                                
-                                            </div>
-                                            <div class="comments-container">
-                                                <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
-                                                <img src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
-                                                </button>
-                                                <label for="iconocomment">${post.comments}</label>
-                                            </div>
+                                        
+                                        <div class="comments-container">
+                                            <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                                            <img src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                            <label for="iconocomment">${post.comments}</label>
                                         </div>
-                                        <div class="pub-reaccion-span">
-                                            <span></span>
-                                        </div> 
-                                        <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
-                                            <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
-                                                
-                                            </ul>
-                                        </div>
-                                `;
+                                    </div>
+                                    <div class="pub-reaccion-span">
+                                        <span></span>
+                                    </div> 
+                                    <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
+                                        <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
+                                            
+                                        </ul>
+                                    </div>
+                            </div>
+                                
+                            `;
+              
                         }
                     }
                     primera = false;
@@ -463,9 +870,114 @@ app = {
                 }).catch(err => console.error(err));
         }
     },
-   
+
+    getPostAdmin: function(active = "0"){
+        if(this.ap){
+            let html = `<b>No hay ningúna Publicacion</b>`;
+            this.ap.html("");
+            fetch(this.urls.posts)
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         for(let post of ppresp){
+                            if(post.Active == active)
+                             html += `
+                            <tr>
+                                <td>${post.ID_publication}</td>
+                                <td>${post.Title}</td>
+                                <td>${post.Date}</td>
+                                ${post.Active ==1 ?` 
+                                <td>Sí</td>`: `<td>NO</td>`}
+                                <td>${post.topic}</td>
+                                <td>
+                                    <div class="text-center">
+                                        <div class="btn-group">
+                                            <button type="button" href="#" onclick="app.openView(event,${post.ID_publication}, this)" class="btnRevisar">Revisar</button>
+                                        
+                                            ${post.Active == 1 ? `
+                                            <button onclick="deletepubli(this)" value="${post.ID_publication}" type="button" class="btnEliminar">Eliminar</button>
+                                            `:`                                            
+                                            <button onclick="declinepost(this)" value="${post.ID_publication}" type="button" class="btnEliminar">Rechazar</button>`}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                                `;
+                            }
+                    this.ap.html(html);
+                    }
+                }).catch( err => console.error( err ));
+        }
+
+    },
+
+    getPeopleAdmin: function(){
+        if(this.ap){
+            let html = `<b>No hay ningún usuario</b>`;
+            this.ap.html("");
+            fetch(this.urls.people + "?_gu")
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         for(let user of ppresp){
+                             html += `
+                            <tr>
+                                <td>${user.ID_user}</td>
+                                <td>${user.Username}</td>
+                                <td>${user.Email}</td>
+                                <td>${user.Nposts}</td>
+                                <td>
+                                    <div class="text-center btn-group">
+                                        <button onclick="deleteuser(this)" type="button" value ="${user.ID_user}" class="btnEliminar">Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                                `;
+                            }
+                    this.ap.html(html);
+                    }
+                }).catch( err => console.error( err ));
+        }
+    },
+
+    deleteElement: function(index, elementId, recharge){ //Metodo para eliminar cualquier elemento 
+        var destiny = ""
+        switch(index){
+            case 1: destiny = this.urls.deletePubli + "?_dP" + "&pid=" + elementId; break;
+            case 2: destiny = this.urls.deleteUser + "?_dU" + "&uid=" + elementId;break;
+            case 3: destiny = ""; break;
+        }
+            
+        fetch(destiny)
+            .then(resp => resp.json())
+            .then(succes => {
+                if(succes.r != false){
+                    recharge();
+                    alert(succes.m);
+                }else
+                    alert("No es posible realizar esta accion")
+            }).catch( err => console.error( err ));
+    },
+
+    activePost: function(elementId, accion = null){
+        fetch(this.urls.activePost + "?_aC" + "&pid=" + elementId)
+            .then(resp => resp.json())
+            .then(succes => {
+                if(succes.r != false){
+                    alert(succes.m);
+                    if(typeof accion === "function")
+                        accion()
+                }else
+                    alert("No es posible realizar esta accion")
+            }).catch( err => console.error( err ));
+    }
 }
 
 app.toggleDetails(); //Abre la función antes de que cargue todo
 app.getTopics();
+app.getTopicslist();
 app.newposttab();
+app.Buscador();
+app.BuscadorPerfil();

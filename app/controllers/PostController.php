@@ -137,14 +137,56 @@ class PostController{
         } 
     }
 
+    public function DP(){
+        if(!empty($_GET)){
+            $op = in_array('_dP', array_keys(filter_input_array(INPUT_GET)));
+            if($op){
+                if(isset(filter_input_array(INPUT_GET)["pid"])){
+                    $pid =  filter_input_array(INPUT_GET)["pid"];
+                    print_r(self::delete_Post($pid));
+                }else{
+                    require_view("error404");
+                }
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
 
- //---------------------------- Modelos y Bd----------------------------------------------------------------------------------------
+    public function Ac(){
+        if(!empty($_GET)){
+            $op = in_array('_aC', array_keys(filter_input_array(INPUT_GET)));
+            if($op){
+                if(isset(filter_input_array(INPUT_GET)["pid"])){
+                    $pid =  filter_input_array(INPUT_GET)["pid"];
+                    print_r(self::activePost($pid));
+                }else{
+                    require_view("error404");
+                }
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
+    
+
+
+ //---------------------------- Modelos y BD----------------------------------------------------------------------------------------
 
 
 //OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
     private function getPost($limit="", $pid = "", $uid = ""){
         $posts = new publication();
-        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic', 'a.Date', 'a.Image'])
+        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic','t.ID_topic as ID_topic', 'a.Date', 'a.Image', 'a.Active'])
                         ->count([["DISTINCT rp.ID_reaction", "reacciones"], ["DISTINCT c.ID_comment", "comments"]])
                          ->group_concat("DISTINCT rt.ID_type", "reacciones_IDS")
                          ->join([['user b', 'a.ID_user = b.ID_user', " "], 
@@ -155,8 +197,7 @@ class PostController{
                          ["topics t", "a.ID_topic = t.ID_topic", "inner"]
                          ])                                                 //Operador terniario dentro de otro operador 
                                                                     //terniario, obtiene las publicaciones de un usuario o una publicacion especifica
-                         ->where($pid != "" ? [['a.ID_publication', $pid], ["a.Active", 1]] : ($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]]))
-                         //->where($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]])
+                         ->where($pid != "" ? [['a.ID_publication', $pid], /*["a.Active", 1]*/] : ($uid != "" ? [['a.ID_user', $uid]/*, ["a.Active", 1]*/] : [["a.Active  NOT", "2"]]))
                          ->groupby($pid != "" ?  "" : "a.ID_publication DESC")
                          ->limit($limit)
                          ->getAll();
@@ -177,7 +218,7 @@ class PostController{
     //Crear Publicacion
     private function createPost($datos){
         $post = new publication();
-        $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"], $datos["imagen"]]);
+        $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"], $datos["state"], $datos["imagen"]]);
         $result = $post->insert();
         return $result;
     }
@@ -226,6 +267,25 @@ class PostController{
         return $reactions;
     }
 
+    private function delete_Post($pid){
+        $publi = new publication();
+        $result = $publi->where([["ID_publication", $pid]])->delete();
+        if($result){
+            return json_encode(["r" => true, "m" => "Se elimino la publicacion satisfactoriamente"], JSON_UNESCAPED_UNICODE);
+        }else{
+            return false;
+        } 
+    }
+
+    private function activePost($pid){
+        $publi = new publication();
+        $result = $publi->where([["ID_publication", $pid]])->update(["Active" => "1"]);
+        if($result){
+            return json_encode(["r" => true, "m" => "Se Activo la publicacion satisfactoriamente"], JSON_UNESCAPED_UNICODE);
+        }else{
+            return json_encode(["r" => false], JSON_UNESCAPED_UNICODE);;
+        } 
+    }
 
 }
 

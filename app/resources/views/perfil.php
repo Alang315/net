@@ -17,10 +17,10 @@
         <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
         <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
         <ul>
-            <li><button class='miperfilbtn' onclick="app.view('home')">Regresar a inicio</button></li>
+            <li><button class='miperfilbtn' onclick="app.view('home')">Ir a inicio</button></li>
             <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
             <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
-            <h2><button class='cerrarsesionbtn' onclick="app.view('logoutperfil')">Cerrar sesión</button></h2>
+            <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
         </ul>
     </div>
     <div class="divNewpost" id="divnewpost">
@@ -42,7 +42,7 @@
                         <input type="text" name="titulo" placeholder="Título" id="titulo" required>
                         <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
                         <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
-                        <input hidden type="text" value="1" name="tid" id="tid">
+                        <input hidden type="text" value="<?php echo isset($sesion->key) && $sesion->key == 1 ? $sesion->key : 0?>" id="state" name="state">
                         <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
                         <input type="file" id="imagen" name="imagen" class="publifile">
                         <select class="temastab" name="temastab" id="temastab" required>
@@ -66,24 +66,8 @@
                 <div class="temas">
                     <h2>Temas</h2>
                     <div class="temasopciones">
-                    <ul>
-                        <li>FIN DE LA POBREZA</li>
-                        <li>HAMBRE CERO</li>
-                        <li>SALUD Y BIENESTAR</li>
-                        <li>EDUCACIÓN DE CALIDAD</li>
-                        <li>IGUALDAD DE GÉNERO</li>
-                        <li>AGUA LIMPIA Y SANEAMIENTO</li>
-                        <li>ENERGÍA ASEQUIBLE Y NO CONTAMINANTE</li>
-                        <li>TRABAJO DECENTE Y CRECIMIENTO ECONÓMICO</li>
-                        <li>INDUSTRIA, INNOVACIÓN E INFRAESTRUCTURA</li>
-                        <li>REDUCCIÓN DE LAS DESIGUALDADES</li>
-                        <li>CIUDADES Y COMUNIDADES SOSTENIBLE</li>
-                        <li>PRODUCCIÓN Y CONSUMO RESPONSABLE</li>
-                        <li>ACCIÓN POR EL CLIMA</li>
-                        <li>VIDA SUBMARINA</li>
-                        <li>VIDA DE ECOSISTEMAS TERRESTRES</li>
-                        <li>PAZ, JUSTICIA E INSTITUCIONES SÓLIDAS</li>
-                        <li>ALIANZAS PARA LOGRAR LOS OBJETIVOS</li>
+                    <ul class="temaslista">
+                        
                         
                     </ul>
                     </div>
@@ -91,7 +75,7 @@
                 <!--Buscador-->
                 <div class="busqueda">
                     <h2>¿Buscas algo?</h2>
-                    <input type="search" class="search-bar" name="search" id="search" placeholder="Escribe aquí...">
+                    <input type="search" class="search-bar" name="search" id="search2" placeholder="Escribe aquí...">
                     <div class="populares">
                     <h2>Popular</h2>
                     <ul>
@@ -119,9 +103,9 @@
                             <input type="text" name="titulo" placeholder="Título" id="titulo2" required>
                             <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key2"> 
                             <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date2">
-                            <input hidden type="text" value="1" name="tid" id="tid">
+                            <input hidden type="text" value="<?php echo isset($sesion->key) && $sesion->key == 1 ? $sesion->key : 0?>" id="state" name="state">
                             <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido2" required></textarea>
-                            <input type="file" id="imagen2" name="imagen" class="publifile">
+                            <input type="file" id="imagen2" name="imagen2" class="publifile">
                             <select class="temastab" name="temastab" id="temastab2" required>
                                 <option value="Me gusta">Elige tu tema</option>
                             </select>
@@ -149,13 +133,17 @@
     <div id="Sombreado"></div>
 </body>
 <?php 
-    $scripts = ["app", "jquery"];
+    $scripts = ["app", "jquery", "sweetalert"];
     perfil_footer(["scripts" => $scripts, $sesion]);
    scripts();
 ?>
 </html>
 
 <script type="text/javascript">
+    app.user.sv = <?=$sesion->sv?'true':'false'?>;
+    app.user.id = "<?=$sesion->key?>";
+    // hacer variables js que se emparejen con las de php para poder enviarlas
+
     $(function(){
         const lf = $("#publi-form");
         const uf = $("#publi-formUser");
@@ -169,6 +157,7 @@
             data.append("key",$("#key").val());
             data.append("date",$("#date").val());
             data.append("tid",$("#temastab").val());
+            data.append("state",$("#state").val());
             data.append("imagen", $("#imagen")[0].files[0]);
             data.append("_cp","");
             fetch(app.urls.createPost,{
@@ -178,11 +167,12 @@
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    alert("Se creo la publicacion")
+                    publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
+                    app.userPosts(app.user.id)
                 }else{
-                    alert("No se pudo realizar la accion");
+                    //nocreada() //alert que dice que no se pudo crear la publicación
                 }
             }).catch( err => console.error( err ))            
         })
@@ -195,6 +185,8 @@
             data.append("key",$("#key2").val());
             data.append("date",$("#date2").val());
             data.append("tid",$("#temastab2").val());
+            data.append("state",$("#state").val());
+            data.append("imagen", $("#imagen2")[0].files[0]);
             data.append("_cp","");
             fetch(app.urls.createPost,{
                 method : "POST",
@@ -203,18 +195,17 @@
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    alert("Se creo la publicacion")
+                    publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo2").val(''); //Borra el campo de titulo
                     $("#contenido2").val(''); //Borra el campo de contenido
+                    app.userPosts(app.user.id)
                 }else{
-                    alert("No se pudo realizar la accion");
+                    //nocreada() //alert que dice que no se pudo crear la publicación
                 }
             }).catch( err => console.error( err ))            
         })
-        app.user.sv = <?=$sesion->sv?'true':'false'?>;
-        app.user.id = "<?=$sesion->key?>";
-        // hacer variables js que se emparejen con las de php para poder enviarlas
         app.userPosts(app.user.id);
+        app.BuscadorPerfil(app.user.id);
         select.click(function() { 
             
         });

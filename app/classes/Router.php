@@ -10,7 +10,8 @@ use app\controllers\PerfilController as Perfil;
 use app\controllers\AdminuserController as Adminuser;
 use app\controllers\AdminpublicController as Adminpublic;
 use app\controllers\PostController as Post;
-use app\controllers\ForgotController as Forgot; ///////
+use app\controllers\ForgotController as Forgot; 
+use app\controllers\UserController as User;
 
 class Router {
     private $uri = "";
@@ -40,6 +41,8 @@ class Router {
                 $controller = new Adminuser(); break;
             case 'ForgotController':
                 $controller = new Forgot(); break;
+            case 'UserController':
+                $controller = new User(); break;
             default :
                 $controller = new ErrorController();
                 $action = 'error404';
