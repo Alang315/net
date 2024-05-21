@@ -46,6 +46,7 @@
                     <span>Datos incorrectos</span>
                 </div>
                 <button type="submit" title="Entrar">Iniciar sesión</button>
+                <div><a class="unirsebtn" href="./forgot">¿Olvidaste tu contraseña?</a></div>
             </form>
         </div>
         <div class="toggle-container">

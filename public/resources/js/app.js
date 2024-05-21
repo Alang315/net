@@ -294,18 +294,18 @@ app = {
     
     if(option == 2 &&  i >0)
         CommentaryStructure = `
-                <div class="commentarrys">
-                    <div>
-                        <h3>${post[i].Username}</h3>  
-                    </div>
-                    <div>
-                        <h3>${post[i].Date}</h3>
-                    </div>
-                    <div>
-                        <p>${post[i].Content}</p>
-                    </div>
+            <div class="commentarrys">
+                <div class="username">
+                    <h3>${post[i].Username}</h3>  
                 </div>
-                <br>
+                <div class="date">
+                    <h5>${post[i].Date}</h5>
+                </div>
+                <div class="content">
+                    <p>${post[i].Content}</p>
+                </div>
+            </div>
+            <br>
             `;
         switch(option){
             case 1: return PostStructure; break;

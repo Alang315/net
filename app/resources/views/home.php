@@ -95,11 +95,11 @@ main_header(["styles" => $styles],$sesion);
     </main>
     <!-- PANEL DERECHO -->
     <section class="comentarios">
-        <div class="publicacion-unidad">
+        
             <div class="contenido">
 
             </div>
-        </div>
+        
     </section>
 </div>
 <div id="Sombreado"></div>
