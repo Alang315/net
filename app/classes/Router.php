@@ -40,6 +40,8 @@ class Router {
                 $controller = new Adminpublic(); break;
             case 'AdminuserController':
                 $controller = new Adminuser(); break;
+            case 'ForgotController':
+                $controller = new Forgot(); break;
             case 'UserController':
                 $controller = new User(); break;
             case 'TemasController':

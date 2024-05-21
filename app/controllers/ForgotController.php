@@ -4,11 +4,9 @@ namespace app\controllers;
 use app\models\codes;
 use app\models\user;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\PHPMailer\SMTP;
-require_once "C:/xampp/htdocs/net/app/PHPMailer/src/PHPMailer.php";
-require_once "C:/xampp/htdocs/net/app/PHPMailer/src/Exception.php";
-require_once "C:/xampp/htdocs/net/app/PHPMailer/src/SMTP.php";
+require_once ROOT . "PHPMailer/src/PHPMailer.php";
+require_once ROOT . "PHPMailer/src/Exception.php";
+require_once ROOT . "PHPMailer/src/SMTP.php";
 
 class ForgotController {
     public function __construct() {
@@ -143,7 +141,8 @@ class ForgotController {
         $email = addslashes($_SESSION['email']);
 
         $user = new user();
-        $query = $user->update(["Password"=>$password], ["Email"=>$email]);
+        $query = $user->where([['Email', $email]])
+                      ->update(["Password"=>$password]);
     }
 
     // Metodo para validar el correo
