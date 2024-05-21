@@ -55,20 +55,16 @@ function deleteuser(element){
         icon:"info",
         title: "¿Está seguro de eliminar a este usuario?",
         text: "Una vez eliminado no podrá revertir esta acción",
-        showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Eliminar",
-        denyButtonText: `No eliminar`
     }).then((result) => {
         if (result.isConfirmed) {
             function charge(){
                 app.getPeopleAdmin()
             }
             app.deleteElement(2,element.value, charge)
-            //Swal.fire("¡Usuario eliminado!", "", "success");
-        } /*else if (result.isDenied) {
-            Swal.fire("Usuario no eliminado", "", "info");
-        }*/
+            Swal.fire("¡Usuario eliminado!", "", "success");
+        }
     });
 }
 
@@ -154,7 +150,6 @@ function deleteTopic(){
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire("¡Tema eliminado!", "", "success");
-=======
                 function charge(){
                     app.getPostAdmin()
                 }
