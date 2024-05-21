@@ -10,7 +10,6 @@
     main_header(["styles" => $styles], $sesion);
 
     date_default_timezone_set('America/Mexico_City');
-    
 ?>
 
 <!--Panel del perfil-->
@@ -19,9 +18,10 @@
         <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : ''; ?></p>
         <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : ''; ?></p>
         <ul>
+            <li><button class='miperfilbtn' onclick="app.view('home')">Ir a inicio</button></li>
             <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('temas')\">Temas</button></li>" : "";?>
             <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
         </ul>
 </div>
@@ -32,9 +32,9 @@
 <div class="container-2">
     <h2 class="text-center text-light">Administración de <span class="badge badge-danger">Usuarios</span></h2> 
 </div> 
-
-<div class="busquedaAdmin">
-    <div class="row">
+<!--Buscador-->
+<div class="busqueda-admin">
+    <div class="row-buscar">
         <div class="col-lg-12">
             <input type="search" class="search-bar" name="search" id="search" placeholder="Buscar...">
         </div>
@@ -42,38 +42,20 @@
 </div>
 
 <div class="container">
-    <div class="row">
+    <div class="row-table">
         <div class="col-lg-12">
-            <div class="table-responsive">
+            <div class="table-responsive"> <!--Contenedor de la tabla-->
                 <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
                             <th>Nombre de usuario</th>
                             <th>Correo electrónico</th>
-                            <th>Purikitaka si</th>
-                            <th>Purikitaka no</th>
-                            <th>             </th>
+                            <th>#Publicaciones</th>
+                            <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Karla</td>
-                            <td>karlarmlp@gmail.com</td>
-                            <td>takaraka tiki</td>
-                            <td>takaraka tiki taka</td>
-                            <td>
-                                <div class="text-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btnEditar">Editar</button>
-                                        <button type="button" class="btnEliminar">x</button>
-                                    </div>
-                                </div>
-                            </td>
-
-                        </tr>
-                        
+                    <tbody class="Tbody">
                     </tbody>
                 </table>
             </div>
@@ -81,29 +63,20 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="buttonnew">
-            <button id="btnNuevo" type="button" class="btn btn-success">Nuevo</button>
-        </div>
-    </div>
-</div>
 <div id="Sombreado"></div>
 
 <?php 
-    $scripts = ["app", "jquery"];
+    $scripts = ["app", "jquery", "sweetalert"];
     main_footer(["scripts" => $scripts, $sesion]);
 ?>
 </html>
 
 <script type="text/javascript">
+    
+    app.getPeopleAdmin();
+        
     $(function(){
         // Evento para eliminar usuario al hacer clic en el botón
-        $(".btnEliminar").click(function() {
-            //agregar la lógica para eliminar el usuario
-
-            alert("Eliminar usuario"); // alerta
-        });
 
         const lf = $("#publi-form");
         lf.on("submit", function(e){

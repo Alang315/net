@@ -33,7 +33,7 @@ const app = {
                 $("#btn-ver-com" + postId).toggleClass("d-none",true)
                 $("#btn-cer-com" + postId).toggleClass("d-none",false)
             })
-            .catch( err => console.error("Hubo un error en los comentarios xd" , err))
+            .catch( err => console.error("Hubo un error en los comentarios" , err))
             .finally(  () => {
                 $("#loading" + postId).toggleClass("d-none", true)
             })
@@ -45,6 +45,7 @@ const app = {
         $("#btn-ver-com" + postId).toggleClass("d-none",false)
         $("#btn-cer-com" + postId).toggleClass("d-none",true)
     },
+    
     searchByWord : function() {
         $("#up"+this.userId).removeClass('active')
         this.userId = ""

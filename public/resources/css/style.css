@@ -170,7 +170,7 @@ header {
     max-width: 220px;
     background-color: #e8f0ef;
     box-shadow: 0 0 10px #34343433;
- 
+    z-index: 1;
 }
 #detailsDiv span {
     right: 0;
