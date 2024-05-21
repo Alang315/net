@@ -43,7 +43,7 @@
                 <input type="email" placeholder="Correo" name="mail" id="mail" required>
                 <input type="password" placeholder="Contraseña" name="passw" id="passw" required minlength="6">
                 <div class="datosincorrectos2" id="errordivlo">
-                    <span>Error al iniciar sesión</span>
+                    <span>Datos incorrectos</span>
                 </div>
                 <button type="submit" title="Entrar">Iniciar sesión</button>
                 <div><a class="unirsebtn" href="./forgot">¿Olvidaste tu contraseña?</a></div>
@@ -52,13 +52,13 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-                    <img width="40%" src="resources/img/logo_ODS.png" title="RedNet" alt="logo de RedNet">
+                    <img width="40%" src="resources/img/logo_ODS.png" title="RedNet" alt="logo de GreenNet">
                     <h1>¡Bienvenido de nuevo!</h1>
                     <p>Inicia sesión para utilizar todas las funciones del sitio</p>
                     <button class="hidden" id="login" title="Entrar">Iniciar sesión</button>
                 </div>
                 <div class="toggle-panel toggle-right">
-                    <img width="40%" src="resources/img/logo_ODS.png" title="RedNet" alt="logo de RedNet">
+                    <img width="40%" src="resources/img/logo_ODS.png" title="RedNet" alt="logo de GreenNet">
                     <h1>¡Hola amigo!</h1>
                     <p>Regístrate con tu correo para utilizar todas las funciones del sitio</p>
                     <button class="hidden" id="register" title="Registrarse">Registrarse</button>
@@ -68,7 +68,7 @@
     </div>
 </body>
 <?php
-    $scripts = ["login_script", "jquery"];
+    $scripts = ["login_script", "jquery", "sweetalert"];
     login_footer(["scripts" => $scripts]); 
     scripts();
 ?>
@@ -92,9 +92,8 @@
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    alert("Se creo el usuario exitosamente")
+                    usercreado()
                     errordiv.css('display', 'none');
-                    app.view("login");
                     $("#name").val('');
                     $("#email").val('');
                     $("#pass").val('');
@@ -128,8 +127,7 @@
             })
             .then ( resp => resp.json())
             .then ( resp => {
-                if(resp.r !== false){
-                    alert("Se creo la sesion")
+                if(resp.r !== false){        
                     $("#mail").val('');
                     $("#passw").val('');
                     errordiv.css('display', 'none');

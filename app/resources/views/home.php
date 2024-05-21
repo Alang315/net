@@ -42,7 +42,7 @@ main_header(["styles" => $styles],$sesion);
                     <input type="text" name="titulo" placeholder="Título" id="titulo" required>
                     <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
                     <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
-                    <input hidden type="text" value="1" name="tid" id="tid">
+                    <input hidden type="text" value="<?php echo isset($sesion->key) && $sesion->key == 1 ? $sesion->key : 0?>" id="state" name="state">
                     <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
                     <input type="file" id="imagen" name="imagen" class="publifile">
                     <select class="temastab" name="temastab" id="temastab" required>
@@ -59,14 +59,8 @@ main_header(["styles" => $styles],$sesion);
         <div class="temas">
             <h2>Temas</h2>
             <div class="temasopciones">
-            <ul>
-                <li>FIN DE LA POBREZA</li>
-                <li>HAMBRE CERO</li>
-                <li>SALUD Y BIENESTAR</li>
-                <li>EDUCACIÓN DE CALIDAD</li>
-                <li>IGUALDAD DE GÉNERO</li>
-                <li>AGUA LIMPIA Y SANEAMIENTO</li>
-                <li>ENERGÍA ASEQUIBLE Y NO CONTAMINANTE</li>
+            <ul class="temaslista">
+               
             </ul>
             </div>
         </div>
@@ -92,9 +86,11 @@ main_header(["styles" => $styles],$sesion);
         
         </div>
         <!--Ciclo para imprimir publicaciones-->
-        <section class="feed">
-            <h1>PUBLICACIONES</h1>
-        </section>
+        <div class="feedmain">
+            <section class="feed">
+                <h1>PUBLICACIONES</h1>
+            </section>
+        </div>
     </main>
     <!-- PANEL DERECHO -->
     <section class="comentarios">
@@ -107,9 +103,10 @@ main_header(["styles" => $styles],$sesion);
 </div>
 <div id="Sombreado"></div>
 </body>
-<?php scripts();
-$scripts = ["app", "jquery"];
-main_footer(["scripts" => $scripts]);?>
+<?php 
+    $scripts = ["app", "jquery", "sweetalert"];
+    main_footer(["scripts" => $scripts]);
+?>
 <script type="text/javascript">
     $(function(){
         const lf = $("#publi-form");
@@ -125,6 +122,7 @@ main_footer(["scripts" => $scripts]);?>
             data.append("key",$("#key").val());
             data.append("date",$("#date").val());
             data.append("tid",$("#temastab").val());
+            data.append("state",$("#state").val());
             data.append("imagen", $("#imagen")[0].files[0]);
             data.append("_cp","");
             fetch(app.urls.createPost,{
@@ -134,13 +132,13 @@ main_footer(["scripts" => $scripts]);?>
             .then ( resp => resp.json())
             .then ( resp => {
                 if(resp.r !== false){
-                    alert("Se creo la publicacion")
+                    publicreada()
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
                     Sombreado.css('display', 'none');
                     divnewpost.css('display', 'none');
                 }else{
-                    alert("No se pudo realizar la accion");
+                    //nocreada() //alert que dice que no se pudo crear la publicación
                 }
             }).catch( err => console.error( err ))            
         })

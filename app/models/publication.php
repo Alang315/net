@@ -8,7 +8,7 @@ class publication extends DB {
 	public $table;
 	function __construct(){
 		parent::__construct();
-		$this->campos = ['Title', 'Content', 'Date','ID_user', 'ID_topic', 'Image'];
+		$this->campos = ['Title', 'Content', 'Date','ID_user', 'ID_topic', 'Active', 'Image'];
 	}
 	
 	function setValores($v) {
