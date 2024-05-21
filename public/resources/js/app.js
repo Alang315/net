@@ -989,7 +989,7 @@ app = {
             .then(succes => {
                 if(succes.r != false){
                     recharge();
-                    alert(succes.m);
+                    //alert(succes.m);
                 }else
                     alert("No es posible realizar esta accion")
             }).catch( err => console.error( err ));
@@ -1000,7 +1000,7 @@ app = {
             .then(resp => resp.json())
             .then(succes => {
                 if(succes.r != false){
-                    alert(succes.m);
+                    //alert(succes.m);
                     if(typeof accion === "function")
                         accion()
                 }else
