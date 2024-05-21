@@ -1,7 +1,7 @@
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
 
-    require_once "C:/xampp/htdocs/net/app/PHPMailer/src/PHPMailer.php";
+    require_once ROOT . "PHPMailer/src/PHPMailer.php";
 
     function send_mail($recipient, $subject, $message){
         $mail = new PHPMailer();
