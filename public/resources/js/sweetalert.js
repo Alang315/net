@@ -55,20 +55,16 @@ function deleteuser(element){
         icon:"info",
         title: "¿Está seguro de eliminar a este usuario?",
         text: "Una vez eliminado no podrá revertir esta acción",
-        showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Eliminar",
-        denyButtonText: `No eliminar`
     }).then((result) => {
         if (result.isConfirmed) {
             function charge(){
                 app.getPeopleAdmin()
             }
             app.deleteElement(2,element.value, charge)
-            //Swal.fire("¡Usuario eliminado!", "", "success");
-        } /*else if (result.isDenied) {
-            Swal.fire("Usuario no eliminado", "", "info");
-        }*/
+            Swal.fire("¡Usuario eliminado!", "", "success");
+        }
     });
 }
 
@@ -123,6 +119,37 @@ function declinepost(element){
         confirmButtonText: "Rechazar",
     }).then((result) => {
         if (result.isConfirmed) {
+            Swal.fire("¡Publicación rechazada!", "", "success");
+        }
+    });
+}
+
+/* Confirm para cuando el administrador acepte una publicación */
+function aceptarpost(){
+    Swal.fire({
+        icon:"question",
+        title: "Aceptar publicación",
+        text: "Al aceptar esta publicación esta será publicada, si desea eliminarla más tarde, puede hacerlo desde el panel de publicaciones activas",
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("¡Publicación aceptada y publicada!", "", "success");
+        }
+    });
+}
+
+/* Eliminar tema */
+function deleteTopic(){
+    swal.fire({
+        icon:"question",
+        title:"Eliminar Tema",
+        text:"¿Desea eliminar este tema?, no podrá revertir esta acción",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar tema",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("¡Tema eliminado!", "", "success");
                 function charge(){
                     app.getPostAdmin()
                 }

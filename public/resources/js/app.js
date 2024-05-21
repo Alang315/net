@@ -19,6 +19,7 @@ app = {
         getEmotes:"/post/getEmotesResult",
         openpost:"/post/openpost",
         people:"/user/get_people",
+        temas: "/temas",
         deleteUser: "/user/DU",
         deletePubli: "/post/DP",
         activePost: "/post/Ac",
@@ -154,6 +155,7 @@ app = {
     },
 
     openPost: function(event, pid, element){
+        console.log(pid)
         event.preventDefault();
         let i = 0;
         let posthtml = "<h2>La publicación no esta disponible</h2>";
@@ -178,6 +180,7 @@ app = {
 
     /* openPost para Revisar en la vista de administrar publicaciones */
     openView: function(event, pid, element){
+        console.log(pid)
         div = $('.div')
             if(div = revisar){
                 div.style.display = 'flex';
@@ -942,6 +945,37 @@ app = {
         }
     },
 
+    // Función para imrpirmir los temas en la tabla
+    getTopicsAdmin: function(){
+        if(this.ap){
+            let html = `<b>No hay ningún tema</b>`;
+            this.ap.html("");
+            fetch(this.urls.getTopics + "?_gt")
+                 .then(resp => resp.json())
+                 .then(ppresp => {
+                    if(ppresp.length > 0){
+                         html = "";
+                         for(let topic of ppresp){
+                             html += `
+                            <tr>
+                                <td>${topic.ID_topic}</td>
+                                <td>${topic.Name}</td>
+                                <td>${topic.Description}</td>
+                                <td>
+                                    <div class="text-center btn-group">
+                                        <button onclick="" type="button" value ="${topic.ID_topic}" class="btnEditar">Editar</button>
+                                        <button onclick="deleteTopic()" type="button" value ="${topic.ID_topic}" class="btnEliminar">Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                                `;
+                            }
+                    this.ap.html(html);
+                    }
+                }).catch( err => console.error( err ));
+        }
+    },
+
     deleteElement: function(index, elementId, recharge){ //Metodo para eliminar cualquier elemento 
         var destiny = ""
         switch(index){
@@ -955,7 +989,7 @@ app = {
             .then(succes => {
                 if(succes.r != false){
                     recharge();
-                    alert(succes.m);
+                    //alert(succes.m);
                 }else
                     alert("No es posible realizar esta accion")
             }).catch( err => console.error( err ));
@@ -966,7 +1000,7 @@ app = {
             .then(resp => resp.json())
             .then(succes => {
                 if(succes.r != false){
-                    alert(succes.m);
+                    //alert(succes.m);
                     if(typeof accion === "function")
                         accion()
                 }else

@@ -143,7 +143,6 @@ class ForgotController {
         $user = new user();
         $query = $user->where([['Email', $email]])
                       ->update(["Password"=>$password]);
-
     }
 
     // Metodo para validar el correo
