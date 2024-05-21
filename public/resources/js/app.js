@@ -26,7 +26,7 @@ app = {
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
-	lp : $(".contenido"), //seccion para insertar el contenido
+	  lp : $(".contenido"), //seccion para insertar el contenido
     tm : $(".temastab"),// select para tomar los temas
     tl : $(".temaslista"),
     rs : $(".reaccioning"),
