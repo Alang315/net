@@ -12,6 +12,7 @@ use app\controllers\AdminpublicController as Adminpublic;
 use app\controllers\PostController as Post;
 use app\controllers\ForgotController as Forgot; 
 use app\controllers\UserController as User;
+use app\controllers\TemasController as Temas;
 
 class Router {
     private $uri = "";
@@ -43,6 +44,8 @@ class Router {
                 $controller = new Forgot(); break;
             case 'UserController':
                 $controller = new User(); break;
+            case 'TemasController':
+                $controller = new Temas(); break;
             default :
                 $controller = new ErrorController();
                 $action = 'error404';
