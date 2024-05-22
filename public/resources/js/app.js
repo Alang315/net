@@ -862,6 +862,10 @@ app = {
                                             
                                         </ul>
                                     </div>
+                                    <div class="BotonesControl">
+                                        <button class="btnEditPost" onclick="">Editar</button>
+                                        <button class="btnDeletePost" onclick="userpost_confirm_delete(${post.ID_publication})">Eliminar</button>
+                                    </div>
                             </div>
                                 
                             `;
