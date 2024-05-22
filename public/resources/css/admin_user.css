@@ -56,6 +56,9 @@
     background: #559050; 
     padding: 0.8rem;
     color: #ffffff; 
+    max-width: 1%;
+    min-width: 1%;
+    width: 1%;
 }
 
 /* Estilos para las celdas de la tabla */

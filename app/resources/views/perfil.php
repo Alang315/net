@@ -12,18 +12,7 @@
     
 ?>
 <!--Panel del perfil-->
-    <div id="detailsDiv">
-        <b>GreenNet</b><br>
-        <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
-        <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
-        <ul>
-            <li><button class='miperfilbtn' onclick="app.view('home')">Ir a inicio</button></li>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('temas')\">Temas</button></li>" : "";?>
-            <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
-        </ul>
-    </div>
+    
     <div class="divNewpost" id="divnewpost">
         <form id="publi-form" method="post" class="form-publi">        
             <div class="mi-perfil">
@@ -56,7 +45,7 @@
         <div class="mitad">
             <div class="foto-miperfil"><img src= "/resources/img/perfil.jpg" width="40%" alt="Foto de perfil"></div>
             <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
-            <hr><br>
+            <hr>
             <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
         </div>  
         <!--<br><hr>-->
@@ -116,9 +105,9 @@
             <div class="feedmain">
             <h3>MIS PUBLICACIONES</h3>
             <!--Ciclo para imprimir publicaciones-->
-            <section class="feed">
-                
-            </section>
+                <section class="feed">
+                    
+                </section>
             </div>
         </main>
         <!--Ciclo para imprimir comentarios-->
@@ -142,12 +131,15 @@
 <script type="text/javascript">
     app.user.sv = <?=$sesion->sv?'true':'false'?>;
     app.user.id = "<?=$sesion->key?>";
+    app.user.name = "<?=$sesion->user?>";
     // hacer variables js que se emparejen con las de php para poder enviarlas
 
     $(function(){
         const lf = $("#publi-form");
         const uf = $("#publi-formUser");
         const select = $("#temastab");
+        const Sombreado = $('#Sombreado');
+        const divnewpost = $('#divnewpost');
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -170,6 +162,8 @@
                     publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
+                    Sombreado.css('display', 'none');
+                    divnewpost.css('display', 'none');
                     app.userPosts(app.user.id)
                 }else{
                     //nocreada() //alert que dice que no se pudo crear la publicación
@@ -206,6 +200,7 @@
         })
         app.userPosts(app.user.id);
         app.BuscadorPerfil(app.user.id);
+        app.getTopicslistUser(app.user.id);
         select.click(function() { 
             
         });

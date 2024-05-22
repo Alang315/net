@@ -1,13 +1,13 @@
 <?php
 
-    $layouts = ["main_header", "main_footer", "main"];
+    $layouts = ["admin_header", "main_footer", "main"];
     $styles = ["fonts", "style", "admin_user"];
     
     foreach ($layouts as $l) {
         require_layout($l);
     }
     
-    main_header(["styles" => $styles], $sesion);
+    admin_header(["styles" => $styles], $sesion);
 
     date_default_timezone_set('America/Mexico_City');
 ?>
@@ -36,7 +36,7 @@
 <div class="busqueda-admin">
     <div class="row-buscar">
         <div class="col-lg-12">
-            <input type="search" class="search-bar" name="search" id="search" placeholder="Buscar...">
+            <input type="search" class="search-bar" name="search" id="search4" placeholder="Buscar...">
         </div>
     </div>
 </div>

@@ -1,13 +1,13 @@
 <?php
 
-    $layouts = ["main_header", "main_footer", "main"];
+    $layouts = ["admin_header", "main_footer", "main"];
     $styles = ["fonts", "style", "admin_public"];
     
     foreach ($layouts as $l) {
         require_layout($l);
     }
     
-    main_header(["styles" => $styles], $sesion);
+    admin_header(["styles" => $styles], $sesion);
 
     date_default_timezone_set('America/Mexico_City');
 ?>
@@ -37,7 +37,7 @@
 <div class="busqueda-admin">
     <div class="row-buscar">
         <div class="col-lg-12">
-            <input type="search" class="search-bar" name="search" id="search" placeholder="Buscar...">
+            <input type="search" class="search-bar" name="search" id="search5" placeholder="Buscar...">
         </div>
     </div>
 </div>
@@ -87,11 +87,15 @@
 </div>
 
 <div id="revisar" class="container-revisar">
-    <div class="feed contenido"></div>
-    <div class="change text-center" id="text-center">
-        <div class="btnRegresar-openView"><button onclick="app.view('adminpublic')">< Regresar</button></div>
-        <button onclick="aceptarpost()" type="button" class="btnAceptar-openView">Aceptar publicación</button>
-        <button onclick="declinepost()" type="button" class="btnEliminar-openView">Rechazar Publicación</button>
+    <div class="objetosVistaPrevia">
+        <div class="PublicacionesDentro">
+            <div class="feed contenido"></div>
+        </div>
+        <div class="change text-center" id="text-center">
+            <div class="btnRegresar-openView">
+                
+            </div>
+        </div>
     </div>
 </div>
 
