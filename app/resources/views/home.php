@@ -148,6 +148,7 @@ main_header(["styles" => $styles],$sesion);
         });
         
         app.getTopics();
+        app.getTopicslist();
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.publications();
         //app.lastPost(1);

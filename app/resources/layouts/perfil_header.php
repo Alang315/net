@@ -41,4 +41,16 @@ function perfil_header($args = [], $sesion = null){
             </div>
         </div>
     </header>
+    <div id="detailsDiv">
+        <b>GreenNet</b><br>
+        <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
+        <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
+        <ul>
+            <li><button class='miperfilbtn' onclick="app.view('home')">Ir a inicio</button></li>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('temas')\">Temas</button></li>" : "";?>
+            <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
+        </ul>
+    </div>
 <?php }?>
