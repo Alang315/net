@@ -1,13 +1,13 @@
 <?php
 
-    $layouts = ["main_header", "main_footer", "main"];
+    $layouts = ["admin_header", "main_footer", "main"];
     $styles = ["fonts", "style", "temas"];
     
     foreach ($layouts as $l) {
         require_layout($l);
     }
     
-    main_header(["styles" => $styles], $sesion);
+    admin_header(["styles" => $styles], $sesion);
 
     date_default_timezone_set('America/Mexico_City');
 ?>
@@ -36,8 +36,10 @@
 <div class="busqueda-admin">
     <div class="row-buscar">
         <div class="col-lg-12">
-            <input type="search" class="search-bar" name="search" id="search" placeholder="Buscar...">
+            <input type="search" class="search-bar" name="search" id="search3" placeholder="Buscar...">
+            <button id="btnCrearTema" class='btnCrearTema' onclick="">Crear nuevo tema</button>
         </div>
+        
     </div>
 </div>
 
@@ -62,6 +64,27 @@
     </div>
 </div>
 
+<div class="CrearTema" id="CrearTema">
+    <div class="formularioTema">
+        <form id="tema-Form" method="post">
+            <div class="Title-container">
+                <div class="tituloxd">
+                    <span>Crear Tema</span>
+                </div>
+                <div class="buttonxd">
+                    <button type="button" id="cerrarBTN">X</button> 
+                </div>
+            </div>
+            <!--Titulo y contenido de la nueva publicacion-->
+            <div class="Input-container">
+                <input type="text" name="Titulo" placeholder="Título" id="titulo3" required>
+                <textarea name="Contenido" placeholder="Escribe la descripción del tema..." id="contenido3" required></textarea>
+                <button type="submit">Crear Tema</button> 
+            </div>         
+        </form>
+    </div>
+</div>
+
 <div id="Sombreado"></div>
 
 <?php 
@@ -71,43 +94,14 @@
 </html>
 
 <script type="text/javascript">
-    
+    app.toggleTemas();
     app.getTopicsAdmin();
 
-    $(".btnEliminar").click(function() {
-            //agregar la lógica para eliminar el usuario
-            console.log("Se toqueteo");
-        });
 
         
     $(function(){
         // Evento para eliminar usuario al hacer clic en el botón
 
-        const lf = $("#publi-form");
-        lf.on("submit", function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            const data = new FormData();
-            data.append("titulo",$("#titulo").val());
-            data.append("contenido",$("#contenido").val());
-            data.append("key",$("#key").val());
-            data.append("tid",$("#tid").val());
-            data.append("date",$("#date").val());
-            data.append("_cp","");
-            fetch(app.urls.createPost,{
-                method : "POST",
-                body : data
-            })
-            .then ( resp => resp.json())
-            .then ( resp => {
-                if(resp.r !== false){
-                    alert("Se creo la publicacion")
-                    $("#titulo").val(''); //Borra el campo de titulo
-                    $("#contenido").val(''); //Borra el campo de contenido
-                }else{
-                    alert("No se pudo realizar la accion");
-                }
-            }).catch( err => console.error( err ))            
-        })
+       
     })
 </script>
