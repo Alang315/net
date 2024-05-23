@@ -204,3 +204,20 @@ function aceptarpost(element){
         }
     });
 }
+
+function userpost_confirm_delete(idPost) {
+    Swal.fire({
+        title: "¿Está seguro de eliminar esta publicación?",
+        text: "Una vez eliminada no podrá revertir esta acción",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          app.deleteElement(1, idPost, ()=>app.userPosts(app.user.id))
+        }
+      });
+}
