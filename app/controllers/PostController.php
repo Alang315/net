@@ -49,6 +49,23 @@ class PostController{
 
     }
 
+    //Obtiene para edita publicacion
+    public function edit_post_data(){
+        if(!empty($_POST)){
+            $cp = in_array('_ep', array_keys(filter_input_array(INPUT_POST)));
+            if($cp){
+                $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $datos["imagen"] = ImageUpload::upload_image('imagen');
+                print_r($this->editPost($datos));
+            }else{
+                require_view("error404");
+            }
+        }else{
+            require_view("error404");
+        }
+
+    }
+
     //obtiene para obtener publicaciones de un usuario en especifico
     public function get_user_P(){
         if(!empty($_GET)){
@@ -137,6 +154,48 @@ class PostController{
         } 
     }
 
+    public function DP(){
+        if(!empty($_GET)){
+            $op = in_array('_dP', array_keys(filter_input_array(INPUT_GET)));
+            if($op){
+                if(isset(filter_input_array(INPUT_GET)["pid"])){
+                    $pid =  filter_input_array(INPUT_GET)["pid"];
+                    print_r(self::delete_Post($pid));
+                }else{
+                    require_view("error404");
+                }
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
+    public function Ac(){
+        if(!empty($_GET)){
+            $op = in_array('_aC', array_keys(filter_input_array(INPUT_GET)));
+            if($op){
+                if(isset(filter_input_array(INPUT_GET)["pid"])){
+                    $pid =  filter_input_array(INPUT_GET)["pid"];
+                    print_r(self::activePost($pid));
+                }else{
+                    require_view("error404");
+                }
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
+    
+
 
  //---------------------------- Modelos y BD----------------------------------------------------------------------------------------
 
@@ -155,8 +214,7 @@ class PostController{
                          ["topics t", "a.ID_topic = t.ID_topic", "inner"]
                          ])                                                 //Operador terniario dentro de otro operador 
                                                                     //terniario, obtiene las publicaciones de un usuario o una publicacion especifica
-                         ->where($pid != "" ? [['a.ID_publication', $pid], ["a.Active", 1]] : ($uid != "" ? [['a.ID_user', $uid]/*, ["a.Active", 1]*/] : [["a.Active", 1]] ))
-                         //->where($uid != "" ? [['a.ID_user', $uid], ["a.Active", 1]] : [["a.Active", 1]])
+                         ->where($pid != "" ? [['a.ID_publication', $pid], /*["a.Active", 1]*/] : ($uid != "" ? [['a.ID_user', $uid]/*, ["a.Active", 1]*/] : [["a.Active  NOT", "2"]]))
                          ->groupby($pid != "" ?  "" : "a.ID_publication DESC")
                          ->limit($limit)
                          ->getAll();
@@ -182,10 +240,23 @@ class PostController{
         return $result;
     }
 
+    //Editar Publicacion
+    private function editPost($datos) {
+        $post = new publication();
+        if(isset($datos['imagen'])){
+            $result = $post->where([["ID_publication ", $datos["idPost"]]])
+            ->update(["Title"=>$datos["titulo"], "Content"=>$datos["contenido"], "ID_topic"=>$datos["tid"], "Image"=>$datos["imagen"]]);
+        } else {
+            $result = $post->where([["ID_publication ", $datos["idPost"]]])
+            ->update(["Title"=>$datos["titulo"], "Content"=>$datos["contenido"], "ID_topic"=>$datos["tid"]]);
+        }
+        return $result;
+    }
+
     //Obtiene temas
     private function getTopics(){
-        $topic = new topics();
-        $result = $topic->select(["ID_topic, Name"])->getAll();
+        $topic = new topics();                                               
+        $result = $topic->select(["ID_topic, Name, Description"])->getAll(); // Obtiene los atributos "ID, el Nombre y la Descripción" de los Temas
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
@@ -226,6 +297,27 @@ class PostController{
         return $reactions;
     }
 
+    private function delete_Post($pid){
+        $publi = new publication();
+        $post = json_decode($this->getPost(1, $pid))[0];
+        unlink(addslashes(PUBLIC_DIRECTORY . "images" . DS . $post->Image));
+        $result = $publi->where([["ID_publication", $pid]])->delete();
+        if($result){
+            return json_encode(["r" => true, "m" => "Se elimino la publicacion satisfactoriamente"], JSON_UNESCAPED_UNICODE);
+        }else{
+            return false;
+        } 
+    }
+
+    private function activePost($pid){
+        $publi = new publication();
+        $result = $publi->where([["ID_publication", $pid]])->update(["Active" => "1"]);
+        if($result){
+            return json_encode(["r" => true, "m" => "Se Activo la publicacion satisfactoriamente"], JSON_UNESCAPED_UNICODE);
+        }else{
+            return json_encode(["r" => false], JSON_UNESCAPED_UNICODE);;
+        } 
+    }
 
 }
 

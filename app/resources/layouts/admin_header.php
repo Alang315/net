@@ -1,5 +1,5 @@
 <?php
-function main_header($args = [],$sesion = null){
+function admin_header($args = [],$sesion = null){
 ?>
 
 <!DOCTYPE html>
@@ -30,12 +30,6 @@ function main_header($args = [],$sesion = null){
             <a onclick="app.view('home')"><h1 class="nombre-logo">GreenNet</h1></a>
         </div>
         <div class="opcionesheader">
-            <div class="iconocrear" id="iconocrear">
-               <?php echo !isset($sesion->sv) ? "" : "<button class='botoncrearpub' id='btncrearposthead' alt='Crear publicación'>
-                        <img src= '/resources/img/create-note-alt-svgrepo-com.png' alt='Crear Publicación' class='img-logo' id='crearpubicon' onclick=\"app.newposttab()\">
-                    </button>" ?> 
-               
-            </div>
             <div class="perfil">
                 <p class="nombre-perfil"><?php echo !isset($sesion->sv) ? "<h2><button class='registerbtn' onclick=\"app.view('login')\"> Regístrate o Inicia sesion</button></h2>" : "" ?> </p><!--Pone en el header el boton para registrarse o iniciar sesión -->
                 <img src="/resources/img/perfil.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">

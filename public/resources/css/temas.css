@@ -1,0 +1,295 @@
+.container-2 {
+    position: sticky;
+    top: -8%; left: 0;
+    margin-top: 1%;
+    padding: 1%;
+    background-color: #448c3f;
+    color: white;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+/* Estilos para el contenedor de la tabla */
+.table-responsive {
+    position: sticky;
+    top: -20%; left: 0;
+    display: auto;
+    grid-template-columns: 14rem auto;
+    gap: 1rem;
+    margin-top: 4%;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 0.5rem;
+    border: 1px solid #e7e7e7;
+    border-radius: 5px;
+    background: #e8e8e8;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.buttonnew {
+    text-align: right;
+}
+
+.btn-success {
+    background-color: #559050; 
+    color: #ffffff; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+    border-radius: 5px; 
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 1px;
+    border-style: none;   
+}
+
+.btn-success:hover {
+    background-color: #000000; 
+    color: #ffffff; 
+}
+
+/* Estilos para los encabezados de la tabla */
+.table th {
+    background: #559050; 
+    padding: 0.8rem;
+    color: #ffffff;
+    max-width: 1%;
+    min-width: 1%;
+    width: 1%;
+}
+
+/* Estilos para las celdas de la tabla */
+.table td {
+    text-align: center;
+    padding: 0.8rem;
+    border-bottom: 1px solid #e3e3e3; 
+    transition: color 0.3s, background 0.3s;
+
+}
+
+.table td:hover {
+    background: #d8d8d8;  
+}
+
+tbody>tr>:nth-child(1){ 
+    width: 10%;
+}
+
+tbody>tr>:nth-child(2){ 
+    width: 20%;
+}
+
+tbody>tr>:nth-child(3){ 
+    width: 55%;
+}
+
+tbody>tr>:nth-child(4){ 
+    width: 15%;
+}
+
+.btnEditar {
+    background-color: #007bff; 
+    color: white;
+    border: 1px solid hsl(211, 100%, 50%); 
+    border-radius: 11px; 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 10px;
+}
+
+.btnEditar:hover {
+    background-color: #0056b3; 
+    border-color: #0056b3; 
+}
+
+.btnEliminar {
+    background-color: #dc3545; 
+    color: white;
+    cursor: pointer; 
+    border: 1px solid #dc3545; 
+    border-radius: 11px; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+}
+
+.btnEliminar:hover {
+    background-color: #c82333; 
+    border-color: #c82333; 
+}
+
+/* Estilos para la barra de búsqueda en la administración */
+.busqueda-admin {
+    position: sticky;
+    top: -20%; left: 0;
+    margin-top: 1%;
+}
+
+.row-buscar {
+    position: relative;
+    left: -2%;
+}
+.btnCrearTema {
+    background-color: #007bff; 
+    color: white;
+    border: 1px solid hsl(211, 100%, 50%); 
+    border-radius: 11px; 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 1px;
+    text-overflow: ellipsis;
+}
+.btnCrearTema:hover {
+    background-color: #c82333; 
+    border-color: #c82333; 
+}
+
+.search-bar {
+    margin-left: 32%;
+    width: 40%; 
+    padding: 10px; 
+    font-size: 16px;
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease; 
+}
+
+/* Estilo cuando se enfoca */
+.search-bar:focus {
+    outline: none; 
+    border-color: #66afe9;
+    box-shadow: 0 0 5px #66afe9; 
+}
+
+.CrearTema {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #0000004a;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    flex-direction: column;
+}
+.CrearTema .formularioTema {
+    width: 40%;
+    max-width: 40%;
+    min-width: 40%;
+    height: 45%;
+    max-height: 45%;
+    min-height: 45%;
+    background-color: #d8d8d8;
+    justify-content: space-between; 
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2rem;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+#tema-Form {
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    width: 90%;
+    max-width: 90%;
+    min-width: 90%;
+    
+}
+
+.Title-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    height: 20%;
+    max-height: 20%;
+    min-height: 20%;
+    display: flex;
+    padding: 10px 10px;
+}
+.Input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 80%;
+    max-height: 80%;
+    min-height: 80%;
+    gap: 5px;
+}
+
+.Input-container button {
+    max-width: 40%;
+    width: 40%;
+    min-width: 40%;
+    max-height: 20%;
+    height: 20%;
+    min-height: 20%;
+    border-radius: 1rem;
+    background-color: #559050;
+    color: rgb(254, 254, 254);
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    text-overflow:clip;
+    transition: background-color 0.3s; 
+}
+.Input-container button:hover{
+    background-color: #69d461;
+}
+.tituloxd {
+    max-width: 80%;
+    width: 80%;
+    min-width: 80%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    text-overflow: ellipsis;
+}
+.tituloxd span {
+    font-size: 23px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+}
+.buttonxd {
+    max-width: 20%;
+    width: 20%;
+    min-width: 20%;
+    text-align: right;
+    justify-content: right;
+    align-items: center;
+    text-overflow:clip;
+    overflow: hidden;
+}
+.buttonxd button {
+    max-width: 40%;
+    width: 40%;
+    min-width: 40%;
+    padding: 5px 5px;
+    text-align: center;
+    justify-content: center;
+    text-overflow: clip;
+    overflow: hidden;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    color: #ffffff;
+    background-color: orangered;
+    transition: background-color 0.3s; 
+    cursor: pointer;
+}
+.buttonxd button:hover {
+    background-color: red;
+}

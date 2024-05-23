@@ -20,6 +20,7 @@ main_header(["styles" => $styles],$sesion);
             <?php echo isset($sesion->sv) ? "<li><button class='miperfilbtn' onclick=\"app.view('miperfil')\">Mi Perfil</button></li>" : "";?>
             <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
             <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
+            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('temas')\">Temas</button></li>" : "";?>
             <?php echo isset($sesion->sv) ? "<h2><button class='cerrarsesionbtn' onclick=\"app.view('logoutindex')\">Cerrar sesión</button></h2>" : "";  ?>
         </ul>
 </div>
@@ -147,6 +148,7 @@ main_header(["styles" => $styles],$sesion);
         });
         
         app.getTopics();
+        app.getTopicslist();
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.publications();
         //app.lastPost(1);

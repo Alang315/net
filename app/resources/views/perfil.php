@@ -9,54 +9,68 @@
     perfil_header(["styles" => $styles], $sesion);
 
     date_default_timezone_set('America/Mexico_City');
-    
 ?>
 <!--Panel del perfil-->
-    <div id="detailsDiv">
-        <b>GreenNet</b><br>
-        <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
-        <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
-        <ul>
-            <li><button class='miperfilbtn' onclick="app.view('home')">Regresar a inicio</button></li>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminpublic')\">Administrar publicaciones</button></li>" : "";?>
-            <?php echo (isset($sesion->role) && $sesion->role == 1) ? "<li><button class='miperfilbtn' onclick=\"app.view('adminuser')\">Administrar usuarios</button></li>" : "";?>
-            <h2><button class='cerrarsesionbtn' onclick="app.view('logoutperfil')">Cerrar sesión</button></h2>
-        </ul>
-    </div>
+    
     <div class="divNewpost" id="divnewpost">
         <form id="publi-form" method="post" class="form-publi">        
-                <div class="mi-perfil">
-                    
-                    <div class="image-container">
-                        <div class="cerrarbtn">
-                            <button class="cancel" id="cerrartabbtn">X</button>
-                        </div>
-                        <div class="datos">
-                            <span>Crear Post</span>
-                            <img src= "/resources/img/perfil_img.jpg" alt="Imagen">
-                            <button type="submit">Enviar</button> 
-                        </div>
+            <div class="mi-perfil">
+                <div class="image-container">
+                    <div class="cerrarbtn">
+                        <button class="cancel" id="cerrartabbtn">X</button>
                     </div>
-                    <!--Titulo y contenido de la nueva publicacion-->
-                    <div class="input-container">
-                        <input type="text" name="titulo" placeholder="Título" id="titulo" required>
-                        <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
-                        <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
-                        <input hidden type="text" value="<?php echo isset($sesion->key) && $sesion->key == 1 ? $sesion->key : 0?>" id="state" name="state">
-                        <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
-                        <input type="file" id="imagen" name="imagen" class="publifile">
-                        <select class="temastab" name="temastab" id="temastab" required>
-                            <option value="Me gusta">Elige tu tema</option>
-                        </select>
+                    <div class="datos">
+                        <span>Crear Post</span>
+                        <img src= "/resources/img/perfil_img.jpg" alt="Imagen">
+                        <button type="submit">Enviar</button> 
                     </div>
                 </div>
+                <!--Titulo y contenido de la nueva publicacion-->
+                <div class="input-container">
+                    <input type="text" name="titulo" placeholder="Título" id="titulo" required>
+                    <input hidden type="text" value="<?php echo isset($sesion->key) ? $sesion->key: null; ?>" name="key" id="key"> 
+                    <input hidden type="text" value=" <?php echo date("d-m-Y h:i a"); ?>" name="date" id="date">
+                    <input hidden type="text" value="<?php echo isset($sesion->key) && $sesion->key == 1 ? $sesion->key : 0?>" id="state" name="state">
+                    <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
+                    <input type="file" id="imagen" name="imagen" class="publifile">
+                    <select class="temastab" name="temastab" id="temastab" required>
+                        <option value="Me gusta">Elige tu tema</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="divEditPost" id="divEditPost">
+        <form id="edit-publi-form" method="post" class="form-publi">        
+            <div class="mi-perfil">
+                <div class="image-container">
+                    <div class="cerrarbtn">
+                        <button class="cancel" id="btnCerrarEdit">X</button>
+                    </div>
+                    <div class="datos">
+                        <span>Editar Post</span>
+                        <img src= "/resources/img/perfil_img.jpg" alt="Imagen">
+                        <button type="submit">Guardar</button> 
+                    </div>
+                </div>
+                <!--Titulo y contenido de la nueva publicacion-->
+                <div class="input-container">
+                    <input type="hidden" name="idPost" id="idPostEdit" value="">
+                    <input type="text" name="newTitulo" id="newTitulo" placeholder="Título" required>
+                    <textarea name="newContenido" id="newContenido" placeholder="Escribe tu idea..." required></textarea>
+                    <input type="file" name="newImagen" id="newImagen" class="publifile">
+                    <select class="temastab" name="newTemastab" id="edit-temastab" required>
+                        <option value="Me gusta">Elige tu tema</option>
+                    </select>
+                </div>
+            </div>
         </form>
     </div>
     <div class="miperfil-arriba">
         <div class="mitad">
             <div class="foto-miperfil"><img src= "/resources/img/perfil.jpg" width="40%" alt="Foto de perfil"></div>
             <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
-            <hr><br>
+            <hr>
             <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
         </div>  
         <!--<br><hr>-->
@@ -116,9 +130,9 @@
             <div class="feedmain">
             <h3>MIS PUBLICACIONES</h3>
             <!--Ciclo para imprimir publicaciones-->
-            <section class="feed">
-                
-            </section>
+                <section class="feed">
+                    
+                </section>
             </div>
         </main>
         <!--Ciclo para imprimir comentarios-->
@@ -142,12 +156,16 @@
 <script type="text/javascript">
     app.user.sv = <?=$sesion->sv?'true':'false'?>;
     app.user.id = "<?=$sesion->key?>";
+    app.user.name = "<?=$sesion->user?>";
     // hacer variables js que se emparejen con las de php para poder enviarlas
 
     $(function(){
         const lf = $("#publi-form");
         const uf = $("#publi-formUser");
+        const ef = $("#edit-publi-form");
         const select = $("#temastab");
+        const Sombreado = $('#Sombreado');
+        const divnewpost = $('#divnewpost');
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -170,6 +188,8 @@
                     publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
+                    Sombreado.css('display', 'none');
+                    divnewpost.css('display', 'none');
                     app.userPosts(app.user.id)
                 }else{
                     //nocreada() //alert que dice que no se pudo crear la publicación
@@ -206,9 +226,34 @@
         })
         app.userPosts(app.user.id);
         app.BuscadorPerfil(app.user.id);
+        app.getTopicslistUser(app.user.id);
         select.click(function() { 
             
         });
+        ef.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("idPost",$("#idPostEdit").val());
+            data.append("titulo",$("#newTitulo").val());
+            data.append("contenido",$("#newContenido").val());
+            data.append("tid",$("#edit-temastab").val());
+            data.append("imagen", $("#newImagen")[0].files[0]);
+            data.append("_ep","");
+            fetch(app.urls.editPost,{
+                method : "POST",
+                body : data
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data){
+                    app.userPosts(app.user.id)
+                }
+            })
+            document.getElementById("divEditPost").style.display = 'none'
+            document.getElementById('Sombreado').style.display = 'none'
+        });
         app.getTopics();
+        app.cerrarEditPost();
     })
 </script>

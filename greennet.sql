@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-05-2024 a las 18:15:57
+-- Tiempo de generación: 21-05-2024 a las 19:02:21
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `greennet`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `codes`
+--
+
+CREATE TABLE `codes` (
+  `ID_code` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `code` varchar(5) NOT NULL,
+  `expire` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `codes`
+--
+
+INSERT INTO `codes` (`ID_code`, `email`, `code`, `expire`) VALUES
+(1, 'vilchiskamila@gmail.com', '26921', 1715630153),
+(2, 'vilchiskamila@gmail.com', '44666', 1715630231),
+(3, 'kramirez32@ucol.mx', '83164', 1716282203),
+(4, 'kramirez32@ucol.mx', '22473', 1716282213),
+(5, 'kramirez32@ucol.mx', '99618', 1716310227),
+(6, 'kramirez32@ucol.mx', '27062', 1716310714),
+(7, 'kramirez32@ucol.mx', '34246', 1716310759);
 
 -- --------------------------------------------------------
 
@@ -50,7 +76,7 @@ INSERT INTO `comments` (`ID_comment`, `Content`, `Date`, `ID_user`, `ID_publicat
 
 CREATE TABLE `publication` (
   `ID_publication` int(11) NOT NULL,
-  `Title` varchar(50) NOT NULL,
+  `Title` varchar(100) NOT NULL,
   `Content` text NOT NULL,
   `Date` text NOT NULL,
   `Active` int(15) NOT NULL,
@@ -69,9 +95,14 @@ INSERT INTO `publication` (`ID_publication`, `Title`, `Content`, `Date`, `Active
 (3, '¿EDUCACIÓN O ADOCTRINAMIENTO?', '¿El sistema educativo actual es de calidad o en realidad dirige a un adoctrinamiento para ser un empleado más?, Algo cuestionable desde hace tiempo es el hecho de que en la educación no hay materias tales como la Educación Financiera', '16-04-2024 07:30 p.m.', 1, 2, 4, NULL),
 (4, 'SIMPLEMENTE HERMOSO', 'Amo correr en un campo abierto, sentirme libre y sin preocupaciones, simplemente es algo que causa un sentimiento satisfactorio', ' 25-04-2024 10:35 am', 1, 3, 15, NULL),
 (5, 'CALOR 🥵', 'Cada año hace más calor', ' 02-05-2024 06:35 pm', 1, 4, 13, NULL),
-(6, '¡TRABAJO DECENTE!', 'Toda la vida se ha oído hablar sobre que en los trabajos no dan las condiciones decentes para desempeñarse laboralmente, incluyendo que los salarios no son buenos. ', ' 05-05-2024 06:39 pm', 1, 5, 8, '_ececc4fd-bf07-40fd-b4f8-57989c4f1cbb.jpeg'),
 (7, 'De Basura a Energía', 'Con los residuos sólidos urbanos se puede generar energía térmica (agua o aire caliente y vapor), energía eléctrica e incluso mecánica mediante el uso de biocarburantes en motores de combustión interna mediante el procedimiento apropiado de transformación.', ' 05-05-2024 07:58 pm', 1, 2, 7, 'basura_a_energia.jpg'),
-(8, 'El amor no es de a ratos', 'El amor debe de ser y estar durante todas las estaciones, no solo en primavera cuando más florece, si no también en verano, cuando más cansancio se siente por el calor, también en otoño, cuando todas esas hojas y flores hermosas se han ido, y en invierno, cuando más calor se necesita', ' 07-05-2024 09:58 am', 1, 2, 15, 'estaciones.gif');
+(8, 'El amor no es de a ratos', 'El amor debe de ser y estar durante todas las estaciones, no solo en primavera cuando más florece, si no también en verano, cuando más cansancio se siente por el calor, también en otoño, cuando todas esas hojas y flores hermosas se han ido, y en invierno, cuando más calor se necesita', ' 07-05-2024 09:58 am', 1, 2, 15, 'estaciones.gif'),
+(9, '¡JUSTICIA!', '¡Justicia para todas aquellas personas que no inician una guerra pero son quienes pagan las consecuencias!, A todas esas personas que no pueden si quiera vivir tranquilas sabiendo que en cualquier momento sus gobernantes iniciarán batallas y ellos se irán a esconder porque son unos cobardes, unos cobardes que no se entregan, unos cobardes que avientan la piedra y esconden la mano.', ' 10-05-2024 12:18 am', 1, 2, 16, NULL),
+(10, 'Feliz cumpleaños', 'Feliz cumple a quien sea que cumpla hoy', ' 10-05-2024 12:49 am', 1, 1, 17, NULL),
+(11, 'Siempre recordemos a quienes nos ayudaron', 'Aún recuerdo que cuando era niño hubo una vez que estaba teniendo un mal día, en la casa mi familia estaba peleada, yo ni desayuné y en la escuela tenía mucha hambre, no me dieron para gastar ni llevé comida, pero ahí estuvo Kito, me compartió comida y me invitó a su casa luego de clases, sus padres eran amigos de los míos, sabían lo que pasaba en casa y me llevaron a su casa para no tener que lidiar con problemas de adultos, estuve todo ese día jugando con Kito, un gran amigo de siempre. Muchas gracias Kito, te quiero mucho  ❤️', ' 10-05-2024 08:03 pm', 1, 4, 3, NULL),
+(12, 'Kito, mi hermano', 'En serio no sé cómo agradecerte por todo lo que has hecho por mí 😢❤️‍🩹 sólo sé que ahora que necesitas de mi apoyo, aquí estoy y no sabes la impotencia que me da no poder hacer más por ti, pero en serio, cualquier apoyo económico o moral que ocupes, aquí estoy.', ' 10-05-2024 08:03 pm', 1, 4, 3, NULL),
+(13, 'EN SERIO, HACE CALOR', 'Gente, ¿de verdad no les asusta el hecho de que hace cada vez más calor y que lo repelemos con electricidad y que la electricidad comienza a fallar y en es probable que en algún punto no tengamos nada para lidiar con el calor? y ni hablar del agua que está escaseando, en serio, hay un problema.', ' 10-05-2024 08:13 pm', 0, 3, 13, NULL),
+(14, 'No puedo cambiar todo el mundo, pero puedo cambiar el pedacito que me toca ❤️‍🩹', '.', ' 10-05-2024 08:20 pm', 0, 2, 15, 'plantando_arbolito.jpeg');
 
 -- --------------------------------------------------------
 
@@ -201,16 +232,25 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`ID_user`, `Username`, `Password`, `Email`, `Biography`, `ID_Role`) VALUES
-(1, 'Administrador', '$2y$10$4frjVF590gCcjcf4mcHZyOtSqy4KFIrzm8/HgCqm4V26NSzHbgWFK', 'admin@greennet.com', NULL, 1),
-(2, 'Wolfkarl', '$2y$10$tFbURbIWv7uC83aTJUryFOK1OWX7qP/92UDKCAXX/Qwv//gTqbidy', 'karlarmlp@gmail.com', NULL, 2),
-(3, 'Alan VP', '$2y$10$lWeAGCYjB6tLNnBnOjglcewQles9D3IQu5PPdInRFgfXHbHxlo5YK', 'avargas39@ucol.mx', NULL, 2),
-(4, 'Gabito', '$2y$10$g/Frv7pxE2QkrYrkjlwBFelz/1AxOXGMAs6mbyCR9QLMakbz8eF/W', 'lramirez68@ucol.mx', NULL, 2),
-(5, 'Saul Bus', '$2y$10$qVdFwt/JkoG6bgMoPj.H4O1RKy2HDUiLoP/LHIbq6FBMcBrGTKJ9W', 'zaulbushta@gmail.com', NULL, 2),
-(26, 'AGUA DE SABORES', '$2y$10$8t1xnX2tqnu94ly/jmtNW.IJaUTql5rjcgBkgWG5aEEP4luUUlcte', 'karlarm22lp@gmail.com', NULL, 2);
+(1, 'Administrador', '$2y$10$okb1t2xizW4JicC1JOTm/.UUYrriyZZXTLQbzlCegm0cph/IXUM2m', 'admin@greennet.com', NULL, 1),
+(2, 'Wolfkarl', '$2y$10$okb1t2xizW4JicC1JOTm/.UUYrriyZZXTLQbzlCegm0cph/IXUM2m', 'karlarmlp@gmail.com', NULL, 2),
+(3, 'Alan VP', '$2y$10$okb1t2xizW4JicC1JOTm/.UUYrriyZZXTLQbzlCegm0cph/IXUM2m', 'avargas39@ucol.mx', NULL, 2),
+(4, 'Gabito', '$2y$10$okb1t2xizW4JicC1JOTm/.UUYrriyZZXTLQbzlCegm0cph/IXUM2m', 'lramirez68@ucol.mx', NULL, 2),
+(5, 'Alguien', '$2y$10$okb1t2xizW4JicC1JOTm/.UUYrriyZZXTLQbzlCegm0cph/IXUM2m', 'alguien@gmail.com', NULL, 2),
+(33, 'KARLA RM', '$2y$10$tBdDWjmw5MrFQBOjg6CLEumjN5fO3E79Z1wJhUcjC6Hibfi.OmKRG', 'kramirez32@ucol.mx', NULL, 2);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `codes`
+--
+ALTER TABLE `codes`
+  ADD PRIMARY KEY (`ID_code`),
+  ADD KEY `code` (`code`),
+  ADD KEY `email` (`email`),
+  ADD KEY `expire` (`expire`);
 
 --
 -- Indices de la tabla `comments`
@@ -277,6 +317,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `codes`
+--
+ALTER TABLE `codes`
+  MODIFY `ID_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
@@ -286,7 +332,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT de la tabla `publication`
 --
 ALTER TABLE `publication`
-  MODIFY `ID_publication` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `ID_publication` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT de la tabla `reactions_comments`
@@ -298,7 +344,7 @@ ALTER TABLE `reactions_comments`
 -- AUTO_INCREMENT de la tabla `reactions_publications`
 --
 ALTER TABLE `reactions_publications`
-  MODIFY `ID_reaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `ID_reaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `reaction_type`
@@ -322,7 +368,7 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `ID_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Restricciones para tablas volcadas

@@ -47,14 +47,19 @@ body {
 
 header {
     display: flex;
+    position: fixed;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
     justify-content: space-between;
     align-items: center;
     background-color: var(--primary-color);
     height: var(--height-header);
     min-height: var(--min-height-header);
-    padding: 0 5%;
+    padding: 0 4%;
     font-size: 1.3rem;
     color: white;
+    z-index: 1;
    
 }
 .opcionesheader {
@@ -122,6 +127,43 @@ header {
     max-width: 20%;
     min-width: 20%;
 }
+
+.divEditPost {
+    z-index: 3;
+    display: none;
+    position: absolute;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+}
+.divEditPost .form-publi {
+    max-width: 50rem;
+    width: 50rem;
+    min-width: 35rem;
+}
+.divEditPost .cancel {
+    background-color: gray;
+    margin-left: 0%;
+    margin-top: -20%;
+    float: left;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 0.2rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    max-width: 20%;
+    min-width: 20%;
+}
+
 .MostrarReacciones {
     display: none;
     z-index: 3;
@@ -155,7 +197,7 @@ header {
 
 #detailsDiv {
     display: none;
-    position: absolute;
+    position: fixed;
     text-align: center;
     right: 0;
     padding: 10px 10px;
@@ -166,6 +208,8 @@ header {
     width: 220px;
     min-width: 220px;
     max-width: 220px;
+    margin-top: 4.5rem;
+    z-index: 1;
     background-color: #e8f0ef;
     box-shadow: 0 0 10px #34343433;
  
@@ -403,20 +447,31 @@ header {
     border-radius: 8px;
     display: flex;
     flex-direction: column;
+    margin-top: 0;
 }
 
 .miperfil-arriba .mitad {
-    padding: 1%;
+    padding: 0.4%;
     background-color: var(--primary-color);
     border-radius: 8px;
     color: #000;
-    
+    margin-top: 5%;
+    align-items: center;
+    justify-content: center;
 }
 
 .miperfil-arriba .mitad p {
     font-family: monospace;
     font-size: 150%;
     margin-left: 600px;     
+    padding: 5px 5px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    max-width: fit-content;
+    border: white 2px solid;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    word-spacing: 2px;
 }
 
 .foto-miperfil {
@@ -426,7 +481,7 @@ header {
     position: absolute;
     left: 50%;
     margin-left: -300px;
-    
+    z-index: 0;
 }
 
 .foto-miperfil img {
@@ -619,13 +674,13 @@ header {
     flex: 7 0 0;
     border-right: 1px solid var(--background-mid-light-color);
     border-left: 1px solid var(--background-mid-light-color);
-    display: flex;
     justify-content: center;
     flex-direction: column;
+    overflow-y: auto;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 .feedmain {
-    overflow-y: auto;
+
     flex: 7 0 0;
 }
 
@@ -787,6 +842,7 @@ header {
 .publicacion-crear {
     margin-top: 0%; /* Espacio entre el formulario y el feed */
     display: flex;
+
 }
 
 .mi-perfil {

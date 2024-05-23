@@ -43,7 +43,7 @@
                 <input type="email" placeholder="Correo" name="mail" id="mail" required>
                 <input type="password" placeholder="Contraseña" name="passw" id="passw" required minlength="6">
                 <div class="datosincorrectos2" id="errordivlo">
-                    <span>Error al iniciar sesión</span>
+                    <span>Datos incorrectos</span>
                 </div>
                 <button type="submit" title="Entrar">Iniciar sesión</button>
                 <div><a class="unirsebtn" href="./forgot">¿Olvidaste tu contraseña?</a></div>
