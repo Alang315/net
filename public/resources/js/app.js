@@ -14,6 +14,7 @@ app = {
         adminuser: "/adminuser",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
+        editPost: "/post/edit_post_data",
         userposts: "/post/get_user_P",
         getReactions:"/post/getEmotes",//llaves uid, pid, type, deben de llevar valores
         getEmotes:"/post/getEmotesResult",
@@ -1166,6 +1167,28 @@ app = {
             });
         }
     },
+
+    editMyPost: function(idPost) {
+        fetch(this.urls.openpost + "?_Op" + "&pid=" + idPost)
+            .then(res => res.json())
+            .then(data => {
+                let dataPost = data[0]
+                document.getElementById("idPostEdit").value = dataPost.ID_publication;
+                document.getElementById("newTitulo").value = dataPost.Title;
+                document.getElementById("newContenido").value = dataPost.Content;
+                document.getElementById("edit-temastab").selectedIndex = dataPost.ID_topic-1;
+                document.getElementById("divEditPost").style.display = 'flex';
+                document.getElementById('Sombreado').style.display = 'flex';
+            })
+    },
+
+    cerrarEditPost: function() {
+        document.getElementById("btnCerrarEdit").addEventListener("click", (e)=>{
+            e.preventDefault()
+            document.getElementById("divEditPost").style.display = 'none'
+            document.getElementById('Sombreado').style.display = 'none'
+        })
+    },
     
     //Publicaciones para los usuarios
     userPosts: function(uid){
@@ -1252,6 +1275,10 @@ app = {
                                         <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
                                             
                                         </ul>
+                                    </div>
+                                    <div class="BotonesControl">
+                                        <button class="btnEditPost" onclick="app.editMyPost(${post.ID_publication})">Editar</button>
+                                        <button class="btnDeletePost" onclick="userpost_confirm_delete(${post.ID_publication})">Eliminar</button>
                                     </div>
                             </div>
                                 

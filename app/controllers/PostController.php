@@ -49,6 +49,23 @@ class PostController{
 
     }
 
+    //Obtiene para edita publicacion
+    public function edit_post_data(){
+        if(!empty($_POST)){
+            $cp = in_array('_ep', array_keys(filter_input_array(INPUT_POST)));
+            if($cp){
+                $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $datos["imagen"] = ImageUpload::upload_image('imagen');
+                print_r($this->editPost($datos));
+            }else{
+                require_view("error404");
+            }
+        }else{
+            require_view("error404");
+        }
+
+    }
+
     //obtiene para obtener publicaciones de un usuario en especifico
     public function get_user_P(){
         if(!empty($_GET)){
@@ -223,6 +240,19 @@ class PostController{
         return $result;
     }
 
+    //Editar Publicacion
+    private function editPost($datos) {
+        $post = new publication();
+        if(isset($datos['imagen'])){
+            $result = $post->where([["ID_publication ", $datos["idPost"]]])
+            ->update(["Title"=>$datos["titulo"], "Content"=>$datos["contenido"], "ID_topic"=>$datos["tid"], "Image"=>$datos["imagen"]]);
+        } else {
+            $result = $post->where([["ID_publication ", $datos["idPost"]]])
+            ->update(["Title"=>$datos["titulo"], "Content"=>$datos["contenido"], "ID_topic"=>$datos["tid"]]);
+        }
+        return $result;
+    }
+
     //Obtiene temas
     private function getTopics(){
         $topic = new topics();                                               
@@ -269,6 +299,8 @@ class PostController{
 
     private function delete_Post($pid){
         $publi = new publication();
+        $post = json_decode($this->getPost(1, $pid))[0];
+        unlink(addslashes(PUBLIC_DIRECTORY . "images" . DS . $post->Image));
         $result = $publi->where([["ID_publication", $pid]])->delete();
         if($result){
             return json_encode(["r" => true, "m" => "Se elimino la publicacion satisfactoriamente"], JSON_UNESCAPED_UNICODE);
