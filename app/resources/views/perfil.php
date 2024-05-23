@@ -136,13 +136,13 @@
             </div>
         </main>
         <!--Ciclo para imprimir comentarios-->
-    <section class="comentarios">
-        
-         <div class="contenido">
+        <section class="comentarios">
+            <div class="publicacion-unidad">
+                <div class="contenido">
 
-         </div>
-    
-    </section>
+                </div>
+            </div>
+        </section>
     </div>
     <div id="Sombreado"></div>
 </body>
