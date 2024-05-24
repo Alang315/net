@@ -151,9 +151,7 @@
         <!--Ciclo para imprimir comentarios-->
         <section class="comentarios">
             <div class="publicacion-unidad">
-                <div class="contenido">
-
-                </div>
+                <div class="contenidoComen"></div>
             </div>
         </section>
     </div>
