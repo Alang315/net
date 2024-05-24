@@ -150,9 +150,7 @@
         </main>
         <!--Ciclo para imprimir comentarios-->
         <section class="comentarios">
-            <div class="publicacion-unidad">
-                <div class="contenidoComen"></div>
-            </div>
+            <div class="contenidoComen"></div>
         </section>
     </div>
     <div id="Sombreado"></div>
