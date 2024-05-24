@@ -28,6 +28,7 @@ app = {
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
 	  lp : $(".contenido"), //seccion para insertar el contenido
+      lpu : $(".contenidoComen"),
     tm : $(".temastab"),// select para tomar los temas
     tl : $(".temaslista"),
     rs : $(".reaccioning"),
@@ -75,7 +76,7 @@ app = {
                         if(post.Active ==1)
                         html += `
                             <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
-                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
+                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this, ${app.user.id})"
                                     class="link-publi"> 
                                     <div class="publicacion-unidad">
                                         <div class="username">
@@ -109,7 +110,7 @@ app = {
                                     <div class="publicacion-reaccion">
                                         <div class="reacciones-container">
                                             <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
-                                            onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
+                                            onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id}, ${app.user.id})"
                                             onclick="return false;">
                                                 <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
                                                 <option class="optionre" value="1" data-index="1">👍</option>
@@ -155,12 +156,14 @@ app = {
         }
     },
 
-    openPost: function(event, pid, element){
+    openPost: function(event, pid, element, user){
+        console.log(name);
         console.log(pid)
         event.preventDefault();
         let i = 0;
         let posthtml = "<h2>La publicación no esta disponible</h2>";
         let comentaryhtml =  "";
+        this.lpu.html("");
         this.pp.html("");
         this.lp.html("");
         fetch(this.urls.openpost + "?_Op" + "&pid=" + pid)
@@ -169,12 +172,43 @@ app = {
 				if(post.length > 0){
                     posthtml = this.postHTMLstructure(post, 1);
                     for(let comemnts of post){
-                        comentaryhtml += this.postHTMLstructure(post, 2, i);
+                        comentaryhtml += this.postHTMLstructure(post, 2, i, user);
                         i++;
                     }
-                    comentaryhtml = comentaryhtml == "" ? "<h2>Los comentarios no estan disponibles o no hay en esta publicacion</h2>" : comentaryhtml
+                    
+                    if(user == 0) {
+                        comentaryhtml = comentaryhtml == "" ? `
+                        <h2>Los comentarios no estan disponibles o no hay en esta publicacion</h2>` : comentaryhtml
+                    }
+                    else {
+                        comentaryhtml = comentaryhtml == "" ? `
+                        <div class="crearcomment">
+                            <form id="comment-form" method="post" class="form-comment">        
+                                <div class="mi-comment">
+                                    <div class="datos-comment">
+                                        <div class="datos">
+                                            <div>
+                                                <span>${app.user.name}</span>
+                                            </div>
+                                            <span>Crear comentario</span>
+                                
+                                        </div>
+                                    </div>
+                                    <div class="input-container">
+                                        <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
+                                    </div>
+                                    <div class="buttondiv">
+                                        <button type="submit">Enviar</button> 
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <h3>No se encontraron comentarios en este Post</h3>` : comentaryhtml
+                    }
                 }
                 this.lp.html(comentaryhtml);
+                this.lpu.html(comentaryhtml)
                 this.pp.html(posthtml);
 			}).catch(err => console.error(err));
     },
@@ -206,7 +240,7 @@ app = {
                     <button onclick="deletepubli1(this)" value="${post[0].ID_publication}" type="button" class="btnEliminar-openView">Eliminar Publicacion</button>`
                     
                     botonA = post[0].Active == 0 ?`<button onclick="aceptarpost(this)" value="${post[0].ID_publication}" type="button" class="btnAceptar-openView">Aceptar publicación</button>`:`
-                    <button value="${post.ID_publication}" type="button" class="btnAceptar-openView">Ta bien</button>`
+                    <!--<button value="$ {post.ID_publication}" type="button" class="btnAceptar-openView">Ta bien</button>-->`
 
                     backB  = `<button class="btnAtras-openView" onclick="app.view('adminpublic')">< Regresar</button>`
                 }
@@ -221,7 +255,7 @@ app = {
     },
 
 
-    postHTMLstructure : function (post, option = "", i = 0){
+    postHTMLstructure : function (post, option = "", i = 0, user){
         //console.table(post);
         let PostStructure = "", CommentaryStructure = ""  
         
@@ -294,7 +328,32 @@ app = {
         `;  
     
     if(option == 2 &&  i >0)
+        if(user == 0) {
+            CommentaryStructure = ``;
+        }
+        else {
         CommentaryStructure = `
+            <div class="crearcomment">
+                <form id="comment-form" method="post" class="form-comment">        
+                    <div class="mi-comment">
+                        <div class="datos-comment">
+                            <div class="datos">
+                                <div>
+                                    <span>${app.user.name}</span>
+                                </div>
+                                <span>Crear comentario</span>
+                    
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
+                        </div>
+                        <div class="buttondiv">
+                            <button type="submit">Enviar</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="commentarrys">
                 <div class="username">
                     <h3>${post[i].Username}</h3>  
@@ -308,6 +367,7 @@ app = {
             </div>
             <br>
             `;
+        }
         switch(option){
             case 1: return PostStructure; break;
             case 2: return CommentaryStructure; break;
@@ -1205,7 +1265,7 @@ app = {
                             html += `
                             <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
                                 ${post.Active == 1 ?`
-                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
+                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this, ${app.user.id})"
                                     class="link-publi">`: ``} 
                                     <div class="publicacion-unidad">
                                         <div class="username">
@@ -1233,8 +1293,8 @@ app = {
                                         </div>
                                     </div>
                                     ${post.Active == 1?`
-                                    <h3>Publi Aceptada</h3>`
-                                    : `<h3>Publi Pendiente</h3>`}
+                                    <span class="PubliStatus"><i title="Publicación Aceptada" class="bi bi-check-lg"></i></span>`
+                                    : `<span class="PubliStatusNone"><i title="Publicación en revisión" class="bi bi-clock"></i></span>`}
                                     ${post.Active==1 ?`
                                 </a>`:``}
                                     <div class="publicacion-reaccion">
@@ -1267,6 +1327,15 @@ app = {
                                             </button>
                                             <label for="iconocomment">${post.comments}</label>
                                         </div>
+
+                                        <div class="BotonesControl">
+                                            <button class="btnEditPost" onclick="app.editMyPost(${post.ID_publication})" title="Editar Post">
+                                                <img src="resources/img/edit-3-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                            <button class="btnDeletePost" onclick="userpost_confirm_delete(${post.ID_publication})" title="ELiminar Post">
+                                                <img src="resources/img/delete-2-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="pub-reaccion-span">
                                         <span></span>
@@ -1275,10 +1344,6 @@ app = {
                                         <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
                                             
                                         </ul>
-                                    </div>
-                                    <div class="BotonesControl">
-                                        <button class="btnEditPost" onclick="app.editMyPost(${post.ID_publication})">Editar</button>
-                                        <button class="btnDeletePost" onclick="userpost_confirm_delete(${post.ID_publication})">Eliminar</button>
                                     </div>
                             </div>
                                 

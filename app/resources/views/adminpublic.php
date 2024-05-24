@@ -89,7 +89,7 @@
 <div id="revisar" class="container-revisar">
     <div class="objetosVistaPrevia">
         <div class="PublicacionesDentro">
-            <div class="feed contenido"></div>
+            <div class="feed"></div>
         </div>
         <div class="change text-center" id="text-center">
             <div class="btnRegresar-openView">

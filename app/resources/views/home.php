@@ -153,8 +153,9 @@ main_header(["styles" => $styles],$sesion);
         app.publications();
         //app.lastPost(1);
         app.user.sv = "<?=isset($sesion->sv) ?'true':'false'?>";
-
+  
         app.user.id = "<?=isset($sesion->key) ? $sesion->key : 0 ?>";
+        app.user.name = "<?=isset($sesion->user) ? $sesion->user :'false' ?>";
     });
 </script>
 <?php main_footer(); ?>
