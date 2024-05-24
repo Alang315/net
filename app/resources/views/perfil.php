@@ -150,7 +150,7 @@
         </main>
         <!--Ciclo para imprimir comentarios-->
         <section class="comentarios">
-            <div class="contenidoComen"></div>
+                <div class="contenidoComen"></div>
         </section>
     </div>
     <div id="Sombreado"></div>
