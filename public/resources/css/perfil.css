@@ -450,20 +450,64 @@ header {
     margin-top: 0;
 }
 
-.miperfil-arriba .mitad {
+.mitad {
     padding: 0.4%;
     background-color: var(--primary-color);
     border-radius: 8px;
     color: #000;
     margin-top: 5%;
+    display: flex;
+}
+.miperfil-arriba .mitad .text {
+    width: 100%;
+    max-width: 100%;
     align-items: center;
-    justify-content: center;
+    display: flex;
+}
+.mitad .textopro {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+.textopro .textarriba {
+    justify-content: left;
+    display: flex;
+    align-items: left;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+
+}
+.textopro .textabajo {
+    justify-content: left;
+    display: flex;
+    align-items: left;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+
+}
+.textopro .textarriba p {
+    text-align: left;
+}
+.textopro .textabajo p {
+    text-align: left;
 }
 
-.miperfil-arriba .mitad p {
+.text {
+    margin-left: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.miperfil-arriba .mitad .text .textopro p {
     font-family: monospace;
+    justify-content: left;
+    left: 1px;
+    align-items: left;
+    text-align: left;
     font-size: 150%;
-    margin-left: 600px;     
+
     padding: 5px 5px;
     color: rgb(255, 255, 255);
     font-weight: bold;
@@ -474,22 +518,29 @@ header {
     word-spacing: 2px;
 }
 
-.foto-miperfil {
+.imgxd {
     padding: 0;
-    top: 11%;
-    width: 300px;
-    position: absolute;
-    left: 50%;
-    margin-left: -300px;
+    width: 30%;
+    display: flex;
+    top: 11%; 
     z-index: 0;
-}
+    justify-content: right;
+    align-items: center;
 
-.foto-miperfil img {
-    border-radius: 100px 100px 100px 100px;
-    border-width: 5px;
+}
+.imgxd img {
+    border-radius: 4em 4em 4em 4em;
+    border-width: 0.2em;
     border-style: solid;
     border-color: #000;
+    width: 20%;
+    max-width: 20%;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
 }
+
+
 
 .app {
     display: flex;
@@ -727,6 +778,65 @@ header {
         display: block;
 }
     
+.publicacion .btnEditPost {
+    background-color: transparent;
+    border: none;
+    width: 2.5em;
+    max-width: 2.5em;
+    min-width: 2.5em;
+    font-weight: bold;
+    border-radius: 5px;
+    max-height: 2.5em;
+    height: 2.5em;
+    min-height: 2.5em;
+    font-size: 1rem;
+    margin: 15px;
+    cursor: pointer;
+    margin-right: 5px;
+
+    align-items: center;
+}
+.publicacion .btnEditPost img {
+    width: 2.0em;
+    max-width: 2.0em;
+    min-width: 2.0em;
+    max-height: 2.0em;
+    height: 2.0em;
+    min-height: 2.0em;
+    align-items: center;
+    display: block;
+}
+
+.publicacion .btnDeletePost {
+    background-color: transparent;
+    border: none;
+    width: 2.5em;
+    max-width: 2.5em;
+    min-width: 2.5em;
+    font-weight: bold;
+    border-radius: 5px;
+    max-height: 2.5em;
+    height: 2.5em;
+    min-height: 2.5em;
+    font-size: 1rem;
+    margin: 15px;
+    cursor: pointer;
+    margin-right: 5px;
+
+    align-items: center;
+}
+.publicacion .btnDeletePost img {
+    width: 2.0em;
+    max-width: 2.0em;
+    min-width: 2.0em;
+    max-height: 2.0em;
+    height: 2.0em;
+    min-height: 2.0em;
+    align-items: center;
+    display: block;
+}
+
+
 .publicacion-unidad {
     background-color: #e1e8ea;
     padding: 1em 1em;
@@ -754,6 +864,32 @@ header {
 .link-publi {
     text-decoration: none;
     color: #000;
+}
+.PubliStatus {
+    background-color: #008a07;
+    float: right;
+    width:fit-content;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 5px;
+    font-size: 22px;
+    color: white;
+    border-radius: 1rem;
+}
+.PubliStatusNone {
+    background-color: #ff5c40;
+    float: right;
+    width:fit-content;
+    display: flex;
+    margin: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 5px;
+    font-size: 22px;
+    color: white;
+    border-radius: 1rem;
 }
 
 .publicacion-reaccion {
@@ -793,78 +929,9 @@ header {
     display: flex;
     align-items: center;
 }
-.comentarios {
-    flex: 3.5 1 0;
+.comments-container {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-    max-width: 90%;
-    width: 90%;
-    margin: 1% 1%;
-    background-color: rgb(234, 234, 234);
-    border-radius: 8px;
-    margin-top: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-
-
-}
-
-.comentarios .contenido {
-    
-    font-size: 1em;
-    border-radius: 8px;
-  
-    
-
-}
-.commentarrys {
-    display: flex;
-    flex-direction: column; /* Cambiamos la dirección a vertical */
-    padding: 20px;
-    margin: 1% 0%;
-    background-color: #448c3f;
-    border-radius: 8px;
-   
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-}
-
-.commentarrys .username {
-    font-size: 20px;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 0px; 
-    background-color: #d7e0df;
-    border-radius: 8px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-    padding: 8px ;
-}
-
-.commentarrys .date {
-    font-size: 0.8em;
-    color: #393b3f;
-
-    margin-bottom: 10px; /* Añadimos espacio entre la fecha y el contenido */
-    background-color: #d7e0df;
-    border-radius: 8px;
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-    padding: 8px;
-    padding-top: 0px;  
-    
-}
-
-.commentarrys .content {
-    font-size: 0.9em;
-    margin-top: 5px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 10px;
-    color: #000000;
-    margin-bottom: 10px; /* Añadimos espacio entre el contenido y el siguiente comentario */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-    
+    align-items: center;
 }
 .publicacion-unidad .titulo {
     background-color: #448c3f;
@@ -885,6 +952,18 @@ header {
     font-size: 22px;
     letter-spacing: 1px;
 }
+.contenidoComen {
+    margin-bottom: 0.2rem;
+    border-radius: 8px;
+    font-size: 22px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    letter-spacing: 1px;
+    overflow-y: auto;
+    overflow-x:hidden;
+}
+
 .publicacion-unidad .image-publication img{
     width:100%;
 }
@@ -901,6 +980,110 @@ header {
     display: flex;
 }
 
+.comentarios {
+    flex: 3 1 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 90%;
+    width: 90%;
+    margin: 2% 3%;
+    background-color: rgb(234, 234, 234);
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.comentarios .contenidoComen {
+    font-size: 1em;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+
+
+}
+
+.commentarrys {
+    display: flex;
+    flex-direction: column; /* Cambiamos la dirección a vertical */
+    padding: 20px;
+
+    margin: 2% 3%;
+    background-color: #448c3f;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.commentarrys .username {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px; /* Añadimos espacio entre el nombre y la fecha */
+}
+
+.commentarrys .date {
+    font-size: 0.8em;
+    color: #393b3f;
+
+    margin-bottom: 10px; /* Añadimos espacio entre la fecha y el contenido */
+    background-color: #d7e0df;
+    border-radius: 8px;
+    padding: 8px;
+    display: inline-block;
+    max-width: 58%;
+    word-wrap: break-word;
+
+}
+
+.commentarrys .content {
+    font-size: 0.9em;
+    margin-top: 5px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    color: #000000;
+    margin-bottom: 10px; /* Añadimos espacio entre el contenido y el siguiente comentario */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+
+}
+
+.crearcomment {
+    text-align: center;
+    align-items: center; 
+    width: 95%;
+    min-width: 95%;
+    max-width: 95%;
+    background-color: transparent;
+    padding: 20px;
+    background-color: #afafaf;
+    margin: 2% 3%;
+    border-radius: 1rem;
+}
+
+.crearcomment .form-comment {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+}
+
+.mi-comment button {
+    transition: background-color 0.3s ease;
+    background-color: #0074D9;
+    color: white;
+    font-weight: bold;
+    padding: 10px 10px;
+    border: none;
+    float: left;
+    outline: none;
+    border-radius: 1rem;
+}
+.mi-comment button:hover {
+    background-color: orangered;
+}
 
 .publicacion-crear {
     margin-top: 0%; /* Espacio entre el formulario y el feed */

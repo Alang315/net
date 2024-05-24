@@ -68,10 +68,23 @@
     </div>
     <div class="miperfil-arriba">
         <div class="mitad">
-            <div class="foto-miperfil"><img src= "/resources/img/perfil.jpg" width="40%" alt="Foto de perfil"></div>
-            <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
-            <hr>
-            <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
+            <div class="text">
+                <div class="imgxd">
+                    <img src= "/resources/img/perfil.jpg" alt="Foto de perfil">
+                    <br>
+                </div>
+                <div class="textopro">
+                    <div class="textarriba">
+                        <br>
+                        <p class="nombre-perfil"><?php echo isset($sesion->user) ? $sesion->user : "" ?></p>
+                    </div>
+                    <hr></hr>
+                    <div class="textabajo">
+                        <br>
+                        <p class="email-perfil"><?php echo isset($sesion->email) ? $sesion->email : "" ?></p>
+                    </div>
+                </div>
+            </div>
         </div>  
         <!--<br><hr>-->
     </div>
@@ -136,13 +149,9 @@
             </div>
         </main>
         <!--Ciclo para imprimir comentarios-->
-    <section class="comentarios">
-        
-         <div class="contenido">
-
-         </div>
-    
-    </section>
+        <section class="comentarios">
+                <div class="contenidoComen"></div>
+        </section>
     </div>
     <div id="Sombreado"></div>
 </body>

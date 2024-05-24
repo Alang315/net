@@ -70,14 +70,14 @@
 .publicacionPrevia {
     margin-bottom: 1em;
     float: right;
-    max-width: 25em;
-    min-width: 25em;
+    max-width: 30em;
+    min-width: 30em;
     border-left: 6px solid blue;
     background-color: #e1e8ea;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    width: 25em;
+    width: 30em;
     text-decoration: none;
     height: auto;
 }
