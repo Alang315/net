@@ -119,8 +119,9 @@ class DB extends PDO{
                ($this->j != "" ? " a" . $this->j : "") .
                " where " . $this->w .
                $this->o . 
-               $this->l . 
-               $this->g;
+               $this->g . 
+               $this->l;
+            //echo $sql;
         $this->r = $this->query($sql);
         return $this->r->fetchAll(PDO::FETCH_CLASS);
     }
