@@ -10,6 +10,10 @@ app = {
         posts: "post/getP?_pp",
         mejorposts: "post/getPublis",
         getTopics: "post/getT",
+        createTopic: "temas/filterdata_createTopic",
+        deleteTopic: "temas/filterdata_deleteTopic",
+        getTopicById: "temas/filterdata_getTopicById",
+        editTopic: "temas/filterdata_editTopic",
         miperfil:"/perfil",
         adminpublic: "/adminpublic",
         adminuser: "/adminuser",
@@ -842,6 +846,22 @@ app = {
             }  
     },
 
+    editTopic: function(idTopic) {
+        fetch(this.urls.getTopicById + "?_gti&idTopic=" + idTopic)
+        .then(res => res.json())
+        .then(data => {
+            let topic = data[0]
+            $("#idTopicEdit").val(idTopic)
+            $("#tituloTemaEditado").val(topic.Name)
+            $("#contenidoTemaEditado").val(topic.Description)
+            $("#EditarTema").css("display", "flex")
+        })
+    },
+
+    cerrarFormEditar: function() {
+        $("#EditarTema").css("display", "None")
+    },
+
     Buscador: function() {
         const buscador = document.getElementById('search');
         if(buscador) {
@@ -1115,8 +1135,8 @@ app = {
                                     <td>${topic.Description}</td>
                                     <td>
                                         <div class="text-center btn-group">
-                                            <button onclick="" type="button" value ="${topic.ID_topic}" class="btnEditar">Editar</button>
-                                            <button onclick="deleteTopic()" type="button" value ="${topic.ID_topic}" class="btnEliminar">Eliminar</button>
+                                            <button onclick="app.editTopic(${topic.ID_topic})" type="button" value ="${topic.ID_topic}" class="btnEditar">Editar</button>
+                                            <button onclick="deleteTopic(${topic.ID_topic})" type="button" value ="${topic.ID_topic}" class="btnEliminar">Eliminar</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -1533,8 +1553,8 @@ app = {
                                 <td>${topic.Description}</td>
                                 <td>
                                     <div class="text-center btn-group">
-                                        <button onclick="" type="button" value ="${topic.ID_topic}" class="btnEditar">Editar</button>
-                                        <button onclick="deleteTopic()" type="button" value ="${topic.ID_topic}" class="btnEliminar">Eliminar</button>
+                                        <button onclick="app.editTopic(${topic.ID_topic})" type="button" value ="${topic.ID_topic}" class="btnEditar">Editar</button>
+                                        <button onclick="deleteTopic(${topic.ID_topic})" type="button" value ="${topic.ID_topic}" class="btnEliminar">Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
@@ -1554,7 +1574,7 @@ app = {
         switch(index){
             case 1: destiny = this.urls.deletePubli + "?_dP" + "&pid=" + elementId; break;
             case 2: destiny = this.urls.deleteUser + "?_dU" + "&uid=" + elementId;break;
-            case 3: destiny = ""; break;
+            case 3: destiny = this.urls.deleteTopic + "?_dT" + "&tid=" + elementId; break;
         }
             
         fetch(destiny)

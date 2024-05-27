@@ -144,7 +144,7 @@ function aceptarpost(){
 }
 
 /* Eliminar tema */
-function deleteTopic(){
+function deleteTopic(idTopic){
     swal.fire({
         icon:"question",
         title:"Eliminar Tema",
@@ -153,13 +153,10 @@ function deleteTopic(){
         confirmButtonText: "Eliminar tema",
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire("¡Tema eliminado!", "", "success");
-                function charge(){
-                    app.getPostAdmin()
-                }
-            
-            Swal.fire("¡Publicación rechazada!", "", "success");
-            app.deleteElement(1, element.value, charge)
+            app.deleteElement(3, idTopic, ()=>{
+                app.getTopicsAdmin()
+                Swal.fire("¡Tema eliminado!", "", "success");
+            })
         }
     });
 }
@@ -224,4 +221,24 @@ function userpost_confirm_delete(idPost) {
           app.deleteElement(1, idPost, ()=>app.userPosts(app.user.id))
         }
       });
+}
+
+/* Confirmar que se ha creado el tema */
+function temaCreado(){
+    Swal.fire({ 
+        icon: "success",
+        title: "Se ha creado el tema",
+        showConfirmButton: false,
+        timer: 1000
+    });
+}
+
+/* Confirmar que se ha editado el tema */
+function temaEditado(){
+    Swal.fire({ 
+        icon: "success",
+        title: "Se ha editado el tema",
+        showConfirmButton: false,
+        timer: 1000
+    });
 }
