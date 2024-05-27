@@ -85,6 +85,28 @@
     </div>
 </div>
 
+<div class="EditarTema" id="EditarTema">
+    <div class="formularioTema">
+        <form id="tema-EditForm" method="post">
+            <div class="Title-container">
+                <div class="tituloxd">
+                    <span>Editar Tema</span>
+                </div>
+                <div class="buttonxd">
+                    <button type="button" id="btnCerrarEditarTema" onclick="app.cerrarFormEditar()">X</button> 
+                </div>
+            </div>
+            <!--Titulo y contenido de la nueva publicacion-->
+            <div class="Input-container">
+                <input type="hidden" name="idTopic" id="idTopicEdit">
+                <input type="text" name="TituloEditado" placeholder="Título" id="tituloTemaEditado" required>
+                <textarea name="ContenidoEditado" placeholder="Escribe la descripción del tema..." id="contenidoTemaEditado" required></textarea>
+                <button type="submit">Editar Tema</button> 
+            </div>         
+        </form>
+    </div>
+</div>
+
 <div id="Sombreado"></div>
 
 <?php 
@@ -97,11 +119,48 @@
     app.toggleTemas();
     app.getTopicsAdmin();
 
+    app.user.sv = <?=$sesion->sv?'true':'false'?>;
+    app.user.id = "<?=$sesion->key?>";
+    app.user.name = "<?=$sesion->user?>";
 
         
     $(function(){
-        // Evento para eliminar usuario al hacer clic en el botón
+        $("#tema-Form").on("submit", function(e){
+            e.preventDefault()
+            let dataTopic = new FormData(this)
+            dataTopic.append("ID_user", app.user.id)
+            dataTopic.append("_ct", "")
+            fetch(app.urls.createTopic, {
+                method : "POST",
+                body : dataTopic
+            }).then(res => res.json())
+            .then(data => {
+                if(data) {
+                    $("#CrearTema").css("display", "None")
+                    this.reset()
+                    app.getTopicsAdmin()
+                    temaCreado()
+                }
+            }).catch(err => console.error(err))
+        })
 
-       
+        $("#tema-EditForm").on("submit", function(e){
+            e.preventDefault()
+            let dataTopic = new FormData(this)
+            dataTopic.append("ID_user", app.user.id)
+            dataTopic.append("_et", "")
+            fetch(app.urls.editTopic, {
+                method : "POST",
+                body : dataTopic
+            }).then(res => res.json())
+            .then(data => {
+                if(data){
+                    app.cerrarFormEditar()
+                    this.reset()
+                    app.getTopicsAdmin()
+                    temaEditado()
+                }
+            }).catch(err => console.error(err))
+        })
     })
 </script>
