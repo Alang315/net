@@ -207,8 +207,9 @@ app = {
                                 </div>
                             </form>
                         </div>
+                        <div class="no-comments">
+                        <h3>No se encontraron comentarios en este Post</h3></div>` : comentaryhtml
                         
-                        <h3>No se encontraron comentarios en este Post</h3>` : comentaryhtml
                     }
                 }
                 this.lp.html(comentaryhtml);
