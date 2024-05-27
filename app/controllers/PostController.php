@@ -31,6 +31,21 @@ class PostController{
             die();
         }
     }
+
+    public function getPublis(){
+        if(!empty($_GET)){
+            $pp = in_array('_ppu', array_keys(filter_input_array(INPUT_GET)));
+            if($pp){
+                print_r($this->getCustomPosts());
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        }
+    }
    
     //Obtiene para crear publicacion
     public function get_Publidata(){
@@ -57,6 +72,23 @@ class PostController{
                 $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
                 $datos["imagen"] = ImageUpload::upload_image('imagen');
                 print_r($this->editPost($datos));
+            }else{
+                require_view("error404");
+            }
+        }else{
+            require_view("error404");
+        }
+
+    }
+
+    //Crea comentarios
+    public function get_Comments(){
+        if(!empty($_POST)){
+            $cp = in_array('_cc', array_keys(filter_input_array(INPUT_POST)));
+            if($cp){
+                $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $user = filter_input_array(INPUT_GET)["uid"];
+                print_r($this->createComment($datos, $user));
             }else{
                 require_view("error404");
             }
@@ -203,7 +235,7 @@ class PostController{
 //OBTENER LA CUENTA DE CADA TIPO DE REACCION DE CADA PUBLICACION
     private function getPost($limit="", $pid = "", $uid = ""){
         $posts = new publication();
-        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content', 'b.Username','t.Name as topic','t.ID_topic as ID_topic', 'a.Date', 'a.Image', 'a.Active'])
+        $resultP = $posts->select(['a.ID_publication', 'a.Title', 'a.Content','a.ID_user as ID_user', 'b.Username','t.Name as topic','t.ID_topic as ID_topic', 'a.Date', 'a.Image', 'a.Active'])
                         ->count([["DISTINCT rp.ID_reaction", "reacciones"], ["DISTINCT c.ID_comment", "comments"]])
                          ->group_concat("DISTINCT rt.ID_type", "reacciones_IDS")
                          ->join([['user b', 'a.ID_user = b.ID_user', " "], 
@@ -231,12 +263,49 @@ class PostController{
             }
             return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
-    
+
+    //obtener los 3 posts más populares
+    private function getCustomPosts($limit = "3", $pid = "", $uid = "") {
+        $posts = new publication();
+        $resultP = $posts->select(['
+            a.ID_publication,
+            a.title,
+            a.content,
+            a.date,
+            a.ID_user as ID_user,
+            rp.ID_reaction as total_reactions,
+            u.Username AS creator'
+        ])
+        ->count([['DISTINCT rp.ID_reaction','total_reactions'],
+                 ['DISTINCT c.ID_comment','total_comments']])
+        ->group_concat('DISTINCT rt.ID_type', 'reaction_types')
+        ->join([
+            ['user u', 'a.ID_user = u.ID_user', " "],
+            ['reactions_publications rp', 'a.ID_publication = rp.ID_publication', "left"],
+            ['reactions_comments rc', 'a.ID_publication = rc.ID_comment', "left"],
+            ['reaction_type rt', 'rp.ID_type = rt.ID_type OR rc.ID_type = rt.ID_type', "left"],
+            ['comments c', 'a.ID_publication = c.ID_publication', "left"]
+        ])
+        ->where([["a.Active", 1]])        
+        ->groupBy("rp.ID_reaction DESC")
+        ->limit($limit)
+        ->getAll();
+        $result = $resultP;
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
     //Crear Publicacion
     private function createPost($datos){
         $post = new publication();
         $post->setValores([$datos["titulo"], $datos["contenido"], $datos["date"], $datos["key"], $datos["tid"], $datos["state"], $datos["imagen"]]);
         $result = $post->insert();
+        return $result;
+    }
+    //Crear comentarios
+    private function createComment($datos) {
+        $comment = new comments();
+        $comment->setValores([$datos["contenidocomen"], $datos["date"], $datos["key"], $datos["pide"]]);
+        $result = $comment->insert();
         return $result;
     }
 
@@ -301,6 +370,8 @@ class PostController{
         $publi = new publication();
         $post = json_decode($this->getPost(1, $pid))[0];
         unlink(addslashes(PUBLIC_DIRECTORY . "images" . DS . $post->Image));
+        if(!is_null($post->Image))
+            unlink(addslashes(PUBLIC_DIRECTORY . "images" . DS . $post->Image));
         $result = $publi->where([["ID_publication", $pid]])->delete();
         if($result){
             return json_encode(["r" => true, "m" => "Se elimino la publicacion satisfactoriamente"], JSON_UNESCAPED_UNICODE);
