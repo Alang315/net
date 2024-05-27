@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\user;
+use app\models\topics;
 use stdClass;
 
 class TemasController {
@@ -25,6 +26,87 @@ class TemasController {
         else{
             require_view("error404"); // funcion para reenviar vistas
         }
+    }
+
+    //FUNCIONES PUBLICAS Y FILTRADAS PARA CRUD
+    public function filterdata_createTopic() {
+        if(!empty($_POST)){
+            $ct = in_array('_ct', array_keys(filter_input_array(INPUT_POST)));
+            if($ct){
+                $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                print_r($this->createTopic($datos));
+                return;
+            }
+        }
+        require_view("error404");
+    }
+
+    public function filterdata_deleteTopic() {
+        if(!empty($_GET)){
+            $dt = in_array('_dT', array_keys(filter_input_array(INPUT_GET)));
+            if($dt){
+                if(isset(filter_input_array(INPUT_GET)["tid"])){
+                    $tid =  filter_input_array(INPUT_GET)["tid"];
+                    print_r($this->deleteTopic($tid));
+                    return;
+                }
+            }
+        }
+        require_view("error404");
+    }
+
+    public function filterdata_getTopicById() {
+        if(!empty($_GET)){
+            $gti = in_array('_gti', array_keys(filter_input_array(INPUT_GET)));
+            if($gti){
+                $id = filter_input_array(INPUT_GET)["idTopic"];
+                echo json_encode($this->getTopicById($id));
+                return;
+            }
+        }
+        require_view("error404");
+    }
+
+    public function filterdata_editTopic() {
+        if(!empty($_POST)){
+            $et = in_array('_et', array_keys(filter_input_array(INPUT_POST)));
+            if($et){
+                $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                echo $this->editTopic($datos);
+                return;
+            }
+        }
+        require_view("error404");
+    }
+
+
+    //FUNCIONES PRIVADAS DE CRUD
+    private function createTopic($data) {
+        $topic = new topics();
+        $topic->setValores([$data['Titulo'], $data['Contenido'], $data['ID_user']]);
+        return $topic->insert();
+    }
+
+    private function deleteTopic($tid) {
+        $topic = new topics();
+        $result = $topic->where([["ID_topic ", $tid]])->delete();
+        if($result){
+            return json_encode(["r" => true, "m" => "Se elimino el tema satisfactoriamente"], JSON_UNESCAPED_UNICODE);
+        }else{
+            return false;
+        } 
+    }
+
+    private function getTopicById($idTopic){
+        $topic = new topics();                                               
+        return $topic->where([["ID_topic", $idTopic]])->select(["ID_topic, Name, Description"])->getAll();
+    }
+
+    private function editTopic($datos) {
+        $topic = new topics();
+        $result = $topic->where([["ID_topic", $datos["idTopic"]]])
+            ->update(["Name"=>$datos["TituloEditado"], "Description"=>$datos["ContenidoEditado"]]);
+        return $result;
     }
 
     //Metodo que deslogue a los usuarios
