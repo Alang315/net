@@ -586,6 +586,11 @@ header {
     padding-bottom: 5rem;
 }
 
+.feedmain h3 {
+    font-size: 1.6em;
+    margin-left: 50px;
+}
+
 .publicacion {
     margin-bottom: 1em;
     max-width: 35em;

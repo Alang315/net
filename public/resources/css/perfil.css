@@ -734,6 +734,12 @@ header {
 
     flex: 7 0 0;
 }
+.feedmain h3 {
+    margin-top: 30px;
+    font-size: 1.6em;
+    margin-left: 50px;
+}
+
 
 .publicacion {
     margin-bottom: 1em;
@@ -1142,8 +1148,9 @@ header {
 }
 
 .publicacion-crear {
-    margin-top: 0%; /* Espacio entre el formulario y el feed */
+    margin-top: 20px; /* Espacio entre el formulario y el feed */
     display: flex;
+    margin-left: 20px;
 
 }
 
