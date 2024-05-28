@@ -286,3 +286,13 @@ function temaEditado(){
         timer: 2000
     });
 }
+
+/* Confirmar que se ha creado el tema */
+function ComentarioCreado(){
+    Swal.fire({ 
+        icon: "success",
+        title: "Se ha creado tu comentario",
+        showConfirmButton: false,
+        timer: 2000
+    });
+}
