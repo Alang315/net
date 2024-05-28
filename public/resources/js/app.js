@@ -168,7 +168,9 @@ app = {
     },
 
     openPost: function(event, pid, element, user, iduser){
-        event.preventDefault();
+        if(event != ""){
+            event.preventDefault();
+        }
         let i = 0;
         let posthtml = "<h2>La publicación no esta disponible</h2>";
         let comentaryhtml =  "";
@@ -249,7 +251,6 @@ app = {
 
     createComent: function(idpubli){
         app.getDate()
-        console.log("Se inicia el comentario")
         const cf = $('#comment-form');
         cf.on("submit", function(e){
             e.preventDefault();
@@ -268,6 +269,7 @@ app = {
             .then ( resp => {
                 if(resp.r !== false){
                     //publicreada()
+                    app.openPost("", idpubli,"", app.user.id, app.user.id)
                     alert("SECREO COMENTARIO")
                     $("#contenidocomen").val(''); //Borra el campo de contenido
                 }else{
