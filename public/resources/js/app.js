@@ -19,7 +19,7 @@ app = {
         adminuser: "/adminuser",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
-        createComment: "/post/get_Comments",
+        createComment: "post/get_Comments?_cc",
         editPost: "/post/edit_post_data",
         userposts: "/post/get_user_P",
         getReactions:"/post/getEmotes",//llaves uid, pid, type, deben de llevar valores
@@ -168,8 +168,6 @@ app = {
     },
 
     openPost: function(event, pid, element, user, iduser){
-        console.log(iduser);
-        console.log(pid)
         event.preventDefault();
         let i = 0;
         let posthtml = "<h2>La publicación no esta disponible</h2>";
@@ -281,7 +279,6 @@ app = {
 
     /* openPost para Revisar en la vista de administrar publicaciones */
     openView: function(event, pid, element){
-        console.log(pid)
         div = $('.div')
             if(div = revisar){
                 div.style.display = 'flex';
@@ -516,9 +513,6 @@ app = {
             entravisit()
         } else {
             let html = `<b>0</b>`;
-            console.log(pid);
-            console.log(typer);
-            console.log(user);
             const selectedValue = typer;
             localStorage.setItem('selectedOption', selectedValue);
             this.rs.html("");
@@ -526,7 +520,6 @@ app = {
                     .then(resp => resp.json())
                     .then(ppresp => {
                     if(ppresp.length > 0){
-                        console.log(ppresp);
                         let total = 0
                         html = "";
                         for(let reaccion of ppresp){
@@ -1404,7 +1397,6 @@ app = {
         const btnAbrirCosa = document.getElementById('btnAbrir');
         if (btnAbrirCosa) {
             btnAbrirCosa.addEventListener('click', () => {
-                console.log("hola");
                 let displayStyle = window.getComputedStyle(navegacion, null).display;
                 navegacion.style.display = (displayStyle === 'none') ? 'flex' : 'none';
             });
