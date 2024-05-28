@@ -112,7 +112,7 @@ main_header(["styles" => $styles],$sesion);
         const select = $("#temastab");
         const Sombreado = $('#Sombreado');
         const divnewpost = $('#divnewpost');
-        const cf = $('#comment-form');
+        //const cf = $('#comment-form');
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -172,6 +172,7 @@ main_header(["styles" => $styles],$sesion);
             }).catch( err => console.error( err ))            
         })
         */
+        
         app.getTopics();
         app.getTopicslist();
         app.abrirnavegacion();
