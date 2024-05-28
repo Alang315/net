@@ -146,10 +146,13 @@
             </div>
         </main>
         <!--Ciclo para imprimir comentarios-->
-        <section class="comentarios">
-                <div class="contenidoComen"></div>
-        </section>
-    </div>
+<section class="comentarios">
+        
+        <div class="contenido">
+
+        </div>
+    
+</section>
     <div id="Sombreado"></div>
 </body>
 <?php 

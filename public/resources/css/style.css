@@ -83,36 +83,88 @@ header {
 .crearcomment {
     text-align: center;
     align-items: center; 
-    width: 95%;
-    min-width: 95%;
-    max-width: 95%;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
     background-color: transparent;
     padding: 20px;
     background-color: #afafaf;
-    margin: 2% 3%;
-    border-radius: 1rem;
+    margin-left: 2px;
+    border-radius: 12px;
+    
 }
 
-.crearcomment .form-comment {
-    display: flex;
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-}
 
-.mi-comment button {
-    transition: background-color 0.3s ease;
-    background-color: #0074D9;
-    color: white;
+
+.datos-comment .datos {
+
+    color : #000;
+    font-size: 1.2em;
     font-weight: bold;
-    padding: 10px 10px;
-    border: none;
-    float: left;
-    outline: none;
-    border-radius: 1rem;
+    text-align: center;
+    
+
+
+    
 }
-.mi-comment button:hover {
-    background-color: orangered;
+
+.crearcomment .form-comment textarea {
+    background-color: #e1e1e1;
+    border: none;
+    padding: 6px 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    resize: none;
+    font-family: 'Montserrat', sans-serif;
+    
+    transition: background-color 0.3s ease-in-out;
+    width:100%;
+    height: 100px;
+    gap: 5px;
+    margin-top: 15px;
+}
+
+.crearcomment .form-comment textarea:focus {
+    background-color: #ffffff;
+    outline: none;
+    box-shadow: 0 0 10px #34343433;
+}
+
+.crearcomment .form-comment button {
+    margin-top: 8px;
+    background-color: #5500ff;
+    color: #FFF;
+    border: none;
+    width: 35%;
+   
+    font-weight: bold;
+    border-radius: 5px;
+    align-items: center;
+    max-height: 35px;
+    font-size: 1rem;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.crearcomment .form-comment button:hover {
+    background-color: white;
+    color: #5500ff;
+}
+.no-comments {
+    color: #000000; 
+    font-size: 1.2em; 
+    font-weight: bold; 
+    text-align: center; 
+    margin-top: 20px; 
+    padding: 10px 20px; 
+    background-color: #f8f8f8; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif; 
 }
 
 
@@ -535,6 +587,11 @@ header {
     padding-bottom: 5rem;
 }
 
+.feedmain h3 {
+    font-size: 1.6em;
+    margin-left: 50px;
+}
+
 .publicacion {
     margin-bottom: 1em;
     max-width: 35em;
@@ -601,8 +658,8 @@ header {
     font-size: 16px;
     background-color: #0074D9;
     color: white;
-    padding: 2px;
-    border-radius: 0.3rem;
+    padding: 6px;
+    border-radius: 6px;
 }
 
 .link-publi {
@@ -654,7 +711,9 @@ header {
 .publicacion-unidad .titulo {
     background-color: #448c3f;
     border-radius: 0.3rem;
-    padding: 0.3rem;
+    padding: 9px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 .publicacion-unidad .titulo .title {
     font-size: 22px;
@@ -663,20 +722,23 @@ header {
 }
 .publicacion-unidad .username {
     margin-bottom: 5px;
+    margin-top: 10px;
 }
 .contenido {
-   margin-bottom: 0.2rem;
+   margin-bottom: 25px;
     border-radius: 8px;
-    font-size: 22px;
+    font-size: 21px;
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    letter-spacing: 1px;
+    letter-spacing: 0.7px;
     overflow-y: auto;
     overflow-x:hidden;
 }
 
 .publicacion-unidad .image-publication img{
+    margin-top: 0;
+    margin-bottom: 25px;
     width:100%;
 }
 
@@ -685,7 +747,9 @@ header {
     width: auto;
     color: white;
     border-radius: 1rem;
-    padding: 0.2rem;
+    font-size: 15px;
+    padding: 8px;
+   
 }
 
 .NoPubs {
@@ -833,16 +897,16 @@ input[type="text"],
 }
 
 .comentarios {
-    flex: 3 1 0;
+    flex: 3.5 1 0;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    max-width: 90%;
-    width: 90%;
-    margin: 2% 3%;
+    
+    width: 100%;
+    margin: 1% 1%;
     background-color: rgb(234, 234, 234);
     border-radius: 8px;
-    margin-top: 30px;
+    margin-top: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 
 }
@@ -861,7 +925,7 @@ input[type="text"],
     flex-direction: column; /* Cambiamos la dirección a vertical */
     padding: 20px;
     
-    margin: 2% 3%;
+    margin-left: 2px;
     background-color: #448c3f;
     border-radius: 8px;
     margin-top: 20px;
@@ -871,21 +935,28 @@ input[type="text"],
 .commentarrys .username {
     font-size: 20px;
     font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 10px; /* Añadimos espacio entre el nombre y la fecha */
+    color: #0d0d0d;
+    background-color: #d7e0df;
+    padding: 8px;
+    border-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+
+
 }
 
 .commentarrys .date {
     font-size: 0.8em;
     color: #393b3f;
-
     margin-bottom: 10px; /* Añadimos espacio entre la fecha y el contenido */
     background-color: #d7e0df;
     border-radius: 8px;
     padding: 8px;
-    display: inline-block;
-    max-width: 58%;
-    word-wrap: break-word;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    padding-top: 0;
+    
     
 }
 
