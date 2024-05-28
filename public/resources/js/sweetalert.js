@@ -3,11 +3,8 @@ function usercreado(){
     Swal.fire({
         title: "¡Usuario creado!",
         icon: "success",
-        confirmButtonText: "Continuar"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            app.view("login");
-        }
+        showConfirmButton: false,
+        timer: 2000
     });
 }
 
@@ -17,7 +14,7 @@ function publicreada(){
         icon: "success",
         title: "Se ha creado la publicación",
         showConfirmButton: false,
-        timer: 1000
+        timer: 2000
     });
 }
 
@@ -41,7 +38,8 @@ function entravisit(){
         imageUrl: "/resources/img/logo.png",
         imageWidth: 200,
         //imageHeight: 200,
-        confirmButtonText: "Aceptar"
+        showCancelButton: true,
+        confirmButtonText: "Ir al login"
     }).then((result) => {
         if (result.isConfirmed) {
             app.view("login");
@@ -63,7 +61,12 @@ function deleteuser(element){
                 app.getPeopleAdmin()
             }
             app.deleteElement(2,element.value, charge)
-            Swal.fire("¡Usuario eliminado!", "", "success");
+            Swal.fire({
+                title: "¡Usuario eliminado!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            });
         }
     });
 }
@@ -82,7 +85,12 @@ function deletepubli(element){
                 app.getPostAdmin(1)
             }
             app.deleteElement(1, element.value, charge)
-            Swal.fire("¡Publicación eliminada!", "", "success");
+            Swal.fire({
+                title: "¡Publicación eliminada!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            });
         }
     });
 }
@@ -104,7 +112,12 @@ function deletepubli1(element){
                     }
             }
             app.deleteElement(1, element.value, charge)
-            Swal.fire("¡Publicación eliminada!", "", "success");
+            Swal.fire({
+                title: "¡Publicación eliminada!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            });
         }
     });
 }
@@ -119,7 +132,17 @@ function declinepost(element){
         confirmButtonText: "Rechazar",
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire("¡Publicación rechazada!", "", "success");
+            function charge(){
+                app.getPostAdmin(1)
+            }
+            app.deleteElement(1, element.value, charge)
+            Swal.fire({
+                title: "¡Publicación rechazada!", 
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            
         }
     });
 }
@@ -134,7 +157,12 @@ function aceptarpost(){
         confirmButtonText: "Aceptar",
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire("¡Publicación aceptada y publicada!", "", "success");
+            Swal.fire({
+                title: "¡Publicación aceptada y publicada!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            });
         }
     });
 }
@@ -151,7 +179,12 @@ function deleteTopic(idTopic){
         if (result.isConfirmed) {
             app.deleteElement(3, idTopic, ()=>{
                 app.getTopicsAdmin()
-                Swal.fire("¡Tema eliminado!", "", "success");
+                Swal.fire({
+                    title: "¡Tema eliminado!",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             })
         }
     });
@@ -173,9 +206,13 @@ function declinepost1(element){
                         div.style.display = 'none';
                     }
                 }
-            
-            Swal.fire("¡Publicación rechazada!", "", "success");
             app.deleteElement(1, element.value, charge)
+            Swal.fire({
+                title: "¡Publicación rechazada!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            });
         }
     });
 }
@@ -189,7 +226,12 @@ function aceptarpost(element){
         confirmButtonText: "Aceptar",
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire("¡Publicación aceptada y publicada!", "", "success");
+            Swal.fire({
+                title: "¡Publicación aceptada y publicada!", 
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            });
             function charge(){
                 app.getPostAdmin()
                 div = $('.div')
@@ -214,6 +256,12 @@ function userpost_confirm_delete(idPost) {
         cancelButtonText: "Cancelar"
       }).then((result) => {
         if (result.isConfirmed) {
+          Swal.fire({
+            title: "¡Publicación eliminada!",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 2000
+          });
           app.deleteElement(1, idPost, ()=>app.userPosts(app.user.id))
         }
       });
@@ -225,7 +273,7 @@ function temaCreado(){
         icon: "success",
         title: "Se ha creado el tema",
         showConfirmButton: false,
-        timer: 1000
+        timer: 2000
     });
 }
 
@@ -235,6 +283,6 @@ function temaEditado(){
         icon: "success",
         title: "Se ha editado el tema",
         showConfirmButton: false,
-        timer: 1000
+        timer: 2000
     });
 }

@@ -104,11 +104,10 @@
                     <h2>¿Buscas algo?</h2>
                     <input type="search" class="search-bar" name="search" id="search2" placeholder="Escribe aquí...">
                     <div class="populares">
-                    <h2>Popular</h2>
+                    <h2></h2>
+                    <div class="ods_rueda"><img src="/resources/img/ods_rueda.gif" title="Objetivos del Desarrollo Sostenible"></div>
                     <ul>
-                        <li>¿3ra guerra mundial 2024?</li>
-                        <li>La destrucción de la tierra</li>
-                        <li>MrBeast construye 100 pozos en África</li>
+                        
                     </ul>
                     </div>
                 </div>
@@ -197,6 +196,7 @@
                     publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
+                    $("#imagen").val(''); //Borra el campo de la imagen
                     Sombreado.css('display', 'none');
                     divnewpost.css('display', 'none');
                     app.userPosts(app.user.id)
@@ -227,6 +227,7 @@
                     publicreada() //alert que dice que se ha creado la publicación
                     $("#titulo2").val(''); //Borra el campo de titulo
                     $("#contenido2").val(''); //Borra el campo de contenido
+                    $("#imagen2").val(''); //Borra el campo de la imagen
                     app.userPosts(app.user.id)
                 }else{
                     //nocreada() //alert que dice que no se pudo crear la publicación

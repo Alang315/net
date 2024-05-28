@@ -1274,3 +1274,15 @@ input[type="text"],
         display: none;
     }
 }
+
+.ods_rueda {
+    align-items: center;
+}
+
+.ods_rueda img {
+    width: 82%;
+    border-radius: 50%;
+    position: sticky;
+    left: 5%; 
+    margin-top: -4.5%;
+}
