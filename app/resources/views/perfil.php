@@ -93,10 +93,7 @@
                 <div class="temas">
                     <h2>Temas</h2>
                     <div class="temasopciones">
-                    <ul class="temaslista">
-                        
-                        
-                    </ul>
+                    
                     </div>
                 </div>
                 <!--Buscador-->
@@ -140,7 +137,6 @@
                 </form>
             </div>
             <div class="feedmain">
-            <h3>MIS PUBLICACIONES</h3>
             <!--Ciclo para imprimir publicaciones-->
                 <section class="feed">
                     
@@ -264,6 +260,7 @@
             document.getElementById('Sombreado').style.display = 'none'
         });
         app.getTopics();
+
         app.cerrarEditPost();
     })
 </script>

@@ -86,7 +86,7 @@ header {
 .divNewpost {
     z-index: 3;
     display: none;
-    position: absolute;
+    position:fixed;
     text-align: center;
     flex-direction: column;
     justify-content: space-between; 
@@ -859,6 +859,20 @@ header {
     color: white;
     padding: 2px;
     border-radius: 0.3rem;
+}
+
+.NoPubs {
+    background-color: #c9d5d9;
+    justify-content: center;
+    color: #000;
+    text-align: center;
+    align-items: center;
+    border-radius: 4rem;
+    padding: 5px 5px;
+}
+.NoPubsIcon {
+    height: 5rem;
+    font-size: 4.5rem;
 }
 
 .link-publi {
