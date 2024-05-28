@@ -90,27 +90,28 @@
     </div>
     <div class="app">
         <aside class="navegacion">
-                <div class="temas">
-                    <h2>Temas</h2>
-                    <div class="temasopciones">
-                    <ul class="temaslista">
+            <button class='todos_los_post' onclick="app.view('miperfil')">Ver todos mis posts</button>
+            <div class="temas">
+                <h2>Temas</h2>
+                <div class="temasopciones">
+                <ul class="temaslista">
 
-                    </ul>
-                    </div>
+                </ul>
                 </div>
-                <!--Buscador-->
-                <div class="busqueda">
-                    <h2>¿Buscas algo?</h2>
-                    <input type="search" class="search-bar" name="search" id="search2" placeholder="Escribe aquí...">
-                    <div class="populares">
-                    <h2></h2>
-                    <div class="ods_rueda"><img src="/resources/img/ods_rueda.gif" title="Objetivos del Desarrollo Sostenible"></div>
-                    <ul>
-                        
-                    </ul>
-                    </div>
+            </div>
+            <!--Buscador-->
+            <div class="busqueda">
+                <h2>¿Buscas algo?</h2>
+                <input type="search" class="search-bar" name="search" id="search2" placeholder="Escribe aquí...">
+                <div class="populares">
+                <h2></h2>
+                <div class="ods_rueda"><img src="/resources/img/ods_rueda.gif" title="Objetivos del Desarrollo Sostenible"></div>
+                <ul>
+                    
+                </ul>
                 </div>
-                <span class="copyright">Copyright 2024© GreenNet</span>
+            </div>
+            <span class="copyright">Copyright 2024© GreenNet</span>
         </aside>
         <!-- PUBLICACIONES -->
         <main class="publicaciones">
