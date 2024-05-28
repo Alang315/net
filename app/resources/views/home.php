@@ -56,9 +56,9 @@ main_header(["styles" => $styles],$sesion);
 <div class="app">
     <!-- PANEL IZQUIERDO -->
     <aside class="navegacion" id="navegacion">
-        <button class='todos_los_post' onclick="app.view('home')">Ver todos los posts</button>
+        
         <!--Mostrar temas-->
-        <div class="temas">
+        <div class="temas"><button class='todos_los_post' onclick="app.view('home')">Ver todos los posts</button>
             <h2>Temas</h2>
             <div class="temasopciones">
             <ul class="temaslista">
