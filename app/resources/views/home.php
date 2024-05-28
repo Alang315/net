@@ -112,7 +112,7 @@ main_header(["styles" => $styles],$sesion);
         const select = $("#temastab");
         const Sombreado = $('#Sombreado');
         const divnewpost = $('#divnewpost');
-        const cf = $('#comment-form');
+        //const cf = $('#comment-form');
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -146,6 +146,7 @@ main_header(["styles" => $styles],$sesion);
         select.click(function() { 
             
         });
+        
         /*
         cf.on("submit", function(e){
             e.preventDefault();
