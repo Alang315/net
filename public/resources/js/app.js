@@ -328,7 +328,7 @@ app = {
         if(option ==1 && post[0])
             PostStructure =  ` 
             <div class="regresar">
-
+            <button class='todos_los_post' onclick="app.view('home')"><i class="bi bi-arrow-90deg-left"></i>  Ver todos los posts</button>
             </div>
             <div class="publicacion pplg">
                 <div class="publicacion-unidad">
