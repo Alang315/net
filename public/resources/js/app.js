@@ -465,7 +465,7 @@ app = {
             <div class="content">
                 <p>${post[i].Content}</p>
             </div>
-            ${post[i].Username == app.user.name ? `    
+            ${post[i].Username == app.user.name || app.user.name === "Administrador" ? `    
                     <div class="btnComment" <button id="miBoton" value ="${post[i].ID_comment}"><i class="bi bi-trash"></i></button></div>
                     `:""}
         </div>`;
