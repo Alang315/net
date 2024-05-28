@@ -270,7 +270,7 @@ app = {
                 if(resp.r !== false){
                     //publicreada()
                     app.openPost("", idpubli,"", app.user.id, app.user.id)
-                    alert("SECREO COMENTARIO")
+                    ComentarioCreado();
                     $("#contenidocomen").val(''); //Borra el campo de contenido
                 }else{
                     //nocreada() //alert que dice que no se pudo crear la publicación
@@ -461,6 +461,7 @@ app = {
             </div>
         </div>`;
             }
+            
         }
         switch(option){
             case 1: return PostStructure; break;
