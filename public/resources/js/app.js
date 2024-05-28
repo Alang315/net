@@ -549,7 +549,6 @@ app = {
                         html = "";
                         let primera = true;
                         for(let popu of ppresp){    
-                            console.log("Holaaa");
                             html += `
                                 <li value="${popu.ID_publication}" onclick="app.openPost(event, ${popu.ID_publication}, this, ${app.user.id}, ${popu.ID_user})">${popu.title}</li>
                             `;     
@@ -1568,9 +1567,6 @@ app = {
 
     deleteElement: function(index, elementId, recharge){ //Metodo para eliminar cualquier elemento 
         var destiny = ""
-        console.log(index)
-        console.log(elementId)
-        console.log(recharge)
         switch(index){
             case 1: destiny = this.urls.deletePubli + "?_dP" + "&pid=" + elementId; break;
             case 2: destiny = this.urls.deleteUser + "?_dU" + "&uid=" + elementId;break;
@@ -1581,7 +1577,7 @@ app = {
             .then(resp => resp.json())
             .then(succes => {
                 if(succes.r != false){
-                    //recharge();
+                    recharge();
                     //alert(succes.m);
                 }else
                     alert("No es posible realizar esta accion")

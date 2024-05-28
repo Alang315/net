@@ -369,7 +369,6 @@ class PostController{
     private function delete_Post($pid){
         $publi = new publication();
         $post = json_decode($this->getPost(1, $pid))[0];
-        unlink(addslashes(PUBLIC_DIRECTORY . "images" . DS . $post->Image));
         if(!is_null($post->Image))
             unlink(addslashes(PUBLIC_DIRECTORY . "images" . DS . $post->Image));
         $result = $publi->where([["ID_publication", $pid]])->delete();
