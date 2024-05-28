@@ -58,7 +58,7 @@ main_header(["styles" => $styles],$sesion);
     <aside class="navegacion" id="navegacion">
         
         <!--Mostrar temas-->
-        <div class="temas">
+        <div class="temas"><button class='todos_los_post' onclick="app.view('home')">Ver todos los posts</button>
             <h2>Temas</h2>
             <div class="temasopciones">
             <ul class="temaslista">
