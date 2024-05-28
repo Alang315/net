@@ -1317,11 +1317,12 @@ input[type="text"],
     margin-top: -4.5%;
 }
 
-.navegacion .todos_los_post {
+.regresar .todos_los_post {
     background-color: #5500ff;
     color: #FFF;
     border: none;
     width: auto;
+    justify-content: center;
     max-width: auto;
     font-weight: bold;
     border-radius: 5px;
@@ -1332,5 +1333,6 @@ input[type="text"],
     cursor: pointer;
     display: flex;
     margin: auto;
+    float: left;
     margin-top: 4%;
 }
