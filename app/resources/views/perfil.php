@@ -90,7 +90,6 @@
     </div>
     <div class="app">
         <aside class="navegacion">
-            <button class='todos_los_post' onclick="app.view('miperfil')">Ver todos mis posts</button>
             <div class="temas">
                 <h2>Temas</h2>
                 <div class="temasopciones">
