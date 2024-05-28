@@ -406,43 +406,59 @@ app = {
         </div>`;
         }
         else {
-        CommentaryStructure = `
-            <div class="crearcomment">
-                <form id="comment-form" method="post" class="form-comment">        
-                    <div class="mi-comment">
-                        <div class="datos-comment">
-                            <div class="datos">
-                                <div>
-                                    <span>${app.user.name}</span>
+            if(i <= 1) {
+            CommentaryStructure = `
+                <div class="crearcomment">
+                    <form id="comment-form" method="post" class="form-comment">        
+                        <div class="mi-comment">
+                            <div class="datos-comment">
+                                <div class="datos">
+                                    <div>
+                                        <span>${app.user.name}</span>
+                                    </div>
+                                    <span>Crear comentario</span>
+                        
                                 </div>
-                                <span>Crear comentario</span>
-                    
                             </div>
+                            <div class="input-container">
+                                <textarea name="contenidocomen" placeholder="Escribe tu idea..." id="contenidocomen" required></textarea>
+                            </div>
+                            <div class="buttondiv">
+                                <button type="submit">Enviar</button> 
+                            </div>
+                        
+                        
                         </div>
-                        <div class="input-container">
-                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
-                        </div>
-                        <div class="buttondiv">
-                            <button type="submit">Enviar</button> 
-                        </div>
-                      
-                       
+                    </form>
+                </div>
+                <div class="commentarrys">
+                    <div class="username">
+                        <h3>${post[i].Username}</h3>  
                     </div>
-                </form>
-            </div>
+                    <div class="date">
+                        <h5>${post[i].Date}</h5>
+                    </div>
+                    <div class="content">
+                        <p>${post[i].Content}</p>
+                    </div>
+                </div>
+                <br>
+                `;
+            }
+            if(i > 1) {
+                CommentaryStructure = `
             <div class="commentarrys">
-                <div class="username">
-                    <h3>${post[i].Username}</h3>  
-                </div>
-                <div class="date">
-                    <h5>${post[i].Date}</h5>
-                </div>
-                <div class="content">
-                    <p>${post[i].Content}</p>
-                </div>
+            <div class="username">
+                <h3>${post[i].Username}</h3>  
             </div>
-            <br>
-            `;
+            <div class="date">
+                <h5>${post[i].Date}</h5>
+            </div>
+            <div class="content">
+                <p>${post[i].Content}</p>
+            </div>
+        </div>`;
+            }
         }
         switch(option){
             case 1: return PostStructure; break;
