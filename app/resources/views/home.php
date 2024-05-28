@@ -55,7 +55,7 @@ main_header(["styles" => $styles],$sesion);
 </div>
 <div class="app">
     <!-- PANEL IZQUIERDO -->
-    <aside class="navegacion">
+    <aside class="navegacion" id="navegacion">
         <!--Mostrar temas-->
         <div class="temas">
             <h2>Temas</h2>
@@ -71,10 +71,8 @@ main_header(["styles" => $styles],$sesion);
             <input type="search" class="search-bar" name="search" id="search" placeholder="Escribe aquí...">
             <div class="populares">
             <h2>Popular</h2>
-            <ul>
-                <li>¿3ra guerra mundial 2024?</li>
-                <li>La destrucción de la tierra</li>
-                <li>MrBeast construye 100 pozos en África</li>
+            <ul class="populista">
+                
             </ul>
             </div>
         </div>
@@ -114,6 +112,7 @@ main_header(["styles" => $styles],$sesion);
         const select = $("#temastab");
         const Sombreado = $('#Sombreado');
         const divnewpost = $('#divnewpost');
+        const cf = $('#comment-form');
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -147,8 +146,34 @@ main_header(["styles" => $styles],$sesion);
             
         });
         
+        cf.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("contenidocomen",$("#contenidocomen").val());
+            data.append("key",$("#key").val());
+            data.append("date",$("#date").val());
+            data.append("pide",$("#pide").val());
+            data.append("_cc","");
+            fetch(app.urls.createComment,{
+                method : "POST",
+                body : data
+            })
+            .then ( resp => resp.json())
+            .then ( resp => {
+                if(resp.r !== false){
+                    publicreada()
+                    $("#contenidocomen").val(''); //Borra el campo de contenido
+                }else{
+                    //nocreada() //alert que dice que no se pudo crear la publicación
+                }
+            }).catch( err => console.error( err ))            
+        })
+
         app.getTopics();
         app.getTopicslist();
+        app.abrirnavegacion();
+        app.getMejorPosts();
         // hacer variables js que se emparejen con las de php para poder enviarlas
         app.publications();
         //app.lastPost(1);
@@ -156,6 +181,20 @@ main_header(["styles" => $styles],$sesion);
   
         app.user.id = "<?=isset($sesion->key) ? $sesion->key : 0 ?>";
         app.user.name = "<?=isset($sesion->user) ? $sesion->user :'false' ?>";
+        
+        
+        $(document).ready(function () {
+            const storedOption = localStorage.getItem('selectedOption');
+            console.log(storedOption);
+            if (storedOption) {
+                if($('.reaccionestab')) {
+                $('.reaccionestab').val(storedOption);
+                }
+                else {
+                    console.log("no hay");
+                }
+            }
+        });
     });
 </script>
 <?php main_footer(); ?>

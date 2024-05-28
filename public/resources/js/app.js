@@ -8,6 +8,7 @@ app = {
         logoutindex: "/home/logout",
         logoutlogin: "/login/logout",
         posts: "post/getP?_pp",
+        mejorposts: "post/getPublis",
         getTopics: "post/getT",
         createTopic: "temas/filterdata_createTopic",
         deleteTopic: "temas/filterdata_deleteTopic",
@@ -18,6 +19,7 @@ app = {
         adminuser: "/adminuser",
         logoutperfil: "/perfil/logout",
         createPost: "/post/get_Publidata",
+        createComment: "/post/get_Comments",
         editPost: "/post/edit_post_data",
         userposts: "/post/get_user_P",
         getReactions:"/post/getEmotes",//llaves uid, pid, type, deben de llevar valores
@@ -35,6 +37,7 @@ app = {
       lpu : $(".contenidoComen"),
     tm : $(".temastab"),// select para tomar los temas
     tl : $(".temaslista"),
+    pl : $(".populista"),
     rs : $(".reaccioning"),
     rs2 : $(".reaccioning2"),
     rp : $(".optionre"), 
@@ -80,7 +83,7 @@ app = {
                         if(post.Active ==1)
                         html += `
                             <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
-                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this, ${app.user.id})"
+                                <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this, ${app.user.id}, ${post.ID_user})"
                                     class="link-publi"> 
                                     <div class="publicacion-unidad">
                                         <div class="username">
@@ -160,8 +163,8 @@ app = {
         }
     },
 
-    openPost: function(event, pid, element, user){
-        console.log(name);
+    openPost: function(event, pid, element, user, iduser){
+        console.log(iduser);
         console.log(pid)
         event.preventDefault();
         let i = 0;
@@ -199,11 +202,14 @@ app = {
                                         </div>
                                     </div>
                                     <div class="input-container">
-                                        <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
+                                        <textarea name="contenidocomen" placeholder="Escribe tu idea..." id="contenidocomen" required></textarea>
                                     </div>
                                     <div class="buttondiv">
                                         <button type="submit">Enviar</button> 
                                     </div>
+                                    <input hidden type="text" value="${iduser}" name="key" id="key"> 
+                                    <input hidden type="text" value="${pid}" name="pide" id="pide"> 
+                                    <input hidden type="text" value="${3}" name="date" id="date">
                                 </div>
                             </form>
                         </div>
@@ -333,7 +339,18 @@ app = {
     
     if(option == 2 &&  i >0)
         if(user == 0) {
-            CommentaryStructure = ``;
+            CommentaryStructure = `
+            <div class="commentarrys">
+            <div class="username">
+                <h3>${post[i].Username}</h3>  
+            </div>
+            <div class="date">
+                <h5>${post[i].Date}</h5>
+            </div>
+            <div class="content">
+                <p>${post[i].Content}</p>
+            </div>
+        </div>`;
         }
         else {
         CommentaryStructure = `
@@ -355,6 +372,8 @@ app = {
                         <div class="buttondiv">
                             <button type="submit">Enviar</button> 
                         </div>
+                      
+                       
                     </div>
                 </form>
             </div>
@@ -444,6 +463,8 @@ app = {
             console.log(pid);
             console.log(typer);
             console.log(user);
+            const selectedValue = typer;
+            localStorage.setItem('selectedOption', selectedValue);
             this.rs.html("");
             fetch(this.urls.getReactions+ "?_ge"+"&pid="+pid+"&uid="+user+ "&type="+typer)
                     .then(resp => resp.json())
@@ -494,6 +515,7 @@ app = {
         div[0].style.display = "none";
     },
 
+
     getTopics: function() {
         if(this.tm) {
             let html = `<b>No hay ningún tema</b>`;
@@ -515,6 +537,31 @@ app = {
                 }).catch( err => console.error( err ));
             }
     },
+    
+    getMejorPosts: function() {
+        if(this.pl) {
+            let html = `<b>No hay populares</b>`;
+            this.pl.html("");
+            fetch(this.urls.mejorposts+ "?_ppu")
+                .then(resp => resp.json())
+                .then(ppresp => {
+                    if(ppresp.length >0 ){
+                        html = "";
+                        let primera = true;
+                        for(let popu of ppresp){    
+                            html += `
+                                <li value="${popu.ID_publication}" onclick="app.openPost(event, ${popu.ID_publication}, this, ${app.user.id}, ${popu.ID_user})">${popu.title}</li>
+                            `;     
+                        }
+                        primera = false;
+                        this.pl.html(html);
+                        
+                    }
+                }).catch( err => console.error( err ));
+            
+        }
+    },
+    
 
     getTopicslist: function() {
         if(this.tl) {
@@ -645,9 +692,13 @@ app = {
                         }
                         if(!foundPost){
                             html = `
-                                <div class="pub-reaccion-span">
+                                <div class="NoPubs">
                                     <span>No hay publicaciones con este tema</span>
+                                    <div class="NoPubsIcon">
+                                        <i class="bi bi-x-circle"></i>
+                                    </div>
                                 </div> 
+                               
                             `;
                         }
                         this.pp.html(html);
@@ -747,9 +798,12 @@ app = {
                         }
                         if(!foundPost){
                             html = `
-                                <div class="pub-reaccion-span">
-                                    <span>No hay publicaciones con este tema</span>
-                                </div> 
+                            <div class="NoPubs">
+                                <span>No hay publicaciones con este tema</span>
+                                <div class="NoPubsIcon">
+                                    <i class="bi bi-x-circle"></i>
+                                </div>
+                            </div> 
                             `;
                         }
                         this.pp.html(html);
@@ -831,86 +885,91 @@ app = {
                         let primera = true;
                         for(let post of ppresp){
                             if(post.Title.toLowerCase().includes(searchTerm.toLowerCase()) || post.Content.toLowerCase().includes(searchTerm.toLowerCase()) || post.Username.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                foundPost = true;
-                                html += `
-                                <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
-                                    <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
-                                        class="link-publi"> 
-                                        <div class="publicacion-unidad">
-                                            <div class="username">
-                                                <small class="User">
-                                                    <i class="bi bi-person-circle"></i>
-                                                    <b>${ post.Username }</b>
-                                                </small>
-                                                <span class="fecha">
-                                                    ${post.Date}
-                                                </span>
-                                            </div>    
-                                            <div class="titulo">
-                                                <span class="title">${post.Title}</span>  
-                                            </div>  
-                                            <div class="contenido">
-                                                <span>${post.Content}</span>
-                                            </div>
-                                            ${post.Image?`
-                                            <div class="image-publication">
-                                                <img src="/images/${post.Image}" alt="Imagen de la publicación">
-                                            </div>`
-                                            :``}
-                                            <div class="topic">
-                                                <span>${post.topic}</span>
-                                            </div>
+                                if(post.Active == 1) {
+                                    foundPost = true;
+                                    html += `
+                                    <div class="publicacion pplg ${ primera ? `active` : `` } prevpost">
+                                        <a href="#" onclick="app.openPost(event, ${post.ID_publication}, this)"
+                                            class="link-publi"> 
+                                            <div class="publicacion-unidad">
+                                                <div class="username">
+                                                    <small class="User">
+                                                        <i class="bi bi-person-circle"></i>
+                                                        <b>${ post.Username }</b>
+                                                    </small>
+                                                    <span class="fecha">
+                                                        ${post.Date}
+                                                    </span>
+                                                </div>    
+                                                <div class="titulo">
+                                                    <span class="title">${post.Title}</span>  
+                                                </div>  
+                                                <div class="contenido">
+                                                    <span>${post.Content}</span>
+                                                </div>
+                                                ${post.Image?`
+                                                <div class="image-publication">
+                                                    <img src="/images/${post.Image}" alt="Imagen de la publicación">
+                                                </div>`
+                                                :``}
+                                                <div class="topic">
+                                                    <span>${post.topic}</span>
+                                                </div>
 
+                                            </div>
+                                        </a>     
+                                        <div class="publicacion-reaccion">
+                                            <div class="reacciones-container">
+                                                <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
+                                                onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
+                                                onclick="return false;">
+                                                    <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
+                                                    <option class="optionre" value="1" data-index="1">👍</option>
+                                                    <option class="optionre" value="2" data-index="2">😡</option>
+                                                    <option class="optionre" value="3" data-index="3">😭</option>
+                                                    <option class="optionre" value="4" data-index="4">😧</option>
+                                                    <option class="optionre" value="5" data-index="5">😄</option>
+                                                    <option class="optionre" value="6" data-index="6">💙</option>
+                                                </select>
+
+                                                <label
+                                                    for="reaccionestab" 
+                                                    class="reaccioning"
+                                                    id="totalreaccion-${post.ID_publication}"
+                                                    onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
+                                                    onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
+                                                    ${post.reacciones}
+                                                </label>
+                                            </div>        
+                                            
+                                            <div class="comments-container">
+                                                <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
+                                                <img  height="40px" widgth="40px" src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
+                                                </button>
+                                                <label for="iconocomment">${post.comments}</label>
+                                            </div>
                                         </div>
-                                    </a>     
-                                    <div class="publicacion-reaccion">
-                                        <div class="reacciones-container">
-                                            <select class="reaccionestab" name="reaccionestab" id="reaccionestab" 
-                                            onchange="app.getEmotes(${post.ID_publication}, this.selectedIndex, ${app.user.id})"
-                                            onclick="return false;">
-                                                <option class="optionre" value="0" disabled selected data-index="0">🤍</option>
-                                                <option class="optionre" value="1" data-index="1">👍</option>
-                                                <option class="optionre" value="2" data-index="2">😡</option>
-                                                <option class="optionre" value="3" data-index="3">😭</option>
-                                                <option class="optionre" value="4" data-index="4">😧</option>
-                                                <option class="optionre" value="5" data-index="5">😄</option>
-                                                <option class="optionre" value="6" data-index="6">💙</option>
-                                            </select>
-
-                                            <label
-                                                for="reaccionestab" 
-                                                class="reaccioning"
-                                                id="totalreaccion-${post.ID_publication}"
-                                                onmouseout="app.CerrarDivMostrarEmojis(document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))"
-                                                onmouseover="app.MotrarEmojis(${post.ID_publication}, document.querySelectorAll('#MostrarlistaEMoji-${post.ID_publication}'), document.querySelectorAll('#MostrarRDiv-${post.ID_publication}'))">
-                                                ${post.reacciones}
-                                            </label>
-                                        </div>        
-                                        
-                                        <div class="comments-container">
-                                            <button name="vercomments" class="vercomments" value="" title="Ver comentarios de la publicación">
-                                            <img  height="40px" widgth="40px" src="resources/img/bubble-chat-comment-conversation-mail-message-svgrepo-com.png" name="iconocomment"></img>
-                                            </button>
-                                            <label for="iconocomment">${post.comments}</label>
+                                        <div class="pub-reaccion-span">
+                                            <span></span>
+                                        </div> 
+                                        <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
+                                            <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
+                                                    
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="pub-reaccion-span">
-                                        <span></span>
-                                    </div> 
-                                    <div class="MostrarReacciones" id="MostrarRDiv-${post.ID_publication}">
-                                        <ul id="MostrarlistaEMoji-${post.ID_publication}" class="MostrarlistaEMoji">
-                                                
-                                        </ul>
-                                    </div>
-                                </div>
-                                `;
+                                    `;
+                                }
                             }
                         }
                         if(!foundPost){
                             html = `
-                                <div class="pub-reaccion-span">
-                                    <span>No se encontró tu busqueda</span>
-                                </div> 
+                            <div class="NoPubs">
+                                <span>No se encontró su busqueda</span>
+                                <div class="NoPubsIcon">
+                                    <i class="bi bi-x-circle"></i>
+                                </div>
+                            </div> 
                             `;
                         }
                         this.pp.html(html);
@@ -1004,6 +1063,16 @@ app = {
                                             </button>
                                             <label for="iconocomment">${post.comments}</label>
                                         </div>
+
+                                        <div class="BotonesControl">
+                                            <button class="btnEditPost" onclick="app.editMyPost(${post.ID_publication})" title="Editar Post">
+                                                <img src="resources/img/edit-3-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                            <button class="btnDeletePost" onclick="userpost_confirm_delete(${post.ID_publication})" title="ELiminar Post">
+                                                <img src="resources/img/delete-2-svgrepo-com.png" name="iconocomment"></img>
+                                            </button>
+                                        </div>
+
                                     </div>
                                     <div class="pub-reaccion-span">
                                         <span></span>
@@ -1019,9 +1088,12 @@ app = {
                         }
                         if(!foundPost){
                             html = `
-                                <div class="pub-reaccion-span">
-                                    <span>No se encontró tu busqueda</span>
-                                </div> 
+                            <div class="NoPubs">
+                                <span>No se encontró su busqueda</span>
+                                <div class="NoPubsIcon">
+                                    <i class="bi bi-x-circle"></i>
+                                </div>
+                            </div> 
                             `;
                         }
                         this.pp.html(html);
@@ -1268,6 +1340,20 @@ app = {
             document.getElementById("divEditPost").style.display = 'none'
             document.getElementById('Sombreado').style.display = 'none'
         })
+    },
+
+
+    abrirnavegacion: function() { 
+        const navegacion = document.getElementById('navegacion');
+        const btnAbrirCosa = document.getElementById('btnAbrir');
+        if (btnAbrirCosa) {
+            btnAbrirCosa.addEventListener('click', () => {
+                console.log("hola");
+                let displayStyle = window.getComputedStyle(navegacion, null).display;
+                navegacion.style.display = (displayStyle === 'none') ? 'flex' : 'none';
+            });
+        
+        };
     },
     
     //Publicaciones para los usuarios
@@ -1517,9 +1603,13 @@ app.toggleTemas();
 app.getTopics();
 app.getTopicslist();
 app.getTopicslistUser();
+app.getMejorPosts();
 app.newposttab();
 app.Buscador();
 app.BuscadorPerfil();
 app.BuscadorUsuariosAdmin();
 app.BuscadorTemasAdmin();
 app.BuscadorPublicacionesAdmin();
+app.abrirnavegacion();
+
+

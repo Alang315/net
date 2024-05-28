@@ -119,6 +119,10 @@ function declinepost(element){
         confirmButtonText: "Rechazar",
     }).then((result) => {
         if (result.isConfirmed) {
+            function recharge() {
+                app.getPostAdmin();
+            }
+            app.deleteElement(1, element.value, recharge)
             Swal.fire("¡Publicación rechazada!", "", "success");
         }
     });

@@ -56,6 +56,7 @@ header {
     padding: 0 5%;
     font-size: 1.3rem;
     color: white;
+    width: auto;
    
 }
 .opcionesheader {
@@ -119,7 +120,7 @@ header {
 .divNewpost {
     z-index: 3;
     display: none;
-    position: absolute;
+    position: fixed;
     text-align: center;
     flex-direction: column;
     justify-content: space-between; 
@@ -687,6 +688,21 @@ header {
     padding: 0.2rem;
 }
 
+.NoPubs {
+    background-color: #c9d5d9;
+    justify-content: center;
+    color: #000;
+    text-align: center;
+    align-items: center;
+    border-radius: 4rem;
+    padding: 5px 5px;
+}
+.NoPubsIcon {
+    height: 5rem;
+    font-size: 4.5rem;
+}
+
+
 .mi-perfil {
     max-width: 90%;
     width: 90%;
@@ -779,6 +795,25 @@ input[type="text"],
         background-color: rgb(255, 255, 255);
         outline: none;
         box-shadow: 0 0 10px #34343433;
+    }
+    .temastab {
+        background-color: #e1e1e1;
+        border-color: transparent;
+        color: black;
+        font-weight: bold;
+        margin-left: 5px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        min-width: 95%;
+        width: 95%;
+        max-width: 95%;
+        height: 10%;
+        max-height: 10%;
+        margin-bottom: 0.8em;
+        padding: 0 0.8rem;
+    }
+    .publifile {
+        border: none;
     }
    
 .mi-perfil button:hover {
@@ -912,6 +947,14 @@ input[type="text"],
     padding-bottom: 10px;
 }
 
+.abrir {
+    display: none;
+    position: fixed;
+    background-color: #0074D9;
+    z-index: 1;
+    padding: 10px 10px;
+    margin: 10px 10px;
+}
 
 
 
@@ -932,5 +975,16 @@ input[type="text"],
 
     .comentarios {
         display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .navegacion {
+        flex: 0 0 35%;
+        order: 1
+    }
+    .publicaciones {
+        flex: 0 0 65%;
+        order: 2;
     }
 }
