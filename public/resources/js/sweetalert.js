@@ -167,6 +167,30 @@ function aceptarpost(){
     });
 }
 
+function deletemensg(idmsg, idpubli){
+    console.log(idmsg)
+    console.log(idpubli)
+    swal.fire({
+        icon:"question",
+        title:"Eliminar comentario",
+        text:"¿Desea eliminar este comentario?, no podrá revertir esta acción",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar comentario",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            app.deleteElement(4, idmsg, ()=>{
+                app.openPost("", idpubli,"", app.user.id, app.user.id)
+                Swal.fire({
+                    title: "¡comentario eliminado!",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            })
+        }
+    });
+}
+
 /* Eliminar tema */
 function deleteTopic(idTopic){
     swal.fire({
@@ -282,6 +306,16 @@ function temaEditado(){
     Swal.fire({ 
         icon: "success",
         title: "Se ha editado el tema",
+        showConfirmButton: false,
+        timer: 2000
+    });
+}
+
+/* Confirmar que se ha creado el tema */
+function ComentarioCreado(){
+    Swal.fire({ 
+        icon: "success",
+        title: "Se ha creado tu comentario",
         showConfirmButton: false,
         timer: 2000
     });

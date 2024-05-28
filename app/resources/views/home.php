@@ -56,8 +56,9 @@ main_header(["styles" => $styles],$sesion);
 <div class="app">
     <!-- PANEL IZQUIERDO -->
     <aside class="navegacion" id="navegacion">
+        
         <!--Mostrar temas-->
-        <div class="temas">
+        <div class="temas"><button class='todos_los_post' onclick="app.view('home')">Ver todos los posts</button>
             <h2>Temas</h2>
             <div class="temasopciones">
             <ul class="temaslista">
@@ -95,7 +96,7 @@ main_header(["styles" => $styles],$sesion);
     <section class="comentarios">
         
             <div class="contenido">
-
+                    
             </div>
         
     </section>
@@ -112,7 +113,7 @@ main_header(["styles" => $styles],$sesion);
         const select = $("#temastab");
         const Sombreado = $('#Sombreado');
         const divnewpost = $('#divnewpost');
-        const cf = $('#comment-form');
+        //const cf = $('#comment-form');
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -146,6 +147,33 @@ main_header(["styles" => $styles],$sesion);
         select.click(function() { 
             
         });
+        /*
+        cf.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("contenidocomen",$("#contenidocomen").val());
+            data.append("key",$("#key").val());
+            data.append("date",$("#date").val());
+            data.append("pide",$("#pide").val());
+            data.append("_cc","");
+            fetch(app.urls.createComment,{
+                method : "POST",
+                body : data
+            })
+            .then ( resp => resp.json())
+            .then ( resp => {
+                if(resp.r !== false){
+                    publicreada()
+                    console.log("se creo el comentario");
+                    $("#contenidocomen").val(''); //Borra el campo de contenido
+                }else{
+                    //nocreada() //alert que dice que no se pudo crear la publicación
+                }
+            }).catch( err => console.error( err ))            
+        })
+        */
+        
         /*
         cf.on("submit", function(e){
             e.preventDefault();

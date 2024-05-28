@@ -30,6 +30,7 @@ app = {
         deleteUser: "/user/DU",
         deletePubli: "/post/DP",
         activePost: "/post/Ac",
+        deletecommentary: "/post/Dc",
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
@@ -54,6 +55,10 @@ app = {
         4: "😧",   
         5: "😄", 
         6: "💙",   
+    },
+
+    date:{
+        actual: "",
     },
 
     user : {
@@ -164,7 +169,9 @@ app = {
     },
 
     openPost: function(event, pid, element, user, iduser){
-        event.preventDefault();
+        if(event != ""){
+            event.preventDefault();
+        }
         let i = 0;
         let posthtml = "<h2>La publicación no esta disponible</h2>";
         let comentaryhtml =  "";
@@ -216,10 +223,62 @@ app = {
                         
                     }
                 }
+                //this.lp.html(comentary);
                 this.lp.html(comentaryhtml);
                 this.lpu.html(comentaryhtml)
                 this.pp.html(posthtml);
+                app.createComent(post[0].ID_publication)
+
 			}).catch(err => console.error(err));
+    },
+
+    getDate:function(){
+        const currentDate = new Date();
+
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        
+        let hours = currentDate.getHours();
+        const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+        const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        const formattedHours = hours.toString().padStart(2, '0');
+        
+        const formattedDateTime = `${year}-${month}-${day} ${formattedHours}:${minutes}:${seconds} ${ampm}`;
+        this.date.actual =  formattedDateTime;
+        console.log(formattedHours)          
+    },
+
+    createComent: function(idpubli){
+        app.getDate()
+        const cf = $('#comment-form');
+        cf.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("contenidocomen",$("#contenidocomen").val());
+            data.append("date", app.date.actual);
+            data.append("key",$("#key").val());
+            data.append("pide",idpubli);
+            data.append("_cc","");
+            fetch(app.urls.createComment,{
+                method : "POST",
+                body : data
+            })
+            .then ( resp => resp.json())
+            .then ( resp => {
+                if(resp.r !== false){
+                    //publicreada()
+                    app.openPost("", idpubli,"", app.user.id, app.user.id)
+                    ComentarioCreado();
+                    $("#contenidocomen").val(''); //Borra el campo de contenido
+                }else{
+                    //nocreada() //alert que dice que no se pudo crear la publicación
+                }
+            }).catch( err => console.error( err ))            
+        })
     },
 
     /* openPost para Revisar en la vista de administrar publicaciones */
@@ -269,6 +328,9 @@ app = {
         
         if(option ==1 && post[0])
             PostStructure =  ` 
+            <div class="regresar">
+            <button class='todos_los_post' onclick="app.view('home')"><i class="bi bi-arrow-90deg-left"></i>  Ver todos los posts</button>
+            </div>
             <div class="publicacion pplg">
                 <div class="publicacion-unidad">
                     <div class="username">
@@ -351,43 +413,66 @@ app = {
         </div>`;
         }
         else {
-        CommentaryStructure = `
-            <div class="crearcomment">
-                <form id="comment-form" method="post" class="form-comment">        
-                    <div class="mi-comment">
-                        <div class="datos-comment">
-                            <div class="datos">
-                                <div>
-                                    <span>${app.user.name}</span>
+            if(i <= 1) {
+            CommentaryStructure = `
+                <div class="crearcomment">
+                    <form id="comment-form" method="post" class="form-comment">        
+                        <div class="mi-comment">
+                            <div class="datos-comment">
+                                <div class="datos">
+                                    <div>
+                                        <span>${app.user.name}</span>
+                                    </div>
+                                    <span>Crear comentario</span>
+                        
                                 </div>
-                                <span>Crear comentario</span>
-                    
                             </div>
+                            <div class="input-container">
+                                <textarea name="contenidocomen" placeholder="Escribe tu idea..." id="contenidocomen" required></textarea>
+                            </div>
+                            <div class="buttondiv">
+                                <button type="submit">Enviar</button> 
+                            </div>
+                        
+                        
                         </div>
-                        <div class="input-container">
-                            <textarea name="contenido" placeholder="Escribe tu idea..." id="contenido" required></textarea>
-                        </div>
-                        <div class="buttondiv">
-                            <button type="submit">Enviar</button> 
-                        </div>
-                      
-                       
+                    </form>
+                </div>
+                <div class="commentarrys">
+                    <div class="username">
+                        <h3>${post[i].Username}</h3>  
                     </div>
-                </form>
-            </div>
+                    <div class="date">
+                        <h5>${post[i].Date}</h5>
+                    </div>
+                    <div class="content">
+                        <p>${post[i].Content}</p>
+                    </div>
+                    ${post[i].Username == app.user.name || app.user.name === "Administrador" ? `    
+                    <div class="btnComment" <button id="miBoton" onclick="deletemensg(${post[i].ID_comment}, ${post[0].ID_publication})"><i class="bi bi-trash"></i></button></div>
+                    `:""}
+                </div>
+                <br>
+                `;
+            }
+            if(i > 1) {
+                CommentaryStructure = `
             <div class="commentarrys">
-                <div class="username">
-                    <h3>${post[i].Username}</h3>  
-                </div>
-                <div class="date">
-                    <h5>${post[i].Date}</h5>
-                </div>
-                <div class="content">
-                    <p>${post[i].Content}</p>
-                </div>
+            <div class="username">
+                <h3>${post[i].Username}</h3>  
             </div>
-            <br>
-            `;
+            <div class="date">
+                <h5>${post[i].Date}</h5>
+            </div>
+            <div class="content">
+                <p>${post[i].Content}</p>
+            </div>
+            ${post[i].Username == app.user.name || app.user.name === "Administrador" ? `    
+                    <div class="btnComment" <button id="miBoton" onclick="deletemensg(${post[i].ID_comment}, ${post[0].ID_publication})"><i class="bi bi-trash"></i></button></div>
+                    `:""}
+        </div>`;
+            }
+            
         }
         switch(option){
             case 1: return PostStructure; break;
@@ -1564,6 +1649,8 @@ app = {
             case 1: destiny = this.urls.deletePubli + "?_dP" + "&pid=" + elementId; break;
             case 2: destiny = this.urls.deleteUser + "?_dU" + "&uid=" + elementId;break;
             case 3: destiny = this.urls.deleteTopic + "?_dT" + "&tid=" + elementId; break;
+            case 4: destiny = this.urls.deletecommentary + "?_dC" + "&cid=" + elementId; break;
+
         }
             
         fetch(destiny)
