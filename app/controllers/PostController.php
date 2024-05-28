@@ -87,8 +87,7 @@ class PostController{
             $cp = in_array('_cc', array_keys(filter_input_array(INPUT_POST)));
             if($cp){
                 $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-                $user = filter_input_array(INPUT_GET)["uid"];
-                print_r($this->createComment($datos, $user));
+                print_r($this->createComment($datos));
             }else{
                 require_view("error404");
             }

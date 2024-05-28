@@ -112,7 +112,7 @@ main_header(["styles" => $styles],$sesion);
         const select = $("#temastab");
         const Sombreado = $('#Sombreado');
         const divnewpost = $('#divnewpost');
-        const cf = $('#comment-form');
+        //const cf = $('#comment-form');
         lf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -147,30 +147,6 @@ main_header(["styles" => $styles],$sesion);
             
         });
         
-        cf.on("submit", function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            const data = new FormData();
-            data.append("contenidocomen",$("#contenidocomen").val());
-            data.append("key",$("#key").val());
-            data.append("date",$("#date").val());
-            data.append("pide",$("#pide").val());
-            data.append("_cc","");
-            fetch(app.urls.createComment,{
-                method : "POST",
-                body : data
-            })
-            .then ( resp => resp.json())
-            .then ( resp => {
-                if(resp.r !== false){
-                    publicreada()
-                    $("#contenidocomen").val(''); //Borra el campo de contenido
-                }else{
-                    //nocreada() //alert que dice que no se pudo crear la publicación
-                }
-            }).catch( err => console.error( err ))            
-        })
-
         app.getTopics();
         app.getTopicslist();
         app.abrirnavegacion();

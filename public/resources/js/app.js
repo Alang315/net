@@ -56,6 +56,10 @@ app = {
         6: "💙",   
     },
 
+    date:{
+        actual: "",
+    },
+
     user : {
         sv : false,
         id : 0,
@@ -217,10 +221,62 @@ app = {
                         <h3>No se encontraron comentarios en este Post</h3>` : comentaryhtml
                     }
                 }
+                //this.lp.html(comentary);
                 this.lp.html(comentaryhtml);
                 this.lpu.html(comentaryhtml)
                 this.pp.html(posthtml);
+                app.createComent(post[0].ID_publication)
+
 			}).catch(err => console.error(err));
+    },
+
+    getDate:function(){
+        const currentDate = new Date();
+
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        
+        let hours = currentDate.getHours();
+        const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+        const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        const formattedHours = hours.toString().padStart(2, '0');
+        
+        const formattedDateTime = `${year}-${month}-${day} ${formattedHours}:${minutes}:${seconds} ${ampm}`;
+        this.date.actual =  formattedDateTime;
+        console.log(formattedHours)          
+    },
+
+    createComent: function(idpubli){
+        app.getDate()
+        console.log("Se inicia el comentario")
+        const cf = $('#comment-form');
+        cf.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData();
+            data.append("contenidocomen",$("#contenidocomen").val());
+            data.append("date", app.date.actual);
+            data.append("key",$("#key").val());
+            data.append("pide",idpubli);
+            data.append("_cc","");
+            fetch(app.urls.createComment,{
+                method : "POST",
+                body : data
+            })
+            .then ( resp => resp.json())
+            .then ( resp => {
+                if(resp.r !== false){
+                    //publicreada()
+                    alert("SECREO COMENTARIO")
+                    $("#contenidocomen").val(''); //Borra el campo de contenido
+                }else{
+                    //nocreada() //alert que dice que no se pudo crear la publicación
+                }
+            }).catch( err => console.error( err ))            
+        })
     },
 
     /* openPost para Revisar en la vista de administrar publicaciones */
