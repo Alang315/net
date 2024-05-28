@@ -190,7 +190,8 @@ app = {
                     
                     if(user == 0) {
                         comentaryhtml = comentaryhtml == "" ? `
-                        <h2>Los comentarios no estan disponibles o no hay en esta publicacion</h2>` : comentaryhtml
+                        <div class="no-comments"><h2>Sin comentarios en este Post</h2></div>
+                        <div class="caja-vacia"><img src="/resources/img/caja_vacia.png" width="90%"></div>` : comentaryhtml
                     }
                     else {
                         comentaryhtml = comentaryhtml == "" ? `
