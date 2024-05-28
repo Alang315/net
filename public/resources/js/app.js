@@ -30,6 +30,7 @@ app = {
         deleteUser: "/user/DU",
         deletePubli: "/post/DP",
         activePost: "/post/Ac",
+        deletecommentary: "/post/Dc",
     },
     
     pp : $(".feed"), //Seccion para meter todos las publicaciones
@@ -447,7 +448,7 @@ app = {
                         <p>${post[i].Content}</p>
                     </div>
                     ${post[i].Username == app.user.name || app.user.name === "Administrador" ? `    
-                    <div class="btnComment" <button id="miBoton" value ="${post[i].ID_comment}"><i class="bi bi-trash"></i></button></div>
+                    <div class="btnComment" <button id="miBoton" onclick="deletemensg(${post[i].ID_comment}, ${post[0].ID_publication})"><i class="bi bi-trash"></i></button></div>
                     `:""}
                 </div>
                 <br>
@@ -466,7 +467,7 @@ app = {
                 <p>${post[i].Content}</p>
             </div>
             ${post[i].Username == app.user.name || app.user.name === "Administrador" ? `    
-                    <div class="btnComment" <button id="miBoton" value ="${post[i].ID_comment}"><i class="bi bi-trash"></i></button></div>
+                    <div class="btnComment" <button id="miBoton" onclick="deletemensg(${post[i].ID_comment}, ${post[0].ID_publication})"><i class="bi bi-trash"></i></button></div>
                     `:""}
         </div>`;
             }
@@ -1647,6 +1648,8 @@ app = {
             case 1: destiny = this.urls.deletePubli + "?_dP" + "&pid=" + elementId; break;
             case 2: destiny = this.urls.deleteUser + "?_dU" + "&uid=" + elementId;break;
             case 3: destiny = this.urls.deleteTopic + "?_dT" + "&tid=" + elementId; break;
+            case 4: destiny = this.urls.deletecommentary + "?_dC" + "&cid=" + elementId; break;
+
         }
             
         fetch(destiny)

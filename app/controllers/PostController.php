@@ -81,6 +81,27 @@ class PostController{
 
     }
 
+    //elimina comentarios
+    public function Dc(){
+        if(!empty($_GET)){
+            $op = in_array('_dC', array_keys(filter_input_array(INPUT_GET)));
+            if($op){
+                if(isset(filter_input_array(INPUT_GET)["cid"])){
+                    $cid =  filter_input_array(INPUT_GET)["cid"];
+                    print_r(self::delete_Comment($cid));
+                }else{
+                    require_view("error404");
+                }
+            }else{
+                require_view("error404");
+                die();
+            }
+        }else{
+            require_view("error404");
+            die();
+        } 
+    }
+
     //Crea comentarios
     public function get_Comments(){
         if(!empty($_POST)){
@@ -291,6 +312,13 @@ class PostController{
         ->getAll();
         $result = $resultP;
         return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
+    private function delete_Comment($cid){
+        $coment = new comments();
+        $result = $coment->where([["ID_comment", $cid]])->delete();
+        if($result)
+            return json_encode(["r" => true]);
     }
 
     //Crear Publicacion
