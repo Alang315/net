@@ -146,7 +146,7 @@ main_header(["styles" => $styles],$sesion);
         select.click(function() { 
             
         });
-        
+        /*
         cf.on("submit", function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -164,13 +164,14 @@ main_header(["styles" => $styles],$sesion);
             .then ( resp => {
                 if(resp.r !== false){
                     publicreada()
+                    console.log("se creo el comentario");
                     $("#contenidocomen").val(''); //Borra el campo de contenido
                 }else{
                     //nocreada() //alert que dice que no se pudo crear la publicación
                 }
             }).catch( err => console.error( err ))            
         })
-
+        */
         app.getTopics();
         app.getTopicslist();
         app.abrirnavegacion();
@@ -186,7 +187,7 @@ main_header(["styles" => $styles],$sesion);
         
         $(document).ready(function () {
             const storedOption = localStorage.getItem('selectedOption');
-            console.log(storedOption);
+            //console.log(storedOption);
             if (storedOption) {
                 if($('.reaccionestab')) {
                 $('.reaccionestab').val(storedOption);
