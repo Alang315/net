@@ -115,7 +115,22 @@ header {
     background-color: orangered;
 }
 
-
+.btnComment {
+    transition: background-color 0.3s ease;
+    background-color: #0074D9;
+    color: white;
+    font-weight: bold;
+    padding: 10px 10px;
+    border: none;
+    float: left;
+    outline: none;
+    border-radius: 1rem;
+    width: fit-content;
+    max-width: fit-content;
+}
+.btnComment:hover {
+    background-color: orangered;
+}
 
 .divNewpost {
     z-index: 3;

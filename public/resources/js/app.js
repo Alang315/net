@@ -326,6 +326,9 @@ app = {
         
         if(option ==1 && post[0])
             PostStructure =  ` 
+            <div class="regresar">
+
+            </div>
             <div class="publicacion pplg">
                 <div class="publicacion-unidad">
                     <div class="username">
@@ -443,6 +446,9 @@ app = {
                     <div class="content">
                         <p>${post[i].Content}</p>
                     </div>
+                    ${post[i].Username == app.user.name || app.user.name === "Administrador" ? `    
+                    <div class="btnComment" <button id="miBoton" value ="${post[i].ID_comment}"><i class="bi bi-trash"></i></button></div>
+                    `:""}
                 </div>
                 <br>
                 `;
@@ -459,6 +465,9 @@ app = {
             <div class="content">
                 <p>${post[i].Content}</p>
             </div>
+            ${post[i].Username == app.user.name || app.user.name === "Administrador" ? `    
+                    <div class="btnComment" <button id="miBoton" value ="${post[i].ID_comment}"><i class="bi bi-trash"></i></button></div>
+                    `:""}
         </div>`;
             }
             
