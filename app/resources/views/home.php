@@ -135,6 +135,7 @@ main_header(["styles" => $styles],$sesion);
                     publicreada()
                     $("#titulo").val(''); //Borra el campo de titulo
                     $("#contenido").val(''); //Borra el campo de contenido
+                    $("#imagen").val(''); //Borra el campo de la imagen
                     Sombreado.css('display', 'none');
                     divnewpost.css('display', 'none');
                 }else{
