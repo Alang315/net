@@ -431,9 +431,11 @@ header {
 }
 
 .registerbtn {
+    font-size: 100%;
+    margin-left: -120%;
     display: inline-block;
             padding: 6px 17px;
-            background-color: #0074D9;
+            background-color: #5500ff;
             color: white;
             text-decoration: none;
             border-radius: 5px;

@@ -37,7 +37,7 @@ function main_header($args = [],$sesion = null){
                
             </div>
             <div class="perfil">
-                <p class="nombre-perfil"><?php echo !isset($sesion->sv) ? "<h2><button class='registerbtn' onclick=\"app.view('login')\"> Regístrate o Inicia sesion</button></h2>" : "" ?> </p><!--Pone en el header el boton para registrarse o iniciar sesión -->
+                <p class="nombre-perfil-login"><?php echo !isset($sesion->sv) ? "<h2><button class='registerbtn' onclick=\"app.view('login')\"> Regístrate o Inicia sesión</button></h2>" : "" ?> </p><!--Pone en el header el boton para registrarse o iniciar sesión -->
                 <img src="/resources/img/perfil.jpg" alt="Foto de perfil" class="img-perfil" id="perfil_Icono">
             </div>
         </div>
